@@ -33,7 +33,7 @@ _Alfabetisk lista över tekniska termer, förkortningar och begrepp som används
 | OWASP            | Open Worldwide Application Security Project |
 | PCI DSS          | Payment Card Industry Data Security Standard |
 | REST             | Representational State Transfer - Arkitekturstil för webbaserade API:er                |
-| | |
+| Spring Boot | ett open-source Java-ramverk som förenklar utvecklingen av webbapplikationer genom att erbjuda en snabb och enkel konfiguration|
 | | |
 | | |
 | | |
@@ -62,36 +62,25 @@ Ett av organisationens mest kända bidrag är OWASP Top 10, en lista över de ti
 OWASP Top 10 används globalt som referensram inom websäkerhet – både av enskilda utvecklare och av stora organisationer. Listan fungerar som ett gemensamt språk mellan utvecklare, säkerhetsexperter och verksamheter för att identifiera, prioritera och åtgärda säkerhetsrisker. Flera regulatoriska ramverk, däribland PCI DSS (betalkortsstandarden), refererar explicit till OWASP Top 10 som en del av sina krav[10].
 I denna studie används OWASP Top 10:2025 som referensram för att systematiskt identifiera och åtgärda säkerhetsbrister i EFbox REST API.
 
-__Beskriv det problemområde eller den kontext som ditt arbete adresserar:
-
-- **För utvecklingsprojekt:** Tekniska utmaningar, befintliga lösningar och deras begränsningar
-- **För utforskande arbeten:** Kunskapsluckor, tekniska frågeställningar som behöver undersökas
-- **För hybridprojekt:** Kombination av praktiska problem och forskningsbehov__
-
-
 ### 1.2 Syfte
 
-Formulera det övergripande syftet i 1-3 meningar:
-
-_"Syftet med detta examensarbete är att..."_
+Syftet med detta examensarbete är att, med OWASP Top 10:2025 som referensram, systematiskt identifiera och åtgärda säkerhetsbrister i ett befintligt Java Spring Boot REST API. Studien syftar därigenom till att demonstrera hur säkerhet kan integreras i ett redan existerande projekt och bidra med ett konkret exempel på säkerhetsanalys av ett verkligt system.
 
 ### 1.3 Frågeställningar
 
-Formulera 3-5 konkreta frågeställningar. Exempel:
-
-- **Utforskande:** "Vilka säkerhetsrisker finns med olika autentiseringsmetoder?"
-- **Jämförande:** "Vilka prestanda-skillnader finns mellan X och Y?"
-- **Utvecklande:** "Hur kan man implementera Z för att lösa problem W?"
-- **Evaluerande:** "Hur påverkar olika databassystem användarupplevelsen?"
+1. Vilka säkerhetsbrister identifieras i EFbox REST API utifrån OWASP Top 10:2025?
+2. Hur kan de identifierade bristerna åtgärdas inom ramen för det befintliga systemets arkitektur?
+3. Hur verifieras att implementerade åtgärder är effektiva?
 
 ### 1.4 Avgränsningar
 
-Definiera tydligt vad arbetet INTE omfattar:
+- Projektet omfattar endast backend-API:et (EFbox) – ingen frontend analyseras
+- Analysen begränsas till de OWASP Top 10-kategorier som är relevanta för applikationens typ och funktionalitet (A01, A02, A03, A04, A05, A07, A08, A09, A10*)
+- Penetrationstestning mot en live-miljö ingår inte – testning sker i lokal utvecklingsmiljö
+- Projektet inkluderar inte prestandaoptimering eller funktionsutveckling utanför säkerhetsåtgärder
+- Applikationen är ej avsedd för produktionsdrift inom ramen för detta projekt
 
-- Tekniska begränsningar
-- Omfattning av undersökning/utveckling
-- Målgrupp och användningsområden
-- Teoretiska eller praktiska begränsningar
+_*A06 - Insecure design är för subjektivt för att kunna bedömas på ett empiriskt sätt. Därför ignoreras den punkten i denna studie._
 
 ### 1.5 Metodöversikt
 
