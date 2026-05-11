@@ -24,8 +24,14 @@ _Alfabetisk lista över tekniska termer, förkortningar och begrepp som används
 | ---------------- | -------------------------------------------------------------------------------------- |
 | API              | Application Programming Interface - Gränssnitt för kommunikation mellan mjukvarusystem |
 | Backend          | |
+| EU               | Europeiska Unionen |
 | Frontend         | |
+| GDPR             | General Data Protection Regulation |
 |                  | |
+|                  | |
+|                  | |
+| OWASP            | Open Worldwide Application Security Project |
+| PCI DSS          | Payment Card Industry Data Security Standard |
 | REST             | Representational State Transfer - Arkitekturstil för webbaserade API:er                |
 | | |
 | | |
@@ -38,12 +44,30 @@ _Alfabetisk lista över tekniska termer, förkortningar och begrepp som används
 
 ### 1.1 Bakgrund
 
-Beskriv det problemområde eller den kontext som ditt arbete adresserar:
+Internet anses ha genomgått tre perioder[1] sen dess specifikation i 1989. 
+Man pratar om __Web 1.0__ där användarna kunde, för det mesta, bara söka och läsa innehåll online. Kommunikationen skulle kunna beskrivas, på ett förenklat sätt, ensidig och användarinputs var begränsade.
+
+Sedan 2000-talet tog __Web 2.0__ över världen med interaktiva tjänster och sociala media. Användarna kan nu skicka information på ett enkelt sätt. Det fanns redan säkerhetsproblem under Web 1.0, men nu behöver online-tjänster kunna hantera, på ett säkert sätt, information och kommando som skickas till servrerna. Säkerhet tas på desto större allvar då många lagrar personlig information online som måste skyddas på ett säkert sätt. Web 2.0 gjorde det möjligt för företag som Meta, Google, Amazon, Twitter/X och andra att bli värdsledande och implementera ett affärssystem där användardatan är en produkt som säljs i marknadsföringssyften. Hackerkulturen fortsatte samtidigt att utvecklas och attackerna blev alltmer avancerade. Man-in-the-middle-attacks, brute force attacks, Denial Of Service mm är hot som alla online-leverantörer måste ta i beaktning. Andra aktörer som statligt sponsrade hacker gör det ännu svårare att skydda informationen online.
+
+På senare år har misstron mot internetjättarnas sätt att hantera vår personliga information tilltagit. De stora företagens sätt att hantera vår data ifrågasätts och i Europa tar E.U fram ett regelverk för att skydda användarna; GDPR, som ska skydda både lagring och överföring av data online. Samtidigt försöker många att decentralisera sig från de stora nätverken (statliga eller privata) genom att förlita sig mer på _peer-to-peer_ filosofin. Detta anses vara **Web 3.0**, ett decentraliserat internet.
+
+Samtidigt i Europa har EU startat många konkurrensmål mot IT-jättarna[3][4], de politiska spänningarna mellan USA (där de flesta internationella tjänsteleverantörer finns) och Europa[5][6] har bidragit till att vissa EU-länder börjar leta efter alternativa tjänster, som t.ex Frankrikes mål att ersätta Microsoft tjänster med Linux baserade system för att uppnå digitalt självständighet[7].
+
+Sammanfattningsvis genomgår internet en ny era där säkerheten kan komma att läggas på mindre utvecklingsteam, en ny marknad kommer att öppnas i samband med att EU-regionen minskar sitt beroende av uteomeuropeiska tjänster. Internetanvändare kan förvänta sig att nya tjänster publiceras online men frågan om datasäkerhet kommer att kvarstå: _hur säker är min information online?_
+
+Denna studie avser att studera hur man kan göra en applikation säker baserat på OWASP Top 10 hot.
+
+Open Worldwide Application Security Project (OWASP) är en internationell non-profit organisation med målet att förbättra säkerheten i programvaror och webbtjänster[8]. Organisationen är öppen och transparent – all dokumentation, verktyg och forskning publiceras fritt tillgängligt online.
+Ett av organisationens mest kända bidrag är OWASP Top 10, en lista över de tio mest förekommande och kritiska säkerhetshoten i webbapplikationer. Listan baseras på data insamlad från hundratals organisationer världen över och uppdateras regelbundet för att spegla det aktuella hotlandskapet. Den senaste versionen publicerades 2025[9].
+OWASP Top 10 används globalt som referensram inom websäkerhet – både av enskilda utvecklare och av stora organisationer. Listan fungerar som ett gemensamt språk mellan utvecklare, säkerhetsexperter och verksamheter för att identifiera, prioritera och åtgärda säkerhetsrisker. Flera regulatoriska ramverk, däribland PCI DSS (betalkortsstandarden), refererar explicit till OWASP Top 10 som en del av sina krav[10].
+I denna studie används OWASP Top 10:2025 som referensram för att systematiskt identifiera och åtgärda säkerhetsbrister i EFbox REST API.
+
+__Beskriv det problemområde eller den kontext som ditt arbete adresserar:
 
 - **För utvecklingsprojekt:** Tekniska utmaningar, befintliga lösningar och deras begränsningar
 - **För utforskande arbeten:** Kunskapsluckor, tekniska frågeställningar som behöver undersökas
-- **För hybridprojekt:** Kombination av praktiska problem och forskningsbehov
-- Koppling till din LIA-plats (om tillämpligt)
+- **För hybridprojekt:** Kombination av praktiska problem och forskningsbehov__
+
 
 ### 1.2 Syfte
 
@@ -76,7 +100,7 @@ Kort beskrivning av din approach:
 - **Teoretisk studie:** Litteraturstudier, jämförande analys
 - **Experimentell:** Praktiska test, mätningar, prototyping
 - **Utveckling:** Systemutveckling, implementation
-- **Kombinerad:** Mix av ovanstående
+- **Kombinerad:** Mix av ovanståendehttps://www.mckinsey.com/featured-insights/mckinsey-explainers/what-is-blockchain
 
 ---
 
@@ -84,7 +108,7 @@ Kort beskrivning av din approach:
 
 ### 2.1 Tekniska Koncept
 
-Förklara viktiga koncept inom ditt område:
+Förklara viktiga koncept inom ditt omgrundad år 2001råde:
 
 - Grundläggande tekniska begrepp
 - Relevanta programmeringsspråk/teknologier
@@ -96,7 +120,7 @@ Förklara viktiga koncept inom ditt område:
 
 - Tidigare studier och forskning
 - Befintliga teorier och modeller
-- Identifierade kunskapsluckor
+- Identifierade kunskapsluckor[1]
 
 **För utvecklingsprojekt:**
 
@@ -160,8 +184,10 @@ Beskriv din systematiska approach:
 
 **För utforskande arbeten:**
 
-- Sökstrategier
+- Sökstrategierförsöker
 - Urvalskriterier
+- Tidigare studier och forskning
+- Befintliga teorier och modeller
 - Analysmetoder
 
 **För experimentella arbeten:**
@@ -200,6 +226,11 @@ _Anpassa detta kapitel efter din typ av arbete:_
 
 - Mätresultat och data
 - Statistisk analys
+- Mätmetoder
+
+**För utvecklingsprojekt:**
+
+- Utvecklingsprocess (agile, iterativ etc.)
 - Observationer från experiment
 
 **För utvecklingsprojekt:**
@@ -226,7 +257,7 @@ _Presentera alla resultat objektivt utan värderingar - spara analysen till disk
 
 - Uppfylldes arbetets syfte?
 - Svarar resultaten på frågeställningarna?
-- Jämförelse med befintlig forskning/lösningar
+- Jämförelse med befintlig forskniförsökerng/lösningar
 
 ### 5.2 Reflektion över Metod
 
@@ -290,8 +321,25 @@ I texten
 
 I referenslistan 
 
-Artikel: [1] A. Author, B. Author, and C. Author, “Title
-of article,” Title of Journal, vol. x, no. x, pp. xxx-xxx, Month Year.
+[1] Bandar Alotaibi, “Cybersecurity Attacks and Detection Methods in Web 3.0 Technology: A Review”, Sensors, Januari 2025. Available: https://www.mdpi.com/1424-8220/25/2/342
+
+[2] Brant Carson, “What is blockchain?”, McKingsey & Company, Juni 2024. Available: https://www.mckinsey.com/featured-insights/mckinsey-explainers/what-is-blockchain
+
+[3] “Antitrust cases against Google by the European Union”, Wikipedia, Accessed Maj 2026. Available: https://en.wikipedia.org/wiki/Antitrust_cases_against_Google_by_the_European_Union
+
+[4] Vatsala Gaur, “How the EU is taking on Big Tech: Meta, Apple, Google, face heightened scrutiny, penalties”, Invezz, December 2025. Available: https://invezz.com/news/2025/12/04/how-the-eu-is-taking-on-big-tech-meta-apple-google-face-heightened-scrutiny-penalties/
+
+[5] “Digital Sovereignty in Tension: U.S. Pushback Against the EU’s Digital Services Act”, The Cyber Institute, Augusti 2025. Available: https://www.cyber-institute.org/post/digital-sovereignty-in-tension-u-s-pushback-against-the-eu-s-digital-services-act
+
+[6] Clare Duffy, “Trump administration’s vision of US tech dominance is colliding with Europe ”, CNN, Januari 2026. Available: https://edition.cnn.com/2026/01/12/tech/us-eu-tech-regulation-fight-explained
+
+[7] Marius Laffont, “Pour son indépendance numérique, l'État français souhaite passer à Linux”, RFI, April 2026. Available: https://www.rfi.fr/fr/france/20260410-pour-son-ind%C3%A9pendance-num%C3%A9rique-l-%C3%A9tat-fran%C3%A7ais-souhaite-passer-%C3%A0-linux
+
+[8] OWASP about page, Accessed: Maj 2026. Available: https://owasp.org/about/
+
+[9] OWASP Top 10 threats, Accessed: Januri -Juni 2026. Available: https://owasp.org/www-project-top-ten/
+
+[10] Lorikeet Security Team, "PCI DSS Requirement 6: Secure Development Practices Your QSA Will Scrutinize", Accessed: Maj 2026. Available: https://lorikeetsecurity.com/blog/pci-dss-requirement-6-secure-development
 
 Bok: [2] A. Author, Title of Book. City, State: Publisher, Year.
 
