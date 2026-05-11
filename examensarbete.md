@@ -51,7 +51,7 @@ Sedan 2000-talet tog __Web 2.0__ över världen med interaktiva tjänster och so
 
 På senare år har misstron mot internetjättarnas sätt att hantera vår personliga information tilltagit. De stora företagens sätt att hantera vår data ifrågasätts och i Europa tar E.U fram ett regelverk för att skydda användarna; GDPR, som ska skydda både lagring och överföring av data online. Samtidigt försöker många att decentralisera sig från de stora nätverken (statliga eller privata) genom att förlita sig mer på _peer-to-peer_ filosofin. Detta anses vara **Web 3.0**, ett decentraliserat internet.
 
-Samtidigt i Europa har EU startat många konkurrensmål mot IT-jättarna [[2](2)][[3](3)], de politiska spänningarna mellan USA (där de flesta internationella tjänsteleverantörer finns) och Europa [[4](4)][[5](5)] har bidragit till att vissa EU-länder börjar leta efter alternativa tjänster, som t.ex Frankrikes mål att ersätta Microsoft tjänster med Linux baserade system för att uppnå digitalt självständighet [[6](6)].
+Samtidigt i Europa har EU startat många konkurrensmål mot IT-jättarna [[2](2),  [3](3)], de politiska spänningarna mellan USA (där de flesta internationella tjänsteleverantörer finns) och Europa [[4](4)][[5](5)] har bidragit till att vissa EU-länder börjar leta efter alternativa tjänster, som t.ex Frankrikes mål att ersätta Microsoft tjänster med Linux baserade system för att uppnå digitalt självständighet [[6](6)].
 
 Sammanfattningsvis genomgår internet en ny era där säkerheten kan komma att läggas på mindre utvecklingsteam, en ny marknad kommer att öppnas i samband med att EU-regionen minskar sitt beroende av uteomeuropeiska tjänster. Internetanvändare kan förvänta sig att nya tjänster publiceras online men frågan om datasäkerhet kommer att kvarstå: _hur säker är min information online?_
 
@@ -81,7 +81,7 @@ Syftet med detta examensarbete är att, med OWASP Top 10:2025 som referensram, s
 - Applikationen är ej avsedd för produktionsdrift inom ramen för detta projekt
 
 _*A06 - Insecure design är för subjektivt för att kunna bedömas på ett empiriskt sätt. Därför ignoreras den punkten i denna studie._
-[2] Brant Carson, “What is blockchain?”, McKingsey & Company, Juni 2024. Available: https://www.mckinsey.com/featured-insights/mckinsey-explainers/what-is-blockchain
+
 ### 1.5 Metodöversikt
 
 Kort beskrivning av din approach:[9](9)
@@ -89,7 +89,7 @@ Kort beskrivning av din approach:[9](9)
 - **Teoretisk studie:** Litteraturstudier, jämförande analys
 - **Experimentell:** Praktiska test, mätningar, prototyping
 - **Utveckling:** Systemutveckling, implementation
-- **Kombinerad:** Mix av ovanståendehttps://www.mckinsey.com/featured-insights/mckinsey-explainers/what-is-blockchain
+- **Kombinerad:** Mix av ovanstående
 
 ---
 
@@ -141,7 +141,7 @@ Beskriv din systematiska approach:
 
 - Litteratursökning och källkritik
 - Analysmetod
-- Syntes och jämförelse[9](9)
+- Syntes och jämförelse
 
 **För experimentella studier:**
 
