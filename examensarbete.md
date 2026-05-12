@@ -23,20 +23,27 @@ _Alfabetisk lista över tekniska termer, förkortningar och begrepp som används
 | Term/Förkortning | Förklaring                                                                             |
 | ---------------- | -------------------------------------------------------------------------------------- |
 | API              | Application Programming Interface - Gränssnitt för kommunikation mellan mjukvarusystem |
-| Backend          | |
+| Backend          | basbearbetningen (ofta på servernivå) |
 | EU               | Europeiska Unionen |
-| Frontend         | |
+| Frontend         | Användargränssnittsorienterad bearbetning (webbsida, mobilapplikationer mm) |
 | GDPR             | General Data Protection Regulation |
-|                  | |
-|                  | |
-|                  | |
+| IDE              | Integrated Development Environment, miljön där utvecklare skriver sin kod |
+| IntelliJ         | En IDE utvecklad av JetBrain|
+| Java             | Ett av de vanligaste programmeringspråken |
+| | |
+| | |
+| | |
+| Open-source| Öppen källkod som inte är proprietärt (dvs illgänglig att använda, läsa, modifiera och vidaredistribuera för den som vill) |
 | OWASP            | Open Worldwide Application Security Project |
-| PCI DSS          | Payment Card Industry Data Security Standard |
+| PCI DSS          | Payment Card Industry Data Security Standard | 
+| Plug-in           | Tilläggsprogram om inte körs fristående utan installeras som ett tillägg i ett annat program |
+| Postman | Ett verktyg för utvecklare för att testa API |
+| | |
 | REST             | Representational State Transfer - Arkitekturstil för webbaserade API:er                |
 | Spring Boot | ett open-source Java-ramverk som förenklar utvecklingen av webbapplikationer genom att erbjuda en snabb och enkel konfiguration|
 | | |
 | | |
-| | |
+| ZAP | Zed Attack Proxy, en _open-source_ programvara som används i samband säkerhetstestning av applikationer |
 
 ---
 
@@ -84,6 +91,20 @@ _*A06 - Insecure design är för subjektivt för att kunna bedömas på ett empi
 
 ### 1.5 Metodöversikt
 
+Målet med detta arbete är att åstadkomma en **kombinerad teoretisk och utvecklingsstudie** där teori och praktik sammanstrålar.
+
+I första stadiet studeras de olika hot listade i OWASP Top 10 följd av en analys av EFBox-API:et för att identifiera dess svaghet. Nästa steg är att åtgärda dessa brister på ett effektivt sätt dvs genom att lösa flera stycken på en gång (ex: log och felhantering är vanligtvis närbesläktade).
+Sista steg att återanalysera API:et för att se om åtgärdena är effektiva.
+
+De verktyg som används i denna studie är:
+- IntelliJ (IDE)
+- Java version 21 (programmeringspråk)
+- Postman
+- ZAP
+- SonarQube för IDE (en plug-in för IDE:er för kodkvalitetsgranskning och olika komplexitetsmätningar)
+- Claude AI kommer också att användas för kodgranskning (eftersom arbetet bedrivs på egen hand) <u>inte för att driva denna rapport</u>.
+- FILLER /TODO: ta bort om ej mer
+
 Kort beskrivning av din approach:[9](9)
 
 - **Teoretisk studie:** Litteraturstudier, jämförande analys
@@ -97,7 +118,7 @@ Kort beskrivning av din approach:[9](9)
 
 ### 2.1 Tekniska Koncept
 
-Förklara viktiga koncept inom ditt omgrundad år 2001råde:
+Förklara viktiga koncept inom ditt område:
 
 - Grundläggande tekniska begrepp
 - Relevanta programmeringsspråk/teknologier
