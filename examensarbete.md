@@ -20,34 +20,36 @@ Detta är en kortfattad sammanfattning (max 250 ord) på **engelska** som ska in
 
 _Alfabetisk lista över tekniska termer, förkortningar och begrepp som används i rapporten._
 
-| Term/Förkortning | Förklaring                                                                                                                      |
-| ---------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| API              | Application Programming Interface - Gränssnitt för kommunikation mellan mjukvarusystem                                          |
-| Backend          | basbearbetningen (ofta på servernivå)                                                                                           |
-| CORS             | Cross-origin resource sharing, en teknik som begränsar åtkomst till websidor från specifierade domän                            |
-| EU               | Europeiska Unionen                                                                                                              |
-| Frontend         | Användargränssnittsorienterad bearbetning (webbsida, mobilapplikationer mm)                                                     |
-| GDPR             | General Data Protection Regulation                                                                                              |
-| HTML             | HyperText Markup Language, programmeringsspråket som lägger grunden till webbsidor                                              |
-| HTTP             | Hypertext Transfer Protocol, ett kommunikationsprotokoll som används för att överföra information på internet                   |
-| HTTPS            | Hypertext Transfer Protocol Secure, protokoll för krypterad transport av data för HTTP-protokollet                              |
-| IDE              | Integrated Development Environment, miljön där utvecklare skriver sin kod                                                       |
-| IntelliJ         | En IDE utvecklad av JetBrain                                                                                                    |
-| Java             | Ett av de vanligaste programmeringspråken                                                                                       |
-| JavaScript       | Ett programmeringsspråk som ger interaktivitet och dynamik till webbsidor, främst när de körs i webbläsaren                     |
-| Json             | JavaScript Object Notation ett kompakt, textbaserat format som används för att utbyta data                                      |
-| JWT              | Json Web Token, ett standardiserat sätt att överföra information som Json-objekt                                                |
-| Open-source      | Öppen källkod som inte är proprietärt (dvs illgänglig att använda, läsa, modifiera och vidaredistribuera för den som vill)      |
-| OWASP            | Open Worldwide Application Security Project                                                                                     |
-| PCI DSS          | Payment Card Industry Data Security Standard                                                                                    |
-| Plug-in          | Tilläggsprogram om inte körs fristående utan installeras som ett tillägg i ett annat program                                    |
-| Postman          | Ett verktyg för utvecklare för att testa API                                                                                    |
-| REST             | Representational State Transfer - Arkitekturstil för webbaserade API:er                                                         |
-| Spring Boot      | ett open-source Java-ramverk som förenklar utvecklingen av webbapplikationer genom att erbjuda en snabb och enkel konfiguration |
-| SQL              | Structured Query Language, ett programmeringsspråk som används för hantera och manipulera relationsdatabaser                    |
-| TLS              | Transport Layer Security är ett kryp­te­rings­pro­to­koll som sä­ker­stäl­ler säker da­taö­ver­fö­ring på internet.             |
-| ZAP              | Zed Attack Proxy, en _open-source_ programvara som används i samband säkerhetstestning av applikationer                         |
-|                  |                                                                                                                                 |
+| Term/Förkortning | Förklaring                                                                                                                                                   |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| API              | Application Programming Interface - Gränssnitt för kommunikation mellan mjukvarusystem                                                                       |
+| Backend          | basbearbetningen (ofta på servernivå)                                                                                                                        |
+| CORS             | Cross-origin resource sharing, en teknik som begränsar åtkomst till websidor från specifierade                                                               |
+| ECDSA            | Elliptisk kurva digital signaturalgoritm, en av de mer komplexa offentliga nyckelkrypteringsalgoritmer                                                       |
+| EU               | Europeiska Unionen                                                                                                                                           |
+| Frontend         | Användargränssnittsorienterad bearbetning (webbsida, mobilapplikationer mm)                                                                                  |
+| GDPR             | General Data Protection Regulation                                                                                                                           |
+| Header           | "Huvud" på svenska, början på ett meddelande inom datateknik som innehåller metadata om meddelandet (hur den ska tolkas)                                     |
+| HTML             | HyperText Markup Language, programmeringsspråket som lägger grunden till webbsidor                                                                           |
+| HTTP             | Hypertext Transfer Protocol, ett kommunikationsprotokoll som används för att överföra information på internet                                                |
+| HTTPS            | Hypertext Transfer Protocol Secure, protokoll för krypterad transport av data för HTTP-protokollet                                                           |
+| IDE              | Integrated Development Environment, miljön där utvecklare skriver sin kod                                                                                    |
+| IntelliJ         | En IDE utvecklad av JetBrain                                                                                                                                 |
+| Java             | Ett av de vanligaste programmeringspråken                                                                                                                    |
+| JavaScript       | Ett programmeringsspråk som ger interaktivitet och dynamik till webbsidor, främst när de körs i webbläsaren                                                  |
+| Json             | JavaScript Object Notation ett kompakt, textbaserat format som används för att utbyta data                                                                   |
+| JWT              | Json Web Token, ett standardiserat sätt att överföra information som Json-objekt                                                                             |
+| Open-source      | Öppen källkod som inte är proprietärt, dvs illgänglig att använda, läsa, modifiera och vidaredistribuera för den som vill                                    |
+| OWASP            | Open Worldwide Application Security Project                                                                                                                  |
+| PCI DSS          | Payment Card Industry Data Security Standard                                                                                                                 |
+| Plug-in          | Tilläggsprogram om inte körs fristående utan installeras som ett tillägg i ett annat program                                                                 |
+| Postman          | Ett verktyg för utvecklare för att testa API                                                                                                                 |
+| RSA              | ett krypteringsalgoritm döpt uppkallad efter dess skapare Rivest, Shamir och Adleman. Systemet kräver en nyckel för kryptering och en annan för avkryptering |
+| REST             | Representational State Transfer - Arkitekturstil för webbaserade API:er                                                                                      |
+| Spring Boot      | ett open-source Java-ramverk som förenklar utvecklingen av webbapplikationer genom att erbjuda en snabb och enkel konfiguration                              |
+| SQL              | Structured Query Language, ett programmeringsspråk som används för hantera och manipulera relationsdatabaser                                                 |
+| TLS              | Transport Layer Security är ett kryp­te­rings­pro­to­koll som sä­ker­stäl­ler säker da­taö­ver­fö­ring på internet.                                          |
+| ZAP              | Zed Attack Proxy, en _open-source_ programvara som används i samband säkerhetstestning av applikationer                                                      |
 
 ---
 
@@ -120,27 +122,27 @@ De verktyg som används i denna studie är:
 
 ##### 2.1.1.1 Man in middle attack (MITM)
 
-En Man-in-the-middle-attack (MITM), "mannen i mitten" på svenska, är en cyberattack där angriparen i hemlighet fångar upp och vidarebefordrar meddelanden mellan två parter som tror att de kommunicerar direkt med varandra. Genom att positionera sig som mellanhand kan anfallaren läsa av och kontrollera informationsflödet. Detta gör det möjligt att skicka egen data eller kod [10] [11]. En jämförelse skulle vara att man skickar en beställning till ett företag med posten. Under postgången får en tredje part tag på beställningsformulär, ändrar dess innehåll (kanske ändra mottagaradressen till sitt eget) och skickar det vidare.
+En Man-in-the-middle-attack (MITM), "mannen i mitten" på svenska, är en cyberattack där angriparen i hemlighet fångar upp och vidarebefordrar meddelanden mellan två parter som tror att de kommunicerar direkt med varandra. Genom att positionera sig som mellanhand kan anfallaren läsa av och kontrollera informationsflödet. Detta gör det möjligt att skicka egen data eller kod [10] [11] [12]. En jämförelse skulle vara att man skickar en beställning till ett företag med posten. Under postgången får en tredje part tag på beställningsformulär, ändrar dess innehåll (kanske ändra mottagaradressen till sitt eget) och skickar det vidare.
 <u>Skyddas med hjälp utav:</u> HTTPS/TLS (kryptering av dataflödet)
 
 ##### 2.1.1.2 Code-Injection
 
-En attack där hackern _injicerar_ sin egen kod i en applikation som körs för att ändra dess beteende. En vanlig injection är så kallade **SQL-injection** där användarinputsfält används för att anropa databasen direkt. T.ex kan anfallaren försöka skriva ett SQL-kommando i ett textinput\* och läsa av svaret från servern om denna inte är skyddad mot detta. Det är även möjligt att ändra data i databasen (som att göra sitt eget konto till admin) [12].
-**Cross-site scripting (XSS)** är också en vanlig form av injection där kod injiceras med hjälp av HTML- eller javascriptkod.
+En attack där hackern _injicerar_ sin egen kod i en applikation som körs för att ändra dess beteende. En vanlig injection är så kallade **SQL-injection** där användarinputsfält används för att anropa databasen direkt. T.ex kan anfallaren försöka skriva ett SQL-kommando i ett textinput\* och läsa av svaret från servern om denna inte är skyddad mot detta. Det är även möjligt att ändra data i databasen (som att göra sitt eget konto till admin).
+**Cross-site scripting (XSS)** är också en vanlig form av injection där kod injiceras med hjälp av HTML- eller javascriptkod [12] [13].
 <u>Skyddas med hjälp utav:</u> inputvalidering (kontroll att inga kommando injiceras)
 
-_*Förenklad exempel: 'SELECT * FROM users;' skulle kunna ge all användardata från serverns databas. I verklighet skulle en anfallare använda sig av sk. or-statements som "' OR '1'=1" som betyder: "om det inte funkar ger mig allt"._
+_*Förenklad exempel: 'SELECT * FROM users;' skulle kunna ge all användardata från serverns databas. I verklighet skulle en anfallare använda sig av sk. or-statements som "' OR '1'=1" som betyder: "om det inte funkar: ger mig allt"._
 
 ##### 2.1.1.3 Brute force attack
 
-Brute force (engelska för råstyrka) är en metod för att hitta exempelvis lösenord genom att pröva alla möjliga kombinationer. Termen brute force syftar oftast på att hitta lösenord och nycklar [13]. Om ett lösenord är enkelt går attack snabbare medan väldigt komplicerade lösenord tar längre tid att hitta. Detta kan jämföras med ett kombinationslås med bara tre siffror och ett med sex stycken där en tjuv testar alla möjliga kombinationer [14].
+Brute force (engelska för råstyrka) är en metod för att hitta exempelvis lösenord genom att pröva alla möjliga kombinationer. Termen brute force syftar oftast på att hitta lösenord och nycklar [14]. Om ett lösenord är enkelt går attack snabbare medan väldigt komplicerade lösenord tar längre tid att hitta. Detta kan jämföras med ett kombinationslås med bara tre siffror och ett med sex stycken där en tjuv testar alla möjliga kombinationer [15].
 <u>Skyddas med hjälp utav:</u> varningar vid upprepade misslyckade inloggningsförsök och låsning av berörda konton, starkt lösenordspolicy
 
 ##### 2.1.1.4 Cross Site Request Forgery
 
 En hacker kan använda en annans rättigheter hos en tjänst och lura till sig en oönskad handling. Istället för att, på ett avancerat sätt, få tag på en användarens uppgifter kan man använda dess rättigheter direkt (_Request Forgery_). Detta kan ske via en extern länk från en annan sajt (_Cross Site_).
-De flesta online-leverantörer delar ut en nyckel, så kallad token eller session-token, till sina användare som fungerar som ett tillstånd att använda tjänsten och komma åt sin data. En hacker kan lyckas nyttja nyckelns privilegier genom att få användaren att omedvetet utföra handlingar.
-Ett bra exempel är att anfallaren skickar en phishinglänk via email till offret som klickar på det. Länken skickar egentligen en förfrågan till offrets bank om att överföra pengar till anfallaren. Om offret är inloggad på bankenshemsida vid klickandet kan överföringen ske [15].
+De flesta online-leverantörer delar ut en nyckel, så kallad token eller session-token, till sina användare som fungerar som ett tillstånd att använda tjänsten och komma åt sin data. En hacker kan lyckas nyttja nyckelns privilegier genom att få användaren att omedvetet utföra handlingar [12].
+Ett bra exempel är att anfallaren skickar en phishinglänk via email till offret som klickar på det. Länken skickar egentligen en förfrågan till offrets bank om att överföra pengar till anfallaren. Om offret är inloggad på bankenshemsida vid klickandet kan överföringen ske [16].
 Detta kan jämföras med att en tjuv lura ett offer att låsa upp hemmet för att kunna komma in.
 <u>Skyddas med hjälp utav:</u> skydda känsliga handlingar som tex en banköverföring, header-verifiering (mm)
 
@@ -148,7 +150,35 @@ Detta kan jämföras med att en tjuv lura ett offer att låsa upp hemmet för at
 
 #### 2.1.2 Autentisering och auktorisering JWT
 
-#### 2.1.3 Kryptering och lösenordhashing
+JSON Web Token (JWT) är en standard öppen för utvecklare som definierar ett säkert sätt att överföra information. Eftersom datan signeras digitalt är den tillförlitlig. Signaturen kan ske med en så kallad _secret_ ("hemlighet", använder sig av HMAC algoritmen) eller ett allmänt/privat nyckelpar med hjälp av RSA eller ECDSA.
+Denna studie fokuserar på JWT-användningen inom signerade token och inte de krypterade token eftersom de signerade används för identifiering av användare. När en token är signerad får servern en bekräftelse på att avsändaren är den som signerat det.
+
+JWT används vid **auktorisering** för att bekräfta att användaren har tillgång till serverns olika tjänster, i såna fall skickas JWT:n med varje förfrågan till skyddade system.
+
+```
+//exempel på en JWT token, notera strukturen i tre delar med punkter (.)
+ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.KMUFsIDTnFmyG3nMiGM6H9FNFUROf3wh7SmqJp-QV30
+```
+
+JWT-strukturen har följande mönster "xxxx.yyyy.zzzzz" där "xxxx" representerar en _header_ (metadata med tokentyp och signeringsalgoritm), "yyyy" är själva innehållet och "zzzz" står för signeringen.
+
+JWT kan skickas i Authorization-headern och implementerar 'Bearer'-schemat (dvs att det står 'Bearer', bärare på svenska, före token med mellanslag). Alternativt kan JWT:n skickas som en cookie men kräver då att CORS konfigureras för detta [12].
+
+#### 2.1.3 Asymmetrisk kryptografi
+
+Vid asymmetrisk kryptografi används ett nyckelpar – en offentlig och en privat nyckel. Den offentliga nyckeln kan delas fritt medan den privata aldrig lämnar ägaren.
+Det som signeras med den privata nyckeln kan verifieras av vem som helst med den offentliga nyckeln. Den offentliga nyckeln kan vara identifierad av en certifikatutfärdare (CA), vilket säkerställer att parterna verkligen är ägare till sina respektive offentliga nycklar [17]. På så sätt försäkras parterna att innehållet i meddelanden inte har manipulerats under utbytet (se [MITM](#2111-man-in-middle-attack-mitm)).
+
+#### 2.1.4 Kryptering, lösenordhashing och salting
+
+**Kryptering** är konverteringen av data till ett format som inte kan avkodas utan en hemlig nyckel. Det gör det alltså möjligt att hålla information hemlig från de utan nyckeln [18].
+
+**Hashing** omvandlar data till en bestämd längd av bokstäver och siffror. Denna process <u>kan inte</u> bli ogjord och hashad data kan inte användas för att avkryptera originalinnehållet [18].
+Hashing är ett populärt sätt att förvara **lösenord** i databaser pga envägsprocessen. När en användare loggar in, hashas det angivna lösenordet och det jämförs med hashen i databasen.
+Stark lösenordspolicy som långa komplex tecken och best practice hashing (med system som t.ex Argon2id) gör det nästan omöjligt att komma åt datan [19].
+
+Hackers kan använda sig av så kallade _Rainbow Table_ [20], en tabell där fördefinerade lösenord har hashats enligt bestämda metoder, och försöka hitta ett hashat lösenord som överensstämmer med det i den attackerade databasen. Om ett hittas, kan anfallaren enkelt kolla upp klartextversionen av hashet. Som en ytterligare säkerhetsåtgärd mot detta kan **salting** implementeras.
+Salting lägger till en slumpmässig vald radtecken <u>unik för varje användare</u> till lösenordet vilket gör det ännu svårare för hackers att komma åt datan [18].
 
 #### 2.1.4 Inputvalidering
 
@@ -382,23 +412,23 @@ I referenslistan
 
 [11]: Wikipedia, Accessed May 2026. Available: https://en.wikipedia.org/wiki/Man-in-the-middle_attack
 
-[12]: ItSecurityDemand, Accessed: May 2026. Available: https://www.itsecuritydemand.com/insights/security/code-injection-attacks-a-guide-to-security-prevention/
+[12]: JWT HANDBOOK, Sebastiàn Peyrott, Publisher; Auth0 by Okta. Available: https://www.jwt.io
 
-[13]: Wikipedia, Accessed May 2026. Available: https://sv.wikipedia.org/wiki/Brute_force
+[13]: ItSecurityDemand, Accessed: May 2026. Available: https://www.itsecuritydemand.com/insights/security/code-injection-attacks-a-guide-to-security-prevention/
 
-[14]: Tom Krantz & Alexandra Jonker, IBM, Accessed: May 2026. Accessible: https://www.ibm.com/think/topics/brute-force-attack
+[14]: Wikipedia, Accessed May 2026. Available: https://sv.wikipedia.org/wiki/Brute_force
 
-[15]: Mozilla, Accessed: May 2026. Available: https://developer.mozilla.org/en-US/docs/Web/Security/Attacks/CSRF
+[15]: Tom Krantz & Alexandra Jonker, IBM, Accessed: May 2026. Accessible: https://www.ibm.com/think/topics/brute-force-attack
 
-[16]:
+[16]: Mozilla, Accessed: May 2026. Available: https://developer.mozilla.org/en-US/docs/Web/Security/Attacks/CSRF
 
-[17]:
+[17]: Asymmetrisk kryptografi: Vad är det och varför använda det inom cybersäkerhet?, HMS, Ewon Ewon, översatt till svenska, Accessed: May 2026. Available: https://www.hms-networks.com/sv/industrial-iot-blog/blogpost/hms-blog/2024/01/08/asymmetric-cryptography-what-is-it-and-why-use-it-in-cyber-security
 
-[18]:
+[18]: Encryption vs Hashing vs Salting, Geeks For Geeks, July 2025. Available: https://www.geeksforgeeks.org/computer-networks/encryption-vs-hashing-vs-salting/
 
-[19]:
+[19]: Password Storage Cheat Sheet, OWASP, Accessed: May 2026. Available: https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html
 
-[20]:
+[20]: Understanding Rainbow Table Attack, Geeks For Geeks, Feb 2023. Available: https://www.geeksforgeeks.org/ethical-hacking/understanding-rainbow-table-attack/
 
 [20]:
 
