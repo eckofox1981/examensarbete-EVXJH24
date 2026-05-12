@@ -36,12 +36,11 @@
     - OWASP safe
         - forks will move from this branch as necessary
    
-**NOTE**: måste
- kartlägga alla endpoint och JSON-objekt
+**NOTE**: måste kartlägga alla endpoint och JSON-objekt
 
 **NOTE**: problem med markdown, vägra länka till referencerna
 
-**Time:** 8.5 hours
+**Time:** 8.5 hours **TOTAL**: 23.5 hours
 
 ## 2026-05-11
 - skrivit har studerat för:
@@ -54,13 +53,12 @@
     - 2.1.6 Filvalidering
 - mkt research för filvalidering gick på mitt sidospår med Apache Tika och Commons Validator fruktlöst, OWASP lydiga på den punkten men länkar till ett färdigt projekt, räknar mycket tidsbesparing
 
-**Time:** 9.5 hours **TOTAL**: 18 hours
+**Time:** 9.5 hours **TOTAL**: 34 hours
 ### Mål för morgon dagen:
 - CORS och hotmodellering/STRIDE
 - halvdag minus tiden till klassråd
 
-**NOTE**: måste
- kartlägga alla endpoint och JSON-objekt
+**NOTE**: måste kartlägga alla endpoint och JSON-objekt
 
 **NOTE**: problem med markdown, vägra länka till referencerna
 
