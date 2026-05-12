@@ -123,12 +123,14 @@ De verktyg som används i denna studie är:
 ##### 2.1.1.1 Man in middle attack (MITM)
 
 En Man-in-the-middle-attack (MITM), "mannen i mitten" på svenska, är en cyberattack där angriparen i hemlighet fångar upp och vidarebefordrar meddelanden mellan två parter som tror att de kommunicerar direkt med varandra. Genom att positionera sig som mellanhand kan anfallaren läsa av och kontrollera informationsflödet. Detta gör det möjligt att skicka egen data eller kod [10] [11] [12]. En jämförelse skulle vara att man skickar en beställning till ett företag med posten. Under postgången får en tredje part tag på beställningsformulär, ändrar dess innehåll (kanske ändra mottagaradressen till sitt eget) och skickar det vidare.
+
 <u>Skyddas med hjälp utav:</u> HTTPS/TLS (kryptering av dataflödet)
 
 ##### 2.1.1.2 Code-Injection
 
 En attack där hackern _injicerar_ sin egen kod i en applikation som körs för att ändra dess beteende. En vanlig injection är så kallade **SQL-injection** där användarinputsfält används för att anropa databasen direkt. T.ex kan anfallaren försöka skriva ett SQL-kommando i ett textinput\* och läsa av svaret från servern om denna inte är skyddad mot detta. Det är även möjligt att ändra data i databasen (som att göra sitt eget konto till admin).
 **Cross-site scripting (XSS)** är också en vanlig form av injection där kod injiceras med hjälp av HTML- eller javascriptkod [12] [13].
+
 <u>Skyddas med hjälp utav:</u> inputvalidering (kontroll att inga kommando injiceras)
 
 _*Förenklad exempel: 'SELECT * FROM users;' skulle kunna ge all användardata från serverns databas. I verklighet skulle en anfallare använda sig av sk. or-statements som "' OR '1'=1" som betyder: "om det inte funkar: ger mig allt"._
@@ -136,14 +138,19 @@ _*Förenklad exempel: 'SELECT * FROM users;' skulle kunna ge all användardata f
 ##### 2.1.1.3 Brute force attack
 
 Brute force (engelska för råstyrka) är en metod för att hitta exempelvis lösenord genom att pröva alla möjliga kombinationer. Termen brute force syftar oftast på att hitta lösenord och nycklar [14]. Om ett lösenord är enkelt går attack snabbare medan väldigt komplicerade lösenord tar längre tid att hitta. Detta kan jämföras med ett kombinationslås med bara tre siffror och ett med sex stycken där en tjuv testar alla möjliga kombinationer [15].
+
 <u>Skyddas med hjälp utav:</u> varningar vid upprepade misslyckade inloggningsförsök och låsning av berörda konton, starkt lösenordspolicy
 
 ##### 2.1.1.4 Cross Site Request Forgery
 
 En hacker kan använda en annans rättigheter hos en tjänst och lura till sig en oönskad handling. Istället för att, på ett avancerat sätt, få tag på en användarens uppgifter kan man använda dess rättigheter direkt (_Request Forgery_). Detta kan ske via en extern länk från en annan sajt (_Cross Site_).
+
 De flesta online-leverantörer delar ut en nyckel, så kallad token eller session-token, till sina användare som fungerar som ett tillstånd att använda tjänsten och komma åt sin data. En hacker kan lyckas nyttja nyckelns privilegier genom att få användaren att omedvetet utföra handlingar [12].
+
 Ett bra exempel är att anfallaren skickar en phishinglänk via email till offret som klickar på det. Länken skickar egentligen en förfrågan till offrets bank om att överföra pengar till anfallaren. Om offret är inloggad på bankenshemsida vid klickandet kan överföringen ske [16].
+
 Detta kan jämföras med att en tjuv lura ett offer att låsa upp hemmet för att kunna komma in.
+
 <u>Skyddas med hjälp utav:</u> skydda känsliga handlingar som tex en banköverföring, header-verifiering (mm)
 
 ##### 2.1.1.5 /TODO: spare
@@ -177,7 +184,7 @@ Det som signeras med den privata nyckeln kan verifieras av vem som helst med den
 Hashing är ett populärt sätt att förvara **lösenord** i databaser pga envägsprocessen. När en användare loggar in, hashas det angivna lösenordet och det jämförs med hashen i databasen.
 Stark lösenordspolicy som långa komplex tecken och best practice hashing (med system som t.ex Argon2id) gör det nästan omöjligt att komma åt datan [19].
 
-Hackers kan använda sig av så kallade _Rainbow Table_ [20], en tabell där fördefinerade lösenord har hashats enligt bestämda metoder, och försöka hitta ett hashat lösenord som överensstämmer med det i den attackerade databasen. Om ett hittas, kan anfallaren enkelt kolla upp klartextversionen av hashet. Som en ytterligare säkerhetsåtgärd mot detta kan **salting** implementeras.
+Hackers kan använda sig av så kallade _Rainbow Table_ [20], en tabell där fördefinerade lösenord har hashats enligt bestämda metoder, och försöka hitta ett hashat lösenord som överensstämmer med det i den attackerade databasen. Om ett hittas, kan anfallaren enkelt kolla upp klartextversionen av hashet (dvs användarens lösenord). Som en ytterligare säkerhetsåtgärd mot detta kan **salting** implementeras.
 Salting lägger till en slumpmässig vald radtecken <u>unik för varje användare</u> till lösenordet vilket gör det ännu svårare för hackers att komma åt datan [18].
 
 #### 2.1.4 Inputvalidering
