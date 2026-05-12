@@ -55,7 +55,7 @@
 - mkt research för filvalidering gick på mitt sidospår med Apache Tika och Commons Validator fruktlöst, OWASP lydiga på den punkten men länkar till ett färdigt projekt, räknar mycket tidsbesparing
 
 **Time:** 9.5 hours **TOTAL**: 18 hours
-### MÅL för morgon dagen:
+### Mål för morgon dagen:
 - CORS och hotmodellering/STRIDE
 - halvdag minus tiden till klassråd
 
