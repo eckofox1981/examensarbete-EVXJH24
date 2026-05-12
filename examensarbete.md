@@ -20,30 +20,34 @@ Detta är en kortfattad sammanfattning (max 250 ord) på **engelska** som ska in
 
 _Alfabetisk lista över tekniska termer, förkortningar och begrepp som används i rapporten._
 
-| Term/Förkortning | Förklaring                                                                             |
-| ---------------- | -------------------------------------------------------------------------------------- |
-| API              | Application Programming Interface - Gränssnitt för kommunikation mellan mjukvarusystem |
-| Backend          | basbearbetningen (ofta på servernivå) |
-| EU               | Europeiska Unionen |
-| Frontend         | Användargränssnittsorienterad bearbetning (webbsida, mobilapplikationer mm) |
-| GDPR             | General Data Protection Regulation |
-| IDE              | Integrated Development Environment, miljön där utvecklare skriver sin kod |
-| IntelliJ         | En IDE utvecklad av JetBrain|
-| Java             | Ett av de vanligaste programmeringspråken |
-| | |
-| | |
-| | |
-| Open-source| Öppen källkod som inte är proprietärt (dvs illgänglig att använda, läsa, modifiera och vidaredistribuera för den som vill) |
-| OWASP            | Open Worldwide Application Security Project |
-| PCI DSS          | Payment Card Industry Data Security Standard | 
-| Plug-in           | Tilläggsprogram om inte körs fristående utan installeras som ett tillägg i ett annat program |
-| Postman | Ett verktyg för utvecklare för att testa API |
-| | |
-| REST             | Representational State Transfer - Arkitekturstil för webbaserade API:er                |
-| Spring Boot | ett open-source Java-ramverk som förenklar utvecklingen av webbapplikationer genom att erbjuda en snabb och enkel konfiguration|
-| | |
-| | |
-| ZAP | Zed Attack Proxy, en _open-source_ programvara som används i samband säkerhetstestning av applikationer |
+| Term/Förkortning | Förklaring                                                                                                                      |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| API              | Application Programming Interface - Gränssnitt för kommunikation mellan mjukvarusystem                                          |
+| Backend          | basbearbetningen (ofta på servernivå)                                                                                           |
+| CORS             | Cross-origin resource sharing, en teknik som begränsar åtkomst till websidor från specifierade domän                            |
+| EU               | Europeiska Unionen                                                                                                              |
+| Frontend         | Användargränssnittsorienterad bearbetning (webbsida, mobilapplikationer mm)                                                     |
+| GDPR             | General Data Protection Regulation                                                                                              |
+| HTML             | HyperText Markup Language, programmeringsspråket som lägger grunden till webbsidor                                              |
+| HTTP             | Hypertext Transfer Protocol, ett kommunikationsprotokoll som används för att överföra information på internet                   |
+| HTTPS            | Hypertext Transfer Protocol Secure, protokoll för krypterad transport av data för HTTP-protokollet                              |
+| IDE              | Integrated Development Environment, miljön där utvecklare skriver sin kod                                                       |
+| IntelliJ         | En IDE utvecklad av JetBrain                                                                                                    |
+| Java             | Ett av de vanligaste programmeringspråken                                                                                       |
+| JavaScript       | Ett programmeringsspråk som ger interaktivitet och dynamik till webbsidor, främst när de körs i webbläsaren                     |
+| Json             | JavaScript Object Notation ett kompakt, textbaserat format som används för att utbyta data                                      |
+| JWT              | Json Web Token, ett standardiserat sätt att överföra information som Json-objekt                                                |
+| Open-source      | Öppen källkod som inte är proprietärt (dvs illgänglig att använda, läsa, modifiera och vidaredistribuera för den som vill)      |
+| OWASP            | Open Worldwide Application Security Project                                                                                     |
+| PCI DSS          | Payment Card Industry Data Security Standard                                                                                    |
+| Plug-in          | Tilläggsprogram om inte körs fristående utan installeras som ett tillägg i ett annat program                                    |
+| Postman          | Ett verktyg för utvecklare för att testa API                                                                                    |
+| REST             | Representational State Transfer - Arkitekturstil för webbaserade API:er                                                         |
+| Spring Boot      | ett open-source Java-ramverk som förenklar utvecklingen av webbapplikationer genom att erbjuda en snabb och enkel konfiguration |
+| SQL              | Structured Query Language, ett programmeringsspråk som används för hantera och manipulera relationsdatabaser                    |
+| TLS              | Transport Layer Security är ett kryp­te­rings­pro­to­koll som sä­ker­stäl­ler säker da­taö­ver­fö­ring på internet.             |
+| ZAP              | Zed Attack Proxy, en _open-source_ programvara som används i samband säkerhetstestning av applikationer                         |
+|                  |                                                                                                                                 |
 
 ---
 
@@ -51,22 +55,22 @@ _Alfabetisk lista över tekniska termer, förkortningar och begrepp som används
 
 ### 1.1 Bakgrund
 
-Internet anses ha genomgått tre perioder [[1](1)] sen dess specifikation i 1989. 
-Man pratar om __Web 1.0__ där användarna kunde, för det mesta, bara söka och läsa innehåll online. Kommunikationen skulle kunna beskrivas, på ett förenklat sätt, ensidig och användarinputs var begränsade.
+Internet anses ha genomgått tre perioder [1] sen dess specifikation i 1989.
+Man pratar om **Web 1.0** där användarna kunde, för det mesta, bara söka och läsa innehåll online. Kommunikationen skulle kunna beskrivas, på ett förenklat sätt, ensidig och användarinputs var begränsade.
 
-Sedan 2000-talet tog __Web 2.0__ över världen med interaktiva tjänster och sociala media. Användarna kan nu skicka information på ett enkelt sätt. Det fanns redan säkerhetsproblem under Web 1.0, men nu behöver online-tjänster kunna hantera, på ett säkert sätt, information och kommando som skickas till servrerna. Säkerhet tas på desto större allvar då många lagrar personlig information online som måste skyddas på ett säkert sätt. Web 2.0 gjorde det möjligt för företag som Meta, Google, Amazon, Twitter/X och andra att bli värdsledande och implementera ett affärssystem där användardatan är en produkt som säljs i marknadsföringssyften. Hackerkulturen fortsatte samtidigt att utvecklas och attackerna blev alltmer avancerade. Man-in-the-middle-attacks, brute force attacks, Denial Of Service mm är hot som alla online-leverantörer måste ta i beaktning. Andra aktörer som statligt sponsrade hacker gör det ännu svårare att skydda informationen online.
+Sedan 2000-talet tog **Web 2.0** över världen med interaktiva tjänster och sociala media. Användarna kan nu skicka information på ett enkelt sätt. Det fanns redan säkerhetsproblem under Web 1.0, men nu behöver online-tjänster kunna hantera, på ett säkert sätt, information och kommando som skickas till servrerna. Säkerhet tas på desto större allvar då många lagrar personlig information online som måste skyddas på ett säkert sätt. Web 2.0 gjorde det möjligt för företag som Meta, Google, Amazon, Twitter/X och andra att bli värdsledande och implementera ett affärssystem där användardatan är en produkt som säljs i marknadsföringssyften. Hackerkulturen fortsatte samtidigt att utvecklas och attackerna blev alltmer avancerade. Man-in-the-middle-attacks, brute force attacks, Denial Of Service mm är hot som alla online-leverantörer måste ta i beaktning. Andra aktörer som statligt sponsrade hacker gör det ännu svårare att skydda informationen online.
 
 På senare år har misstron mot internetjättarnas sätt att hantera vår personliga information tilltagit. De stora företagens sätt att hantera vår data ifrågasätts och i Europa tar E.U fram ett regelverk för att skydda användarna; GDPR, som ska skydda både lagring och överföring av data online. Samtidigt försöker många att decentralisera sig från de stora nätverken (statliga eller privata) genom att förlita sig mer på _peer-to-peer_ filosofin. Detta anses vara **Web 3.0**, ett decentraliserat internet.
 
-Samtidigt i Europa har EU startat många konkurrensmål mot IT-jättarna [[2](2),  [3](3)], de politiska spänningarna mellan USA (där de flesta internationella tjänsteleverantörer finns) och Europa [[4](4)][[5](5)] har bidragit till att vissa EU-länder börjar leta efter alternativa tjänster, som t.ex Frankrikes mål att ersätta Microsoft tjänster med Linux baserade system för att uppnå digitalt självständighet [[6](6)].
+Samtidigt i Europa har EU startat många konkurrensmål mot IT-jättarna [2][3], de politiska spänningarna mellan USA (där de flesta internationella tjänsteleverantörer finns) och Europa [4][5] har bidragit till att vissa EU-länder börjar leta efter alternativa tjänster, som t.ex Frankrikes mål att ersätta Microsoft tjänster med Linux baserade system för att uppnå digitalt självständighet [6].
 
 Sammanfattningsvis genomgår internet en ny era där säkerheten kan komma att läggas på mindre utvecklingsteam, en ny marknad kommer att öppnas i samband med att EU-regionen minskar sitt beroende av uteomeuropeiska tjänster. Internetanvändare kan förvänta sig att nya tjänster publiceras online men frågan om datasäkerhet kommer att kvarstå: _hur säker är min information online?_
 
 Denna studie avser att studera hur man kan göra en applikation säker baserat på OWASP Top 10 hot.
 
-Open Worldwide Application Security Project (OWASP) är en internationell non-profit organisation med målet att förbättra säkerheten i programvaror och webbtjänster [[7](7)]. Organisationen är öppen och transparent – all dokumentation, verktyg och forskning publiceras fritt tillgängligt online.
-Ett av organisationens mest kända bidrag är OWASP Top 10, en lista över de tio mest förekommande och kritiska säkerhetshoten i webbapplikationer. Listan baseras på data insamlad från hundratals organisationer världen över och uppdateras regelbundet för att spegla det aktuella hotlandskapet. Den senaste versionen publicerades 2025 [[8](7)].
-OWASP Top 10 används globalt som referensram inom websäkerhet – både av enskilda utvecklare och av stora organisationer. Listan fungerar som ett gemensamt språk mellan utvecklare, säkerhetsexperter och verksamheter för att identifiera, prioritera och åtgärda säkerhetsrisker. Flera regulatoriska ramverk, däribland PCI DSS (betalkortsstandarden), refererar explicit till OWASP Top 10 som en del av sina krav [[9](9)].
+Open Worldwide Application Security Project (OWASP) är en internationell non-profit organisation med målet att förbättra säkerheten i programvaror och webbtjänster [7]. Organisationen är öppen och transparent – all dokumentation, verktyg och forskning publiceras fritt tillgängligt online.
+Ett av organisationens mest kända bidrag är OWASP Top 10, en lista över de tio mest förekommande och kritiska säkerhetshoten i webbapplikationer. Listan baseras på data insamlad från hundratals organisationer världen över och uppdateras regelbundet för att spegla det aktuella hotlandskapet. Den senaste versionen publicerades 2025 [8].
+OWASP Top 10 används globalt som referensram inom websäkerhet – både av enskilda utvecklare och av stora organisationer. Listan fungerar som ett gemensamt språk mellan utvecklare, säkerhetsexperter och verksamheter för att identifiera, prioritera och åtgärda säkerhetsrisker. Flera regulatoriska ramverk, däribland PCI DSS (betalkortsstandarden), refererar explicit till OWASP Top 10 som en del av sina krav [9].
 I denna studie används OWASP Top 10:2025 som referensram för att systematiskt identifiera och åtgärda säkerhetsbrister i EFbox REST API.
 
 ### 1.2 Syfte
@@ -82,35 +86,29 @@ Syftet med detta examensarbete är att, med OWASP Top 10:2025 som referensram, s
 ### 1.4 Avgränsningar
 
 - Projektet omfattar endast backend-API:et (EFbox) – ingen frontend analyseras
-- Analysen begränsas till de OWASP Top 10-kategorier som är relevanta för applikationens typ och funktionalitet (A01, A02, A03, A04, A05, A07, A08, A09, A10*)
+- Analysen begränsas till de OWASP Top 10-kategorier som är relevanta för applikationens typ och funktionalitet (A01, A02, A03, A04, A05, A07, A08, A09, A10\*)
 - Penetrationstestning mot en live-miljö ingår inte – testning sker i lokal utvecklingsmiljö
 - Projektet inkluderar inte prestandaoptimering eller funktionsutveckling utanför säkerhetsåtgärder
 - Applikationen är ej avsedd för produktionsdrift inom ramen för detta projekt
 
-_*A06 - Insecure design är för subjektivt för att kunna bedömas på ett empiriskt sätt. Därför ignoreras den punkten i denna studie._
+_\*A06 - Insecure design är för subjektivt för att kunna bedömas på ett empiriskt sätt. Därför ignoreras den punkten i denna studie._
 
 ### 1.5 Metodöversikt
 
 Målet med detta arbete är att åstadkomma en **kombinerad teoretisk och utvecklingsstudie** där teori och praktik sammanstrålar.
 
 I första stadiet studeras de olika hot listade i OWASP Top 10 följd av en analys av EFBox-API:et för att identifiera dess svaghet. Nästa steg är att åtgärda dessa brister på ett effektivt sätt dvs genom att lösa flera stycken på en gång (ex: log och felhantering är vanligtvis närbesläktade).
-Sista steg att återanalysera API:et för att se om åtgärdena är effektiva.
+Sista steg är att återanalysera API:et för att se om åtgärdena är effektiva.
 
 De verktyg som används i denna studie är:
+
 - IntelliJ (IDE)
 - Java version 21 (programmeringspråk)
 - Postman
 - ZAP
 - SonarQube för IDE (en plug-in för IDE:er för kodkvalitetsgranskning och olika komplexitetsmätningar)
-- Claude AI kommer också att användas för kodgranskning (eftersom arbetet bedrivs på egen hand) <u>inte för att driva denna rapport</u>.
+- Claude AI kommer också att användas för kodgranskning (eftersom arbetet bedrivs på egen hand) <u>inte för att driva studien</u>.
 - FILLER /TODO: ta bort om ej mer
-
-Kort beskrivning av din approach:[9](9)
-
-- **Teoretisk studie:** Litteraturstudier, jämförande analys
-- **Experimentell:** Praktiska test, mätningar, prototyping
-- **Utveckling:** Systemutveckling, implementation
-- **Kombinerad:** Mix av ovanstående
 
 ---
 
@@ -118,11 +116,47 @@ Kort beskrivning av din approach:[9](9)
 
 ### 2.1 Tekniska Koncept
 
-Förklara viktiga koncept inom ditt område:
+#### 2.1.1 Olika attacker mot API
 
-- Grundläggande tekniska begrepp
-- Relevanta programmeringsspråk/teknologier
-- Arkitekturella mönster eller teorier
+##### 2.1.1.1 Man in middle attack (MITM)
+
+En Man-in-the-middle-attack (MITM), "mannen i mitten" på svenska, är en cyberattack där angriparen i hemlighet fångar upp och vidarebefordrar meddelanden mellan två parter som tror att de kommunicerar direkt med varandra. Genom att positionera sig som mellanhand kan anfallaren läsa av och kontrollera informationsflödet. Detta gör det möjligt att skicka egen data eller kod [10] [11]. En jämförelse skulle vara att man skickar en beställning till ett företag med posten. Under postgången får en tredje part tag på beställningsformulär, ändrar dess innehåll (kanske ändra mottagaradressen till sitt eget) och skickar det vidare.
+<u>Skyddas med hjälp utav:</u> HTTPS/TLS (kryptering av dataflödet)
+
+##### 2.1.1.2 Code-Injection
+
+En attack där hackern _injicerar_ sin egen kod i en applikation som körs för att ändra dess beteende. En vanlig injection är så kallade **SQL-injection** där användarinputsfält används för att anropa databasen direkt. T.ex kan anfallaren försöka skriva ett SQL-kommando i ett textinput\* och läsa av svaret från servern om denna inte är skyddad mot detta. Det är även möjligt att ändra data i databasen (som att göra sitt eget konto till admin) [12].
+**Cross-site scripting (XSS)** är också en vanlig form av injection där kod injiceras med hjälp av HTML- eller javascriptkod.
+<u>Skyddas med hjälp utav:</u> inputvalidering (kontroll att inga kommando injiceras)
+
+_*Förenklad exempel: 'SELECT * FROM users;' skulle kunna ge all användardata från serverns databas. I verklighet skulle en anfallare använda sig av sk. or-statements som "' OR '1'=1" som betyder: "om det inte funkar ger mig allt"._
+
+##### 2.1.1.3 Brute force attack
+
+Brute force (engelska för råstyrka) är en metod för att hitta exempelvis lösenord genom att pröva alla möjliga kombinationer. Termen brute force syftar oftast på att hitta lösenord och nycklar [13]. Om ett lösenord är enkelt går attack snabbare medan väldigt komplicerade lösenord tar längre tid att hitta. Detta kan jämföras med ett kombinationslås med bara tre siffror och ett med sex stycken där en tjuv testar alla möjliga kombinationer [14].
+<u>Skyddas med hjälp utav:</u> varningar vid upprepade misslyckade inloggningsförsök och låsning av berörda konton, starkt lösenordspolicy
+
+##### 2.1.1.4 Cross Site Request Forgery
+
+En hacker kan använda en annans rättigheter hos en tjänst och lura till sig en oönskad handling. Istället för att, på ett avancerat sätt, få tag på en användarens uppgifter kan man använda dess rättigheter direkt (_Request Forgery_). Detta kan ske via en extern länk från en annan sajt (_Cross Site_).
+De flesta online-leverantörer delar ut en nyckel, så kallad token eller session-token, till sina användare som fungerar som ett tillstånd att använda tjänsten och komma åt sin data. En hacker kan lyckas nyttja nyckelns privilegier genom att få användaren att omedvetet utföra handlingar.
+Ett bra exempel är att anfallaren skickar en phishinglänk via email till offret som klickar på det. Länken skickar egentligen en förfrågan till offrets bank om att överföra pengar till anfallaren. Om offret är inloggad på bankenshemsida vid klickandet kan överföringen ske [15].
+Detta kan jämföras med att en tjuv lura ett offer att låsa upp hemmet för att kunna komma in.
+<u>Skyddas med hjälp utav:</u> skydda känsliga handlingar som tex en banköverföring, header-verifiering (mm)
+
+##### 2.1.1.5 /TODO: spare
+
+#### 2.1.2 Autentisering och auktorisering JWT
+
+#### 2.1.3 Kryptering och lösenordhashing
+
+#### 2.1.4 Inputvalidering
+
+#### 2.1.5 HTTP- och API-säkerhet (CORS)
+
+#### 2.1.6 STRIDE (check OWASP)
+
+#### 2.1.7 Filhantering och validering
 
 ### 2.2 Befintlig Forskning och Lösningar
 
@@ -324,25 +358,61 @@ Förslag på:
 
 Använd valfri referenstil. Rekommentation: IEEE
 
-I referenslistan 
+I referenslistan
 
-[1] Bandar Alotaibi, “Cybersecurity Attacks and Detection Methods in Web 3.0 Technology: A Review”, Sensors, Januari 2025. Available: https://www.mdpi.com/1424-8220/25/2/342
+[1]: Bandar Alotaibi, “Cybersecurity Attacks and Detection Methods in Web 3.0 Technology: A Review”, Sensors, Januari 2025. Available: https://www.mdpi.com/1424-8220/25/2/342
 
-[2] “Antitrust cases against Google by the European Union”, Wikipedia, Accessed Maj 2026. Available: https://en.wikipedia.org/wiki/Antitrust_cases_against_Google_by_the_European_Union
+[2]: “Antitrust cases against Google by the European Union”, Wikipedia, Accessed Maj 2026. Available: https://en.wikipedia.org/wiki/Antitrust_cases_against_Google_by_the_European_Union
 
-[3] Vatsala Gaur, “How the EU is taking on Big Tech: Meta, Apple, Google, face heightened scrutiny, penalties”, Invezz, December 2025. Available: https://invezz.com/news/2025/12/04/how-the-eu-is-taking-on-big-tech-meta-apple-google-face-heightened-scrutiny-penalties/
+[3]: Vatsala Gaur, “How the EU is taking on Big Tech: Meta, Apple, Google, face heightened scrutiny, penalties”, Invezz, December 2025. Available: https://invezz.com/news/2025/12/04/how-the-eu-is-taking-on-big-tech-meta-apple-google-face-heightened-scrutiny-penalties/
 
-[4] “Digital Sovereignty in Tension: U.S. Pushback Against the EU’s Digital Services Act”, The Cyber Institute, Augusti 2025. Available: https://www.cyber-institute.org/post/digital-sovereignty-in-tension-u-s-pushback-against-the-eu-s-digital-services-act
+[4]: “Digital Sovereignty in Tension: U.S. Pushback Against the EU’s Digital Services Act”, The Cyber Institute, Augusti 2025. Available: https://www.cyber-institute.org/post/digital-sovereignty-in-tension-u-s-pushback-against-the-eu-s-digital-services-act
 
-[5] Clare Duffy, “Trump administration’s vision of US tech dominance is colliding with Europe ”, CNN, Januari 2026. Available: https://edition.cnn.com/2026/01/12/tech/us-eu-tech-regulation-fight-explained
+[5]: Clare Duffy, “Trump administration’s vision of US tech dominance is colliding with Europe ”, CNN, Januari 2026. Available: https://edition.cnn.com/2026/01/12/tech/us-eu-tech-regulation-fight-explained
 
-[6] Marius Laffont, “Pour son indépendance numérique, l'État français souhaite passer à Linux”, RFI, April 2026. Available: https://www.rfi.fr/fr/france/20260410-pour-son-ind%C3%A9pendance-num%C3%A9rique-l-%C3%A9tat-fran%C3%A7ais-souhaite-passer-%C3%A0-linux
+[6]: Marius Laffont, “Pour son indépendance numérique, l'État français souhaite passer à Linux”, RFI, April 2026. Available: https://www.rfi.fr/fr/france/20260410-pour-son-ind%C3%A9pendance-num%C3%A9rique-l-%C3%A9tat-fran%C3%A7ais-souhaite-passer-%C3%A0-linux
 
-[7] OWASP about page, Accessed: Maj 2026. Available: https://owasp.org/about/
+[7]: OWASP about page, Accessed: Maj 2026. Available: https://owasp.org/about/
 
-[8] OWASP Top 10 threats, Accessed: Januri -Juni 2026. Available: https://owasp.org/www-project-top-ten/
+[8]: OWASP Top 10 threats, Accessed: Januri -Juni 2026. Available: https://owasp.org/www-project-top-ten/
 
-[9] Lorikeet Security Team, "PCI DSS Requirement 6: Secure Development Practices Your QSA Will Scrutinize", Accessed: Maj 2026. Available: https://lorikeetsecurity.com/blog/pci-dss-requirement-6-secure-development
+[9]: Lorikeet Security Team, "PCI DSS Requirement 6: Secure Development Practices Your QSA Will Scrutinize", Accessed: Maj 2026. Available: https://lorikeetsecurity.com/blog/pci-dss-requirement-6-secure-development
+
+[10]: NordVPN, Accessed May 2026. Available: https://nordvpn.com/sv/blog/mitm-attack/
+
+[11]: Wikipedia, Accessed May 2026. Available: https://en.wikipedia.org/wiki/Man-in-the-middle_attack
+
+[12]: ItSecurityDemand, Accessed: May 2026. Available: https://www.itsecuritydemand.com/insights/security/code-injection-attacks-a-guide-to-security-prevention/
+
+[13]: Wikipedia, Accessed May 2026. Available: https://sv.wikipedia.org/wiki/Brute_force
+
+[14]: Tom Krantz & Alexandra Jonker, IBM, Accessed: May 2026. Accessible: https://www.ibm.com/think/topics/brute-force-attack
+
+[15]: Mozilla, Accessed: May 2026. Available: https://developer.mozilla.org/en-US/docs/Web/Security/Attacks/CSRF
+
+[16]:
+
+[17]:
+
+[18]:
+
+[19]:
+
+[20]:
+
+[20]:
+
+[20]:
+
+[20]:
+
+[20]:
+
+[20]:
+
+[20]:
+
+[20]:
 
 Bok: [2] A. Author, Title of Book. City, State: Publisher, Year.
 
