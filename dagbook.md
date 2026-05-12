@@ -42,4 +42,26 @@
 **NOTE**: problem med markdown, vägra länka till referencerna
 
 **Time:** 8.5 hours
+
+## 2026-05-11
+- skrivit har studerat för:
+    - 1.5 Metodöversikt
+    - 2.1.1 Olika attacker mot API (4 st än så länge)
+    - 2.1.2 Autentisering och auktorisering JWT
+    - 2.1.3 Asymmetrisk kryptografi
+    - 2.1.4 Kryptering, lösenordhashing och salting
+    - 2.1.5 Inputvalidering
+    - 2.1.6 Filvalidering
+- mkt research för filvalidering gick på mitt sidospår med Apache Tika och Commons Validator fruktlöst, OWASP lydiga på den punkten men länkar till ett färdigt projekt, räknar mycket tidsbesparing
+
+**Time:** 9.5 hours **TOTAL**: 18 hours
+### MÅL för morgon dagen:
+- CORS och hotmodellering/STRIDE
+- halvdag minus tiden till klassråd
+
+**NOTE**: måste
+ kartlägga alla endpoint och JSON-objekt
+
+**NOTE**: problem med markdown, vägra länka till referencerna
+
 ---
