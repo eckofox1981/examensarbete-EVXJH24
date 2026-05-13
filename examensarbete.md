@@ -26,6 +26,8 @@ _Alfabetisk lista över tekniska termer, förkortningar och begrepp som används
 | Backend          | basbearbetningen (ofta på servernivå)                                                                                                                                                             |
 | Cookie           | Kaka på svenska (efter sagan om Hans och Greta) är information som sparas i webbläsaren, oftast används det för prestanda förbättringar och/eller för att lagra användarinformation (t.ex en JWT) |
 | CORS             | Cross-origin resource sharing, en teknik som begränsar åtkomst till websidor från specifierade                                                                                                    |
+| CRUD             | Create Read Update Delete (Skapa, Läsa, Ändra, Radera), ett begrepp som beskriver möjlig hantering av data                                                                                        |
+| CSP              | Content-Security-Policy, en response header som definierar vilka resurser en webbläsare få använda (ofta en servers ursprung)                                                                     |
 | ECDSA            | Elliptisk kurva digital signaturalgoritm, en av de mer komplexa offentliga nyckelkrypteringsalgoritmer                                                                                            |
 | EU               | Europeiska Unionen                                                                                                                                                                                |
 | Frontend         | Användargränssnittsorienterad bearbetning (webbsida, mobilapplikationer mm)                                                                                                                       |
@@ -57,6 +59,7 @@ _Alfabetisk lista över tekniska termer, förkortningar och begrepp som används
 | TLS              | Transport Layer Security, ett kryp­te­rings­pro­to­koll som sä­ker­stäl­ler säker da­taö­ver­fö­ring på internet.                                                                                 |
 | URI              | Uniform Resource Identifier, en teckensträng som används för att identifiera en resurs. URI kan användas för att lokalisera en webbplats, fil eller en specifik del av data                       |
 | URL              | Uniform Resource Locator, är den teckensträng som identifierar en viss resurs på internet, till exempel en webbsida. I folkmun kallas URL i för "webbadress"                                      |
+| XSS              | [Cross Site Scripting](#2112)                                                                                                                                                                     |
 | ZAP              | Zed Attack Proxy, en _open-source_ programvara som används i samband säkerhetstestning av applikationer                                                                                           |
 
 ---
@@ -330,6 +333,90 @@ Hotmodellering måste granskas av alla berörda aktörer [29]:
 **Hotmodellering i denna studie**
 För att lyckas skydda EFBox-applikationen på ett effektivt sätt kommer en förenklad version av hotmodellering, som täcker de mest kritiska hoten, skapas. Systemet kommer att inventeras och tillgängliga funktioner granskas för definera hoten med STRIDE. Men utan ett team av säkerhetsexperter bli en fullskalig hotmodellering orealistiskt och det kommer att implementeras som en _proof of concept_.
 
+#### 2.1.7 OWASP Top 10 hot 2025
+
+Open Worldwide Application Security Project (OWASP) publicerar regelbundet en lista på de mest kritiska säkerhetsrisker för webbapplikationer [8]. Denna studie kommer att säkra EFBox-API enligt OWASP Top 10 med undantag för [Insecure Design](#2176)(se innehåll). I detta avsnitt behandlas dessa hot och hur en utvecklare kan åtgärda dem.
+
+##### 2.1.7.1 Broken Access Control (Bristfällig åtkomstkontroll)
+
+Med Broken Access Control menar man åtkomst till tillstånd eller data bortom de tänkta av administratörerna. Utvecklare måste försäkra sig att tjänsterna är designade så att åtkomsten till funktioner, tillstånd eller data kontrolleras via kod eller CORS-konfiguration.
+OWASP rekommenderar att kontrollen är tillståndbaserad (_permission based_) snarare än rollbaserad (_role based_) för att skydda sig mot en Elevation of Privilege attack. Med rollbaserade kontroller kan en anfallare som lyckats höja sin användarroll får han automatiskt alla privilegier kopplade till rollen. Med tillståndbaserade kontroller måste varje tillstånd listas ut och sen inskaffas.
+Åtkomstkontroll kan implementeras till viss del i frontend men måste alltid implementeras i backend för att vara effektiv.
+Några åtgärder för att förebygga Bristfällig Åtkomstkontroll:
+| Åtgärd | Förklaring |
+|--|--|
+| Deny by default (Neka som standard) | Respekterar "least privilege"-filosofin fär tillstånd inte utfärdas om det inte behövs |
+| Implementerar kontroll en gång | Det är bättre att implementera kontrollen en gång (i en klass till exempel) och använda den genom applikationen |
+| Åtkomstkontroll före datahantering | Kontrollera att användaren äger data före CRUD-operationer|
+| Logga fel och skapa varningar i åtkomstkonrollen | Genom att spara historik för åtkomstfel får administratören reda på vad som har hänt. Vid suspekta åtkomstfel (t.ex upprepade fel) bör varningar skickas till berörda aktörer |
+| Kortvariga JWT | Långlivade JWT riskerar att missbrukas efter att användaren slutat använda tjänsten. Dessa bör har en kort giltighetstid med mekanismer för att förnyas på ett användarvänligt sätt. |
+| Rate Limiting (Hastighetsbegränsning)| För att reglera antalet begäranden som en användare kan göra under en viss tid och på så sätt skyddas mot [Brute Force Attacks](#2113-brute-force-attack)|
+
+Kodanalys av EFBox-API:et kommer att genomföras för bedöma hur lämplig Åtkomstkontrollen är.
+
+##### 2.1.7.2 Security Misconfiguration (Felaktig säkerhetskonfiguration)
+
+Om säkerheten i en applikation är felkonfigurerad (eller inte konfigurerad alls) kan den vara sårbar för attacker.
+Förebyggande åtgärder kan vara:
+| Åtgärd | Förklaring |
+|--|--|
+| Säkrad appliction-deployment | Säkerhetskonfigurationen bör standardiseras och automatiseras så att utvecklings-, test- och produktionsmiljöer alltid är identiskt konfigurerade. Detta minimerar risken för mänskliga fel och säkerställer att nya miljöer snabbt kan driftsättas med rätt säkerhetsinställningar (behandlas ej i denna studie). |
+| Minimera attackyta | onödiga funktioner skall tas bort, likaså onödig dokumentation och ramverk |̣̣
+| Implementation av Security headers | Säkerhetsheaders är instruktioner till webbläsaren för hur säkerhet skall hanteras. Dessa bör definieras med korrekta direktiv. Exempel för en filhanteringsapplikation skulle vara x-content-type (för att definiera MIME-typ) eller CSP |
+| Kontroll vid uppgradering| Vissa uppgraderingar till projektets ramverk eller dependencies kan påverka säkerhetskonfigurationen eller radera den (se [Software Supply Chain Failures](#2173-software-supply-chain-failures-bristermjukvarans-leveranskedja)) |
+| Logging| Som backup bör en centraliserad konfiguration implementeras för att fånga och varna vid ovanligt många felmeddelanden |
+| CORS-konfiguration| CORS-konfiguration är nära relaterad till A02 och behandlas i denna studie inom ramen för säkerhetskonfiguration. CORS skall konfigureras för att användaren enbart kommer åt tillåtna tjänster (se även [Broken Access Control](#2171-broken-access-control-bristfällig-åtkomstkontroll))|
+
+Eftersom EFBox var en _proof of concept_ förväntas säkerhetskonfigurationen behöva ses över och stärkas, i synnerhet CORS och logging.
+
+##### 2.1.7.3 Software Supply Chain Failures (BristerMjukvarans leveranskedja)
+
+| Åtgärd | Förklaring |
+| ------ | ---------- |
+|        |
+
+##### 2.1.7.4 Cryptographic Failures (Kryptografibrister)
+
+| Åtgärd | Förklaring |
+| ------ | ---------- |
+|        |
+
+##### 2.1.7.5 Injection (Injektionsattacker)
+
+| Åtgärd | Förklaring |
+| ------ | ---------- |
+|        |
+
+##### 2.1.7.6 Insecure Desgin (Osäker design)
+
+| Åtgärd | Förklaring |
+| ------ | ---------- |
+|        |
+
+##### 2.1.7.7 Authentication Failures (Autentiseringsbrister)
+
+| Åtgärd | Förklaring |
+| ------ | ---------- |
+|        |
+
+##### 2.1.7.8 Software och Data Integrity Failures (Brister i mjukvaru- och dataintegritet)
+
+| Åtgärd | Förklaring |
+| ------ | ---------- |
+|        |
+
+##### 2.1.7.9 Security Logging and Alerting Failures (Brister i säkerhetsloggning och larmhantering)
+
+| Åtgärd | Förklaring |
+| ------ | ---------- |
+|        |
+
+##### 2.1.7.10 Mishandling Of exceptional Conditions (Felhantering av undantagstillstånd)
+
+| Åtgärd | Förklaring |
+| ------ | ---------- |
+|        |
+
 ### 2.2 Befintlig Forskning och Lösningar
 
 **För utforskande arbeten:**
@@ -347,6 +434,8 @@ För att lyckas skydda EFBox-applikationen på ett effektivt sätt kommer en fö
 **För hybridprojekt:**
 
 - Kombination av forskning och praktiska lösningar
+
+Denna studie baseras huvudsakligen på OWASP forskning och erfarenhet.
 
 ### 2.3 Teknisk/Teoretisk Jämförelse
 
