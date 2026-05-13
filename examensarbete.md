@@ -20,38 +20,43 @@ Detta är en kortfattad sammanfattning (max 250 ord) på **engelska** som ska in
 
 _Alfabetisk lista över tekniska termer, förkortningar och begrepp som används i rapporten._
 
-| Term/Förkortning | Förklaring                                                                                                                                                                          |
-| ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| API              | Application Programming Interface - Gränssnitt för kommunikation mellan mjukvarusystem                                                                                              |
-| Backend          | basbearbetningen (ofta på servernivå)                                                                                                                                               |
-| CORS             | Cross-origin resource sharing, en teknik som begränsar åtkomst till websidor från specifierade                                                                                      |
-| ECDSA            | Elliptisk kurva digital signaturalgoritm, en av de mer komplexa offentliga nyckelkrypteringsalgoritmer                                                                              |
-| EU               | Europeiska Unionen                                                                                                                                                                  |
-| Frontend         | Användargränssnittsorienterad bearbetning (webbsida, mobilapplikationer mm)                                                                                                         |
-| GDPR             | General Data Protection Regulation                                                                                                                                                  |
-| GitHub           | Ett kodbibliotek för olika programmeringsprojekt där innehåll kan hämtas eller laddas upp                                                                                           |
-| Header           | "Huvud" på svenska, början på ett meddelande inom datateknik som innehåller metadata om meddelandet (hur den ska tolkas)                                                            |
-| HTML             | HyperText Markup Language, programmeringsspråket som lägger grunden till webbsidor                                                                                                  |
-| HTTP             | Hypertext Transfer Protocol, ett kommunikationsprotokoll som används för att överföra information på internet                                                                       |
-| HTTPS            | Hypertext Transfer Protocol Secure, protokoll för krypterad transport av data för HTTP-protokollet                                                                                  |
-| IDE              | Integrated Development Environment, miljön där utvecklare skriver sin kod                                                                                                           |
-| IntelliJ         | En IDE utvecklad av JetBrain                                                                                                                                                        |
-| Java             | Ett av de vanligaste programmeringspråken                                                                                                                                           |
-| JavaScript       | Ett programmeringsspråk som ger interaktivitet och dynamik till webbsidor, främst när de körs i webbläsaren                                                                         |
-| Json             | JavaScript Object Notation ett kompakt, textbaserat format som används för att utbyta data                                                                                          |
-| JWT              | Json Web Token, ett standardiserat sätt att överföra information som Json-objekt                                                                                                    |
-| MIME-type        | Multipurpose Internet Mail Extensions Type, används för att ange filtyp. Namnet härstammar från dess ursprungliga användning för att identidera emails innehåll och bifogade filer. |
-| Open-source      | Öppen källkod som inte är proprietärt, dvs illgänglig att använda, läsa, modifiera och vidaredistribuera för den som vill                                                           |
-| OWASP            | Open Worldwide Application Security Project                                                                                                                                         |
-| PCI DSS          | Payment Card Industry Data Security Standard                                                                                                                                        |
-| Plug-in          | Tilläggsprogram om inte körs fristående utan installeras som ett tillägg i ett annat program                                                                                        |
-| Postman          | Ett verktyg för utvecklare för att testa API                                                                                                                                        |
-| RSA              | ett krypteringsalgoritm döpt uppkallad efter dess skapare Rivest, Shamir och Adleman. Systemet kräver en nyckel för kryptering och en annan för avkryptering                        |
-| REST             | Representational State Transfer - Arkitekturstil för webbaserade API:er                                                                                                             |
-| Spring Boot      | ett open-source Java-ramverk som förenklar utvecklingen av webbapplikationer genom att erbjuda en snabb och enkel konfiguration                                                     |
-| SQL              | Structured Query Language, ett programmeringsspråk som används för hantera och manipulera relationsdatabaser                                                                        |
-| TLS              | Transport Layer Security är ett kryp­te­rings­pro­to­koll som sä­ker­stäl­ler säker da­taö­ver­fö­ring på internet.                                                                 |
-| ZAP              | Zed Attack Proxy, en _open-source_ programvara som används i samband säkerhetstestning av applikationer                                                                             |
+| Term/Förkortning | Förklaring                                                                                                                                                                                        |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| API              | Application Programming Interface - Gränssnitt för kommunikation mellan mjukvarusystem                                                                                                            |
+| Backend          | basbearbetningen (ofta på servernivå)                                                                                                                                                             |
+| Cookie           | Kaka på svenska (efter sagan om Hans och Greta) är information som sparas i webbläsaren, oftast används det för prestanda förbättringar och/eller för att lagra användarinformation (t.ex en JWT) |
+| CORS             | Cross-origin resource sharing, en teknik som begränsar åtkomst till websidor från specifierade                                                                                                    |
+| ECDSA            | Elliptisk kurva digital signaturalgoritm, en av de mer komplexa offentliga nyckelkrypteringsalgoritmer                                                                                            |
+| EU               | Europeiska Unionen                                                                                                                                                                                |
+| Frontend         | Användargränssnittsorienterad bearbetning (webbsida, mobilapplikationer mm)                                                                                                                       |
+| GDPR             | General Data Protection Regulation                                                                                                                                                                |
+| GitHub           | Ett kodbibliotek för olika programmeringsprojekt där innehåll kan hämtas eller laddas upp                                                                                                         |
+| Header           | "Huvud" på svenska, början på ett meddelande inom datateknik som innehåller metadata om meddelandet (hur den ska tolkas)                                                                          |
+| HTML             | HyperText Markup Language, programmeringsspråket som lägger grunden till webbsidor                                                                                                                |
+| HTTP             | Hypertext Transfer Protocol, ett kommunikationsprotokoll som används för att överföra information på internet                                                                                     |
+| HTTPS            | Hypertext Transfer Protocol Secure, protokoll för krypterad transport av data för HTTP-protokollet                                                                                                |
+| IDE              | Integrated Development Environment, miljön där utvecklare skriver sin kod                                                                                                                         |
+| IntelliJ         | En IDE utvecklad av JetBrain                                                                                                                                                                      |
+| Java             | Ett av de vanligaste programmeringspråken                                                                                                                                                         |
+| JavaScript       | Ett programmeringsspråk som ger interaktivitet och dynamik till webbsidor, främst när de körs i webbläsaren                                                                                       |
+| Json             | JavaScript Object Notation ett kompakt, textbaserat format som används för att utbyta data                                                                                                        |
+| JWT              | Json Web Token, ett standardiserat sätt att överföra information som Json-objekt                                                                                                                  |
+| MIME-type        | Multipurpose Internet Mail Extensions Type, används för att ange filtyp. Namnet härstammar från dess ursprungliga användning för att identidera emails innehåll och bifogade filer.               |
+| Open-source      | Öppen källkod som inte är proprietärt, dvs illgänglig att använda, läsa, modifiera och vidaredistribuera för den som vill                                                                         |
+| OWASP            | Open Worldwide Application Security Project                                                                                                                                                       |
+| PCI DSS          | Payment Card Industry Data Security Standard                                                                                                                                                      |
+| Plug-in          | Tilläggsprogram om inte körs fristående utan installeras som ett tillägg i ett annat program                                                                                                      |
+| Postman          | Ett verktyg för utvecklare för att testa API                                                                                                                                                      |
+| RSA              | Ett krypteringsalgoritm döpt uppkallad efter dess skapare Rivest, Shamir och Adleman. Systemet kräver en nyckel för kryptering och en annan för avkryptering                                      |
+| REST             | Representational State Transfer - Arkitekturstil för webbaserade API:er                                                                                                                           |
+| Spring Boot      | Ett open-source Java-ramverk som förenklar utvecklingen av webbapplikationer genom att erbjuda en snabb och enkel konfiguration                                                                   |
+| Statefull        | Syftar på att information (eller _state_) sparas för kommunikationen för snabbare åtkomst                                                                                                         |
+| Stateless        | Syftar på att ingen information (eller _state_) sparas för kommunikationen, all information relevant för informationsutbyttet måste skickas med varje meddelande                                  |
+| SQL              | Structured Query Language, ett programmeringsspråk som används för hantera och manipulera relationsdatabaser                                                                                      |
+| TLS              | Transport Layer Security, ett kryp­te­rings­pro­to­koll som sä­ker­stäl­ler säker da­taö­ver­fö­ring på internet.                                                                                 |
+| URI              | Uniform Resource Identifier, en teckensträng som används för att identifiera en resurs. URI kan användas för att lokalisera en webbplats, fil eller en specifik del av data                       |
+| URL              | Uniform Resource Locator, är den teckensträng som identifierar en viss resurs på internet, till exempel en webbsida. I folkmun kallas URL i för "webbadress"                                      |
+| ZAP              | Zed Attack Proxy, en _open-source_ programvara som används i samband säkerhetstestning av applikationer                                                                                           |
 
 ---
 
@@ -189,7 +194,7 @@ Stark lösenordspolicy som långa komplex tecken och best practice hashing (med 
 Hackers kan använda sig av så kallade _Rainbow Table_ [20], en tabell där fördefinerade lösenord har hashats enligt bestämda metoder, och försöka hitta ett hashat lösenord som överensstämmer med det i den attackerade databasen. Om ett hittas, kan anfallaren enkelt kolla upp klartextversionen av hashet (dvs användarens lösenord). Som en ytterligare säkerhetsåtgärd mot detta kan **salting** implementeras.
 Salting lägger till en slumpmässig vald radtecken <u>unik för varje användare</u> till lösenordet vilket gör det ännu svårare för hackers att komma åt datan [18].
 
-#### 2.1.4 Inputvalidering
+#### 2.1.5 Inputvalidering
 
 \*\*Inputvalidering är kontrollen av data som skickas direkt av användaren, som t.ex tecken i ett textflält på en hemsida. Valideringen kontrollerar även Json-objekt som skickas från clienten [21].
 
@@ -204,7 +209,7 @@ Inputvalidering kan ske på olika sätt, denna studie kommer att fokusera på f�
 - Apache Commons Validators: inhemskt till Java API:er, tillåter valideringen av inkommande data (//TODO: ska vi verkligen bråka med det???)
 - Json schema: Json-objekt valideras innan de behandlas
 
-#### 2.1.5 Filvalidering
+#### 2.1.6 Filvalidering
 
 Eftersom en filhanteringstjänst studeras i denna studie måste ansträngningar läggas på filvalidering. Hackers kan ladda upp filer som antingen orsakar skador på servern (t.ex enorma filer eller filer som innehåller farlig kod) eller används för sekundära attacker som t.ex phishing.
 
@@ -219,9 +224,55 @@ I denna studie används Righettos approach som inspiration för implementationen
 
 #### 2.1.5 HTTP- och API-säkerhet (CORS)
 
-#### 2.1.6 STRIDE (check OWASP)
+##### 2.1.5.1 Grundläggande om HTTP
 
-#### 2.1.7 Filhantering och validering
+HyperText Transfer Protocol (HTTP) är ett underliggande nätverksprotokoll för överföring av hypermedia dokument. I de flesta fallen sker denna överföring mellan en klient (t.ex en browser) och en server. HTTP-kommunikation är textbaserad, all information skickas i klar text, vilket gör det lättare för människor att läsa. HTTP är _stateless_, vilket innebär att all kommunikation sker utan minne av tidigare utbyte [24]. Skulle en stateful kommunikation behövas kan _cookies_ användas. Dessa sparar relevant information (t.ex inloggningsinformation) i webbläsaren [25] [26].
+Dessa egenskaper är fördelaktiga när man utvecklar REST-API:er eftersom dessa ska utvecklas stateless, i.e nödvändig information hämtas vid behov och sparas inte i det aktiva minne med vissa undantag för caching.
+
+HTTP meddelande innehåller en så kallad _header_ som innehåller information om hur det ska läsas. Innehållet i en header varierar men kan hålla information om vilken sorts anrop som görs till servern (GET, POST, PUT mm.) eller om innehållet (text, fil mm).
+
+```
+// exempel på en header som skickas från en webbläsare (User-Agent)
+// för att hämta (GET) en sida på Mozilla sajt (Host).
+// Notera att ursprunget (Origin) nämns (las till för framtida förklaringar).
+GET /static/client/styles-global.cac2f06a61438497.css HTTP/2
+Host: developer.mozilla.org
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:150.0) Gecko/20100101 Firefox/150.0
+Accept: text/css,*/*;q=0.1
+Accept-Language: en-US,en;q=0.9
+Accept-Encoding: gzip, deflate, br, zstd
+Connection: keep-alive
+Origin: https://foo.example
+```
+
+HTTP-headern är central för hur CORS fungerar, vilket förklaras i nästa avsnitt.
+
+#### 2.1.5.2 Cross-origin resource sharing (CORS) - API: säkerhet
+
+Cross-origin resource sharing är ett HTTP-baserat system som gör det möjligt för en server att lista vilka domäner, schema eller port en webbläsare bör tillåta för att ladda resurser [26].
+
+Om ingen CORS-inställningdefineras, accepteras enbart förfågningar från servern, sk _same-origin_. CORS gör det möjligt att tillåta förfrågningar från andra källor **på ett kontrollerat sätt**.
+
+Webbläsaren gör en _preflight request_ (preflight: kontroll före flygning på svenska), dvs den granskar förfrågan, för att försäkra sig att servern kommer att tillåta den. I denna granskning skickas en OPTIONS-header som beskriver HTTP-metod (GET, POST, PUT, DEL mm) och den ursprungliga header för förfrågan.
+Man kan säga att preflight request kontrollerar att förfrågan är giltig innan den skickas.
+
+Enklare förfrågor behöver inte alltid trigga en preflight. Dessa defineras med headers med specifika HTTP-metod (GET, HEAD, POST), ett begränsat val av användardefinerade headers (ex: Accept, Accept-language mm) och enklare Content-type (ex: text eller formdata).
+
+En viktig del av CORS är kontrollen av ursprunget för förfrågan, detta bl.a för att förebygga [Cross Site Request Forgery (CSRF)](#2114-cross-site-request-forgery). Vissa servrar tillåter bara same-origin (se ovan) men andra kan tillåta en lista med domäner vars förfrågningar accepteras. Om servern inte hanterar känslig information (t.ex [Dog API](https://dog.ceo/dog-api/)) kan alla ursprung tillåtas.
+
+För att webbläsaren ska veta om förfrågan kommer att godkännas svarar servern med en _access-allow-origin_ header med värdet på det tillåtna ursprung:
+
+```
+//EXEMPLE 1:
+access-control-allow-origin: * // alla kan anropa servern
+//EXEMPEL 2:
+Access-Control-Allow-Origin: https://foo.example //bara Foo Example kan anropa servern
+Access-Control-Allow-Methods: POST, GET, OPTIONS //enbart dessa HTTP-request kan utföras
+```
+
+En felkonfigurerad CORS-inställning – som att tillåta alla ursprung (\*) för en tjänst som hanterar känslig information – kan exponera API:et för obehöriga förfrågningar. Korrekt CORS-konfiguration är därför en viktig säkerhetsåtgärd som analyseras vidare i denna studie. Vilket behandlas vidare under [Security Misconfiguration](//TODO:länk).
+
+#### 2.1.6 Hotmodellering med STRIDE
 
 ### 2.2 Befintlig Forskning och Lösningar
 
@@ -471,13 +522,13 @@ I referenslistan
 
 [23]: File Upload Cheat Sheet, OWASP, Accessed: May 2026. Available: https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html
 
-[24]:
+[24]: HTTP, Mozilla, Acessed: May 2026. Available: https://developer.mozilla.org/en-US/docs/Glossary/HTTP
 
-[25]:
+[25]: Overview of HTTP, Mozilla, Accessed: May 2026. Available: https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Overview
 
-[26]:
+[26]: Using HTTP cookies, Mozilla, Acessed: May 2026. Available: https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Cookies
 
-[27]:
+[27]: Cross-Origin Resource Sharing (CORS), Mozilla, Acessed: May 2026. Available: https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS
 
 Bok: [2] A. Author, Title of Book. City, State: Publisher, Year.
 
