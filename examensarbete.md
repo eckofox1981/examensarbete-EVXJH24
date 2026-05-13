@@ -52,6 +52,7 @@ _Alfabetisk lista över tekniska termer, förkortningar och begrepp som används
 | Spring Boot      | Ett open-source Java-ramverk som förenklar utvecklingen av webbapplikationer genom att erbjuda en snabb och enkel konfiguration                                                                   |
 | Statefull        | Syftar på att information (eller _state_) sparas för kommunikationen för snabbare åtkomst                                                                                                         |
 | Stateless        | Syftar på att ingen information (eller _state_) sparas för kommunikationen, all information relevant för informationsutbyttet måste skickas med varje meddelande                                  |
+| STRIDE           | Spoofing-Tampering-Repudiation-Information-Disclosure-Denial of service-Elevation of privileges, ett hotmodelleringsramverk utvecklad av Microsoft                                                |
 | SQL              | Structured Query Language, ett programmeringsspråk som används för hantera och manipulera relationsdatabaser                                                                                      |
 | TLS              | Transport Layer Security, ett kryp­te­rings­pro­to­koll som sä­ker­stäl­ler säker da­taö­ver­fö­ring på internet.                                                                                 |
 | URI              | Uniform Resource Identifier, en teckensträng som används för att identifiera en resurs. URI kan användas för att lokalisera en webbplats, fil eller en specifik del av data                       |
@@ -256,7 +257,7 @@ Om ingen CORS-inställningdefineras, accepteras enbart förfågningar från serv
 Webbläsaren gör en _preflight request_ (preflight: kontroll före flygning på svenska), dvs den granskar förfrågan, för att försäkra sig att servern kommer att tillåta den. I denna granskning skickas en OPTIONS-header som beskriver HTTP-metod (GET, POST, PUT, DEL mm) och den ursprungliga header för förfrågan.
 Man kan säga att preflight request kontrollerar att förfrågan är giltig innan den skickas.
 
-Enklare förfrågor behöver inte alltid trigga en preflight. Dessa defineras med headers med specifika HTTP-metod (GET, HEAD, POST), ett begränsat val av användardefinerade headers (ex: Accept, Accept-language mm) och enklare Content-type (ex: text eller formdata).
+Enklare förfrågor behöver inte alltid trigga en preflight. Dessa defineras med headers med specifika HTTP-metod (GET, HEAD, POST), ett begränsat val av användardefinerade headers (ex: Accept, Accept-language mm) och enklare Content-type (ex: text eller formdata)[27].
 
 En viktig del av CORS är kontrollen av ursprunget för förfrågan, detta bl.a för att förebygga [Cross Site Request Forgery (CSRF)](#2114-cross-site-request-forgery). Vissa servrar tillåter bara same-origin (se ovan) men andra kan tillåta en lista med domäner vars förfrågningar accepteras. Om servern inte hanterar känslig information (t.ex [Dog API](https://dog.ceo/dog-api/)) kan alla ursprung tillåtas.
 
@@ -273,6 +274,61 @@ Access-Control-Allow-Methods: POST, GET, OPTIONS //enbart dessa HTTP-request kan
 En felkonfigurerad CORS-inställning – som att tillåta alla ursprung (\*) för en tjänst som hanterar känslig information – kan exponera API:et för obehöriga förfrågningar. Korrekt CORS-konfiguration är därför en viktig säkerhetsåtgärd som analyseras vidare i denna studie. Vilket behandlas vidare under [Security Misconfiguration](//TODO:länk).
 
 #### 2.1.6 Hotmodellering med STRIDE
+
+Allt som kan störa en tjänst eller data den hanterar anses vara ett hot [28].
+
+Genom en systematisk och strukturerad process som **hotmodellering** kan man få inblick i säkerhetskarakteristikerna av en applikation. För att uppnå detta identifierar man de relevanta hot och responsen mot dessa [28] [29].
+
+För att skapa en hotmodell kan man ställa sig fyra frågor [30]:
+
+1. Vad jobbar vi med?
+2. Vad kan gå fel?
+3. Vad ska vi göra åt det?
+4. Är modelleringen tillräckligt effektiv?
+
+**1. Vad jobbar vi med?**
+För att definiera en hotmodell bör man identifiera följande i applikationen [28]:
+
+- Systemelement (tillgångar, komponenter)
+- Dataflöden och interaktioner med tredje part
+- Intressenter
+- Hot
+- Åtgärder mot hot
+- Iterera
+
+**2. Vad kan gå fel?**
+Som hjälp för att svara på dessa frågor kan man använda sig av ramverk för att kategorisera hoten. Ett populärt sådant är STRIDE [29]. Varje bokstav motsvarar en hotkategori (se tabell nedan). Ramverket underlättar kategoriseringen på ett systematiskt sätt när man ställer sig frågan "Vad kan gå fel?".
+
+| Hotkategori             | Påverkan         | Exempel                                                                                 |
+| ----------------------- | ---------------- | --------------------------------------------------------------------------------------- |
+| Spoofing                | Autentisering    | Hackern får tag på en användarens JWT och identifierar sig som denna                    |
+| Tampering               | Integritet       | Hackern missbrukar applikation för att genomföra oönskade updateringar i databasen      |
+| Repudiation             | Logging          | Hackern manipulerar loggarna för att dölja sina spår                                    |
+| Information Disclosure  | Konfidentialitet | Hackern får ut information om en användare från databasen                               |
+| Denial Of Service       | Tillgänglighet   | Hackern låser ut en användare från tjänsten genom att utföra förmånga inloggningsförsök |
+| Elevation of Privileges | Auktorisering    | Hackern manipulerar en JWT för att ändra sin roll till administratör                    |
+
+Vanligtvis ordnas hoten efter produkten av hur sannolikt hotet är och dess påverkan. I denna studie kommer detta utföras i förminskad omfattning då hotmodellering är ett ämne i sig.
+
+**3. Vad ska vi göra åt det?**
+När hoten är identifierade ska responser utvecklas [29]:
+
+- Mitigera: förebygga att hotet kommer att genomföras
+- Eliminera: Ta bort komponenten eller tjänsten som orsakar hotet
+- Överför (Transfer): Flytta ansvaret till annan (ex: identifiering via OpenID eller lägg ansvar på kunden via lösenordspolicy)
+- Acceptera: Beroende på den kommersiella modellen får tjänstleverantören acceptera hoten
+
+**4. Är modelleringen tillräckligt effektiv?**
+Hotmodellering måste granskas av alla berörda aktörer [29]:
+
+- Är det använda schemat representativt?
+- Har alla hot identiferats?
+- När mitigering implementerats, har risken minskats till acceptabla nivåer?
+- Har modelleringen dokumenterats och är tillgänglig för det som behöver kan komma åt det?
+- Kan mitigeringen testas?
+
+**Hotmodellering i denna studie**
+För att lyckas skydda EFBox-applikationen på ett effektivt sätt kommer en förenklad version av hotmodellering, som täcker de mest kritiska hoten, skapas. Systemet kommer att inventeras och tillgängliga funktioner granskas för definera hoten med STRIDE. Men utan ett team av säkerhetsexperter bli en fullskalig hotmodellering orealistiskt och det kommer att implementeras som en _proof of concept_.
 
 ### 2.2 Befintlig Forskning och Lösningar
 
@@ -529,6 +585,52 @@ I referenslistan
 [26]: Using HTTP cookies, Mozilla, Acessed: May 2026. Available: https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Cookies
 
 [27]: Cross-Origin Resource Sharing (CORS), Mozilla, Acessed: May 2026. Available: https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS
+
+[28]: Threat modeling, Mozilla, Acessed: May 2026. Available: https://developer.mozilla.org/en-US/docs/Web/Security/Threat_modeling
+
+[29]: Threat Modeling Cheat Sheet, OWASP, Accessed: May 2026. Available: https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html
+
+[30]: Threat Modelling Manifesto, Zoe Braiterman, Adam Shostack, Jonathan Marcil, Stephen de Vries, Irene Michlin, Kim Wuyts, Robert Hurlbut, Brook S.E. Schoenfield, Fraser Scott, Matthew Coles, Chris Romeo, Alyssa Miller, Izar Tarandach, Avi Douglen, Marc French, Threat Modelling Manifesto, Accessed: May 2026. Available: https://www.threatmodelingmanifesto.org/
+
+[31]: Threat modeling frameworks and tools, Mozilla, Acessed: May 2026. Available: https://developer.mozilla.org/en-US/docs/Web/Security/Threat_modeling/Frameworks#stride
+
+[32]:
+
+[33]:
+
+[34]:
+
+[35]:
+
+[36]:
+
+[37]:
+
+[38]:
+
+[39]:
+
+[40]:
+
+[41]:
+
+[42]:
+
+[43]:
+
+[44]:
+
+[45]:
+
+[46]:
+
+[47]:
+
+[48]:
+
+[49]:
+
+[50]:
 
 Bok: [2] A. Author, Title of Book. City, State: Publisher, Year.
 
