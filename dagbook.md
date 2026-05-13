@@ -62,4 +62,22 @@
 
 **NOTE**: problem med markdown, vägra länka till referencerna
 
+## 2026-05-11
+- förlorad tid på klassråd (2timmar) och ingen skola i em
+- skrivit och studerat för:
+     - 2.1.5 HTTP and API security
+     - 2.1.6 Threat modeling
+     - 2.1.7 Owasp top 10
+     - 2.1.7.1 Broken Access Control
+     - 2.1.7.2 Security Misconfigurations
+- se till att överblicka innehåll, orolig att för lite (eller för mkt?)
+
+**Time:** 5.75 hours **TOTAL**: 39.75 hours
+### Mål för morgon dagen:
+- fortsatt top 10
+
+**NOTE**: måste kartlägga alla endpoint och JSON-objekt
+
+**NOTE**: problem med markdown, vägra länka till referencerna
+
 ---
