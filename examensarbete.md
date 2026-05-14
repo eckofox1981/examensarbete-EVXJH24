@@ -18,8 +18,6 @@ Detta är en kortfattad sammanfattning (max 250 ord) på **engelska** som ska in
 
 ## Förkortningar och Begrepp
 
-_Alfabetisk lista över tekniska termer, förkortningar och begrepp som används i rapporten._
-
 | Term/Förkortning                | Förklaring                                                                                                                                                                                        |
 | ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | API                             | Application Programming Interface - Gränssnitt för kommunikation mellan mjukvarusystem                                                                                                            |
@@ -46,6 +44,7 @@ _Alfabetisk lista över tekniska termer, förkortningar och begrepp som används
 | JWT                             | Json Web Token, ett standardiserat sätt att överföra information som Json-objekt                                                                                                                  |
 | MIME-type                       | Multipurpose Internet Mail Extensions Type, används för att ange filtyp. Namnet härstammar från dess ursprungliga användning för att identidera emails innehåll och bifogade filer.               |
 | Open-source                     | Öppen källkod som inte är proprietärt, dvs illgänglig att använda, läsa, modifiera och vidaredistribuera för den som vill                                                                         |
+| MFA                             | Multi-Factor Authentication                                                                                                                                                                       |
 | ORM                             | Object Relational Mapping, en programmeringsteknik som tjänar till att transformera data som används i ett objektorienterade programmeringsspråk eller programmet och relationsdatabasen          |
 | OWASP                           | Open Worldwide Application Security Project                                                                                                                                                       |
 | PCI DSS                         | Payment Card Industry Data Security Standard                                                                                                                                                      |
@@ -414,41 +413,81 @@ Applikationer ska vara säkrade mot [injektion](#2112-code-injection) för att o
 | Åtgärd | Förklaring |
 | ------ | ---------- |
 | Använd ett säkert API | Undvik att använda tolken (interpretern) direkt, ett parametriserat gränssnitt eller ett ORM-verktyg som genererar SQL-frågor automatiskt bör användas istället |
-| Om ovan inte är möjligt | Använd inputvalidering, detta är inte optimalt då många tjänster behöver använda speciella tecken. Se till att åtminstone förbjuda tecken kopplade till applikationens databaspråk (ex: 'OR '1'=1) |
+| Om ovan inte är möjligt | Använd inputvalidering, detta är inte optimalt då många tjänster behöver använda speciella tecken. Se till att åtminstone förbjuda tecken kopplade till applikationens databaspråk (ex: "OR '1'=1;") |
 
-Eftersom EFbox använder JPA/Hibernate i Spring Boot (ett ORM-verktyg) kan det förväntas att den inte är så känslig mot klassiska injektionsattacker.
+Eftersom EFbox-API:Et använder JPA/Hibernate i Spring Boot (ett ORM-verktyg) kan det förväntas att den inte är så känslig mot klassiska injektionsattacker.
 
 OWASP pratar inte om kodinjektion via filer men för denna studie anses det vara relevant och kommer att behandlas under granskning av EFbox.
 
-##### 2.1.7.6 Insecure Desgin (Osäker design)
+##### 2.1.7.6 Insecure Design (Osäker design)
 
-| Åtgärd | Förklaring |
-| ------ | ---------- |
-|        |
+Säker design är en kultur och metodologi som konstant utvärdera hot och ser till att koden är designad på ett sätt som förebygger mot kända hot. Detta uppnås genom att titta på hur datan flödar genom applikationen. För objektorienterade programmeringspråk som Java handlar t.ex om segregering av klasser/objekt och hur de fördelas genom projektet. Ett verktyg för att kontrollera designen kan vara Unit Testing (som testar funktioner och komponenter) men även det behöver designas.
+Säker design förblir en bedömningsfråga och är svår att sätta ett värde på. Därför kommer "detta hot inte behandlas (se [Avgränsningar](#14-avgränsningar)).
 
 ##### 2.1.7.7 Authentication Failures (Autentiseringsbrister)
 
+Autentiseringsbrister uppstår när en anfallare olovligt identifierar sig till tjänsten. Hackern kan ha listat ut en användares inloggningsdata via dataintrång online eller genom en [brute force attack](#2113). OWASP huvudfokus för detta hot ligger på följande punkter:
 | Åtgärd | Förklaring |
 | ------ | ---------- |
-|        |
+| Stark lösenordspolicy | Lösenord skall vara komplicerade och svåra att gissa sig till. Användaren bör informeras om riskerna med svaga eller vanliga lösenord (de sistnämnda bör förbjudas helt) och förespråka användningen av lösenordshanterare |
+| MFA | Med MFA kan användarens identitet dubbelkontrolleras via authenticators eller SMS |
+| Rate Limiting | För att reglera antalet begäranden som en användare kan göra under en viss tid och på så sätt skyddas mot [Brute Force Attacks](#2113-brute-force-attack) (t.ex om de vanligaste lösenord testas med) |
+| Hantering av session-identifiers | dessa bör inte vara i URL:n utan sparas i säkrade cookies. De bör invalideras vid utloggning och inaktivitet. |
+| Standard inloggningsuppgifter | Applikationen bör inte byggas med standardiserade inloggningsuppgifter särskilt för administratörer som t.ex username:'admin and password:'admin'. |
+| Behåll säkra lösenord | Om lösenordet inte har råkat ut för ett dataintrång bör inte användaren uppmanas till att byta. Om ett dataintrång misstänks skall lösenordet bytas **omedelbart**. |
+
+Att försöka ta sig igenom inloggningen till en tjänst är ett av de lättare intrång en hacker kan försöka sig på. Genom att göra inloggningsprocessen säker kan en utvecklare hoppas på att trötta ut de mindre ambitösa aktörer och få applikationen att framstå som säkerhetsorienterad vilket kan även få mer avancerade hackers att ge upp.
+EFBox implementerar kryptering med BCrypt med en lättare lösenordvalidering som sparar hashade lösenord. Detta kommer att granskas och uppdateras till en säkrare standard. MFA är önskvärt men kommer inte att implementeras pga tidsbrist.
 
 ##### 2.1.7.8 Software och Data Integrity Failures (Brister i mjukvaru- och dataintegritet)
 
+För att undvika Brister i mjukvaru- och dataintegritet måste man säkerställa att den mjukvaran eller dependencies som används av applikationen kommer från pålitliga källor. Det är alltså inte bara mjukvaran i sig som kan vara farlig utan själva källan. Detta kan jämföras med en privatperson som köper ett känd och säkert kameraövervakningssystem men beställer det från en kriminell organisation som använder gömt spionmjukvara i systemet.
+Mjukvaran **och** källan måste vara pålitliga. OWASP föreslår följande:
 | Åtgärd | Förklaring |
 | ------ | ---------- |
-|        |
+| Signaturer och liknande mekanismer | Dessa kontrollerar att mjukvaran kommer från rätt källa och att koden inte manipulerats i efterhand |
+| Säkra dependency-bibliotek | _Dependency-libraries_ som Maven, NPM eller i EFBoxs fall Gradle bör kontrolleras för att säkerställa att de hämtar data från rätt källor |
+
+EFBox är byggd på Gradle som beskriver en [process för att kontrollera dependencies](https://docs.gradle.org/current/userguide/dependency_verification.html) som löser många fallgropar nämnda ovan. Detta kommer att implementeras för applikationen.
+OWASP nämner också olika steg för att skydda CI/CD-kedjan men detta anses vara _out of scope_ för denna studie.
 
 ##### 2.1.7.9 Security Logging and Alerting Failures (Brister i säkerhetsloggning och larmhantering)
 
+Om inga varningar skickas eller ingen historik sparas, hur kan tjänsteleverantören då veta att systemet har utsatts för hot? Denna fråga summerar OWASP A09 Security Logging and Alerting Failures, då det fokuseras på behovet att informera ansvariga att något obehörigt har skett.
+Om inte misstänksam aktivitet övervakas och sparas (genom logging) kan inte dessa upptäcktas. Om inga varningar skickas kan inte en snabb respons utföras.
+
+Andra brister inom Brister i säkerhetsloggning och larmhantering kan vara att loggarna är tillgängliga för den som utför attacken eller att känslig information sparas i loggarna (se även [Broken Access Control](#2171-broken-access-control-bristfällig-åtkomstkontroll)). I detta fall kan loggarna manipuleras för att dölja spåren av attacken så att den förblir hemlig.
+Att designa sådana system är svårt. För mycket information är opraktiskt att läsa igenom och om för många varningar skickas riskerar de att ignoreras.
+Följande åtgärd föreslås av OWASP:
 | Åtgärd | Förklaring |
 | ------ | ---------- |
-|        |
+| Övervaka känsliga system | alla fel vid login, åtkomstkontroll och inputvalidering måste loggas. Loggarna bör även sparas tillräckligt länge för att möjliggöra forensiska undersökningar om en attack sker |
+| Läsbar logging format | Loggarna måste vara lätta att läsa |
+| Säkra loggarna | Loggarna i sig bör vara skyddade mot injektionsattacker så att en hacker inte får loggarna att köra olovlig kod för att t.ex förfalska loggarna |
+| Utveckla procedur för övervakning och varningar | När en mistänksam aktivitet upptäcks och en varning skickas måste en respons vara designad för att hantera hotet (se även [Hotmodellering](#216-hotmodellering-med-stride)) |
+
+EfBox har ingen logging alls utöver det som erbjuds inbyggt i Spring Boot i terminalen. Därför kommer ett logging och alerting system behöva utvecklas och implementeras enligt OWASP rekommendationer.
 
 ##### 2.1.7.10 Mishandling Of exceptional Conditions (Felhantering av undantagstillstånd)
 
+Med Felhantering av undantagstillstånd menas att applikationen misslyckas att förebygga eller upptäcka och hantera ovanliga eller oförutsebara tillstånd. Detta leder i sin tur till krascher, oönskat beteende och ibland sårbarhet.
+
+Varje gång applikationen inte vet hur den ska hantera nästa instruktion eller kommando har ett undantagstillstånd felhanteras. En hacker kan använda dessa sårbarhet för att få applikationen att bete sig på ett oönskat sätt.
+
+Eftersom utvecklare behöver förebygga för det oförutsebara kan undantagstillståndshantering vara komplicerad. OWASP rekommendera följande:
 | Åtgärd | Förklaring |
 | ------ | ---------- |
-|        |
+| Undantag fångas tidigt | Nästlade undantagshantering bör undvikas dels för att säkra beteende men också för att underlätta felsökning |
+| Rollback | När ett undantag upptäcks ska processen som orsakade den avbrytas och eventuellt köras om. Man pratar om att applikationen felar stängt (_failing closed_) |
+| Undvika undantag | För undvika undantag ska applikationen konfigureras för att undvika dessa. Hastighetsbegränsning (_rate-limiting_), strypning och andra begränsningar förebygger undantagstillstånd. |
+| Logging | Vissa undantagstillstånd bör loggas om de förekommer repetitivt över en fördefinierad tidsram. Detta för att undvika [Brute Force Attacker](#2113-brute-force-attack) och Denial of Service (DoS) attacker (dvs anfallet går ut på att överbelasta systemet) . Logging bör ske enligt föreslagna åtgärd i [Security Logging and Alerting Failures](#2179-security-logging-and-alerting-failures-brister-i-säkerhetsloggning-och-larmhantering).|
+
+OWASP understryker också behovet av följande:
+
+- en strikt inputsvalidering med sanitering av tecken som accepteras
+- ett centraliserat och globalt felhanteringssystem för att undvika att undantag hanteras på olika sätt genom applikationen.
+
+Dessa åtgärd får tas under beaktning under [hotmodelleringen](#216-hotmodellering-med-stride). Ett återkommande tema är behovet för bra logging av incidenter och EFBox-API:et på granskas och ett globalt felhanteringssystem behöver skapas.
 
 ### 2.2 Befintlig Forskning och Lösningar
 
@@ -456,7 +495,7 @@ OWASP pratar inte om kodinjektion via filer men för denna studie anses det vara
 
 - Tidigare studier och forskning
 - Befintliga teorier och modeller
-- Identifierade kunskapsluckor[1]
+- Identifierade kunskapsluckor
 
 **För utvecklingsprojekt:**
 
