@@ -62,7 +62,7 @@
 
 **NOTE**: problem med markdown, vägra länka till referencerna
 
-## 2026-05-11
+## 2026-05-12
 - förlorad tid på klassråd (2timmar) och ingen skola i em
 - skrivit och studerat för:
      - 2.1.5 HTTP and API security
@@ -79,5 +79,45 @@
 **NOTE**: måste kartlägga alla endpoint och JSON-objekt
 
 **NOTE**: problem med markdown, vägra länka till referencerna
+
+## 2026-05-13
+- Nästan klar med kapitel 2, kommer behöva se över påstående och eventuellt backa/förbättra på några punkter
+- skrivit och studerat för:
+      - 2.1.7.3 Software Supply Chain Failures
+      - 2.1.7.4 Cryptographic Failures
+      - 2.1.7.5 Injection
+      - 2.1.7.6 insecure design
+      - 2.1.7.7 Authentication failures
+      - 2.1.7.8 Software integrity
+      - 2.1.7.9 Software integrity
+      - 2.1.7.10 Mishandling of exceptions
+- se till att överblicka innehåll, orolig att för lite (eller för mkt?)
+- har börjat på befintliga lösningar med anser att OWASP i sig är svaret. La till en studie från Barcelona för att visa att jag sökt.
+
+**Time:** 7 hours **TOTAL**: 46 hours
+### Mål för morgon dagen:
+- vore bra att få till ZAP
+
+### TODO
+- boka tid med William för kontroll
+
+**NOTE**: måste kartlägga alla endpoint och JSON-objekt
+
+**NOTE**: problem med markdown, vägra länka till referencerna
+
+---
+| Vecka | Milstolpe | Leverabler |
+| ----- | --------- | ---------- |
+| 3 | Implementering av åtgärder klar | Åtgärdad kod i feature-branch, commit per åtgärd |
+
+---
+| Vecka | Milstolpe | Leverabler |
+| ----- | --------- | ---------- |
+| 4 | Testning och rapport klar | Testrapport (före/efter per brist), fullständig rapportutkast |
+
+---
+| Vecka | Milstolpe | Leverabler |
+| ----- | --------- | ---------- |
+| 5 | Redovisning | Inlämnad rapport, genomförd muntlig presentation |
 
 ---

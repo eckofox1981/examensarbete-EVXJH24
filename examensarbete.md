@@ -38,6 +38,7 @@ Detta är en kortfattad sammanfattning (max 250 ord) på **engelska** som ska in
 | HTTPS                           | Hypertext Transfer Protocol Secure, protokoll för krypterad transport av data för HTTP-protokollet                                                                                                |
 | IDE                             | Integrated Development Environment, miljön där utvecklare skriver sin kod                                                                                                                         |
 | IntelliJ                        | En IDE utvecklad av JetBrain                                                                                                                                                                      |
+| ISO                             | International Organization for Standardization                                                                                                                                                    |
 | Java                            | Ett av de vanligaste programmeringspråken                                                                                                                                                         |
 | JavaScript                      | Ett programmeringsspråk som ger interaktivitet och dynamik till webbsidor, främst när de körs i webbläsaren                                                                                       |
 | Json                            | JavaScript Object Notation ett kompakt, textbaserat format som används för att utbyta data                                                                                                        |
@@ -45,6 +46,7 @@ Detta är en kortfattad sammanfattning (max 250 ord) på **engelska** som ska in
 | MIME-type                       | Multipurpose Internet Mail Extensions Type, används för att ange filtyp. Namnet härstammar från dess ursprungliga användning för att identidera emails innehåll och bifogade filer.               |
 | Open-source                     | Öppen källkod som inte är proprietärt, dvs illgänglig att använda, läsa, modifiera och vidaredistribuera för den som vill                                                                         |
 | MFA                             | Multi-Factor Authentication                                                                                                                                                                       |
+| NIST                            | National Institute of Standards and Technology                                                                                                                                                    |
 | ORM                             | Object Relational Mapping, en programmeringsteknik som tjänar till att transformera data som används i ett objektorienterade programmeringsspråk eller programmet och relationsdatabasen          |
 | OWASP                           | Open Worldwide Application Security Project                                                                                                                                                       |
 | PCI DSS                         | Payment Card Industry Data Security Standard                                                                                                                                                      |
@@ -60,6 +62,7 @@ Detta är en kortfattad sammanfattning (max 250 ord) på **engelska** som ska in
 | TLS                             | Transport Layer Security, ett kryp­te­rings­pro­to­koll som sä­ker­stäl­ler säker da­taö­ver­fö­ring på internet.                                                                                 |
 | URI                             | Uniform Resource Identifier, en teckensträng som används för att identifiera en resurs. URI kan användas för att lokalisera en webbplats, fil eller en specifik del av data                       |
 | URL                             | Uniform Resource Locator, är den teckensträng som identifierar en viss resurs på internet, till exempel en webbsida. I folkmun kallas URL i för "webbadress"                                      |
+| XML                             | Extensible Markup Language                                                                                                                                                                        |
 | XSS                             | [Cross Site Scripting](#2112)                                                                                                                                                                     |
 | ZAP                             | Zed Attack Proxy, en _open-source_ programvara som används i samband säkerhetstestning av applikationer                                                                                           |
 
@@ -472,14 +475,14 @@ EfBox har ingen logging alls utöver det som erbjuds inbyggt i Spring Boot i ter
 
 Med Felhantering av undantagstillstånd menas att applikationen misslyckas att förebygga eller upptäcka och hantera ovanliga eller oförutsebara tillstånd. Detta leder i sin tur till krascher, oönskat beteende och ibland sårbarhet.
 
-Varje gång applikationen inte vet hur den ska hantera nästa instruktion eller kommando har ett undantagstillstånd felhanteras. En hacker kan använda dessa sårbarhet för att få applikationen att bete sig på ett oönskat sätt.
+Varje gång applikationen inte vet hur den ska hantera nästa instruktion eller kommando har ett undantagstillstånd felhanterats. En hacker kan använda dessa sårbarheter för att få applikationen att bete sig på ett oönskat sätt.
 
-Eftersom utvecklare behöver förebygga för det oförutsebara kan undantagstillståndshantering vara komplicerad. OWASP rekommendera följande:
+Eftersom utvecklare behöver förebygga för det oförutsebara kan undantagstillståndshantering vara komplicerad. OWASP rekommenderar följande:
 | Åtgärd | Förklaring |
 | ------ | ---------- |
 | Undantag fångas tidigt | Nästlade undantagshantering bör undvikas dels för att säkra beteende men också för att underlätta felsökning |
 | Rollback | När ett undantag upptäcks ska processen som orsakade den avbrytas och eventuellt köras om. Man pratar om att applikationen felar stängt (_failing closed_) |
-| Undvika undantag | För undvika undantag ska applikationen konfigureras för att undvika dessa. Hastighetsbegränsning (_rate-limiting_), strypning och andra begränsningar förebygger undantagstillstånd. |
+| Undvika undantag | För att undvika undantag ska applikationen konfigureras för att undvika dessa. Hastighetsbegränsning (_rate-limiting_), strypning och andra begränsningar förebygger undantagstillstånd. |
 | Logging | Vissa undantagstillstånd bör loggas om de förekommer repetitivt över en fördefinierad tidsram. Detta för att undvika [Brute Force Attacker](#2113-brute-force-attack) och Denial of Service (DoS) attacker (dvs anfallet går ut på att överbelasta systemet) . Logging bör ske enligt föreslagna åtgärd i [Security Logging and Alerting Failures](#2179-security-logging-and-alerting-failures-brister-i-säkerhetsloggning-och-larmhantering).|
 
 OWASP understryker också behovet av följande:
@@ -487,27 +490,19 @@ OWASP understryker också behovet av följande:
 - en strikt inputsvalidering med sanitering av tecken som accepteras
 - ett centraliserat och globalt felhanteringssystem för att undvika att undantag hanteras på olika sätt genom applikationen.
 
-Dessa åtgärd får tas under beaktning under [hotmodelleringen](#216-hotmodellering-med-stride). Ett återkommande tema är behovet för bra logging av incidenter och EFBox-API:et på granskas och ett globalt felhanteringssystem behöver skapas.
+Dessa åtgärder får tas under beaktning under [hotmodelleringen](#216-hotmodellering-med-stride). Ett återkommande tema är behovet för bra logging av incidenter och EFBox-API:et på granskas. Ett globalt felhanteringssystem behöver skapas.
 
 ### 2.2 Befintlig Forskning och Lösningar
 
-**För utforskande arbeten:**
+Det hittades ingen studie som direkt uppgraderar ett API till OWASP Top 10 standard. Det finns dock studier där OWASP används som grund för att skapa nya REST API baserat på OWASP Top 10 med varierande programmeringsspråk och omfattning.
 
-- Tidigare studier och forskning
-- Befintliga teorier och modeller
-- Identifierade kunskapsluckor
+Till exempel beskriver Silvia Llorente Viejo i sin tes "[Securing a REST API Server](https://upcommons.upc.edu/server/api/core/bitstreams/7376cf6b-eeb4-49ef-819b-281b8ad7a272/content)" (Polytechnic University of Catalonia, 2022) hur ett REST API byggs med OWASP Top 10 2021 som grund. Programmeringsspråket är NodeJS och omfattar bredare aspekter som Docker, NGINX, CI/CD mm. Studien innehåller några intressanta diskussioner och lösningar relevanta till säkringen av EFBox, nämligen valet av Argon2 för kryptering istället för BCrypt (avsnitt 1.2 Fixing A02:2021 – Cryptographic Failures). Viejos studie är relaterad till säkringen av EFBox men den är inte riktigt jämförbar. Den är dock en bra grund och inspirationskälla för arbetsprocessen.
 
-**För utvecklingsprojekt:**
+Eftersom studien är unik för varje API som behandlas kommer det inte finnas några direkta lösningar för de problem studien stöter på. Kanske kan studien vara en grund för att fylla denna kunskapslucka.
 
-- Liknande applikationer/system
-- Open source-projekt
-- Kommersiella lösningar
+OWASP är dock en av de ledande oraganisationer (andra är NIST och ISO) som främjar applikationers säkerhet och tillhandahåller lösningar och i vissa fall även exempel projekt (som tidigare nämnt i [Filvalidering](#216-filvalidering)).
 
-**För hybridprojekt:**
-
-- Kombination av forskning och praktiska lösningar
-
-Denna studie baseras huvudsakligen på OWASP forskning och erfarenhet.
+Webbsäkerhet är tyvärr ett ofullständigt kunskapsområde då nya exploateringar upptäcks regelbundet på system som ansågs säkra. Attackerna mot system förnyas regelbundet och det är svårt att gardera sig mot det oförutsebara.
 
 ### 2.3 Teknisk/Teoretisk Jämförelse
 
@@ -523,25 +518,18 @@ _Anpassa detta kapitel efter din typ av arbete:_
 
 ### 3.1 Övergripande Arbetsgång
 
-Beskriv din systematiska approach:
+Källorna för arbetsgången är huvudsakligen OWASP eftersom studien använder deras analys av de mest förekommande hot. Annan referensmaterial kommer att användas, i synnerhet dem som rekommenderas av OWASP som anses vara en pålitlig referens.
 
-**För teoretiska studier:**
+Arbetsprocessen för denna studie kommer att följa en lättare form av agila arbetsmetod med extremt korta sprintar. Sprintarnas längd kommer att anpassas beroende på deras omfattning men räknas vara ca en till två dagar långa.
 
-- Litteratursökning och källkritik
-- Analysmetod
-- Syntes och jämförelse
+Planeringsverktyget [Git Hub-projekt](https://github.com/users/eckofox1981/projects/2) med roadmap används för att kartlägga och kontrollera milstolparna i studien.
 
-**För experimentella studier:**
+För det praktiska arbetet ter planeringen sig enligt följande:
 
-- Experimentdesign
-- Testmiljö och verktyg
-- Mätmetoder
-
-**För utvecklingsprojekt:**
-
-- Utvecklingsprocess (agile, iterativ etc.)
-- Design och arkitektur
-- Implementation och testning
+1. Teoretiska studier inkl. grundläggande förståelse runt OWASP Zed Attack Proxy (ZAP).
+2. Analys och test av EFbox i dess nuvarande konfiguration
+3. Implementera de nödvändiga ändringarna till EFBox
+4. Ny analys och testning av EFBox efter implementationen ovan
 
 ### 3.2 Verktyg och Tekniker
 
@@ -556,6 +544,24 @@ Beskriv din systematiska approach:
 - Programmeringsverktyg
 - Testverktyg och mätinstrument
 - Utvecklingsmiljöer
+
+Resurser använda för studien:
+
+- OWASP:s hemsida
+- Google Scholar
+- Google för övriga referenser
+
+I utvecklingsmiljön används följande verktyg:
+
+- IntelliJ Community Edtion (IDE) av JetBrains
+- IntelliJ-plugin SonarQube för analys av kodkvaliten
+- Docker som container för POSTGRESQL-databasen
+- Postman, ett API testing verkty
+- OWASP ZAP, ett servertestverktyg
+- Programmeringen sker i Java version 23 med ramverket SpringBoot
+- Claude AI för code reviews (prompt och historik kommer att bifogas för transparens)
+- Git för versionshantering
+- Git Hub för repositories
 
 ### 3.3 Datainsamling och Analys
 
@@ -578,6 +584,113 @@ Beskriv din systematiska approach:
 - Requirements gathering
 - Teststrategier
 - Utvärderingsmetoder
+
+#### 3.3.1 kartläggning av EFbox, struktur och end-points
+
+##### 3.3.1.1 Översikt
+
+EFbox är ett Javabaserat API som använder ramverket SPring Boot. Spring Boot är ett verktyg med öppen källkod som gör det enklare att skapa mikrotjänster och webbappar med hjälp av Java-baserade ramverk [33]. Spring Boot förenklar utveckling av webb-applikationer genom att, till exempel, inte behöva skapa XML-konfigurationer vilket äldre ramverk krävde (ex: Apache Turbine).
+
+##### 3.3.1.2 Struktur
+
+EFbox fördelas i tre paket:
+
+- user: innehåller objekt, controller, service och repository för användarobjekten
+- fileobjects: innehåller följande paket relaterade till mappar och filer:
+  - efboxfolder: innehåller objekt, controller, service och repository för mappobjekten
+  - efboxfile: innehåller objekt, controller, service och repository för filobjekten
+- security: innehåller säkerhetskonfigurationer som JWT, JWT-filtrering, lösenordskonfigurering mm
+
+Utöver själva koden finns konfigurationsfiler. Ingen CI/CD har implementerats.
+
+#### 3.3.1.3 End-points
+
+Alla end-points börjar sedvanligt med basurl:n.
+Alla endpoint kräver auktorisation med JWT med undantag för registrering- och loginfunktionerna.
+
+| HTTP-metod | URL                | URI                                         | Data                                                                                      | Svar                                                                                                                                         | Beskrivning                                                                                   |
+| ---------- | ------------------ | ------------------------------------------- | ----------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| POST       | user/register      |                                             | JSON: { username: _sträng_, firstName: _sträng_, lastName: _sträng_, password: _sträng_ } | HTTP-kod (_ex: 200 OK_)                                                                                                                      | skapa ett användarkontot                                                                      |
+| PUT        | user/login         |                                             | JSON: { username: _sträng_, firstName: "", lastName: "", password: _sträng_ }             | JWT                                                                                                                                          | loggar in användaren och skickar tillbaka JWT                                                 |
+| GET        | user/info          |                                             | JWT                                                                                       | JSON: { "userID": _UUID_, "username": _sträng_, "firstname": _sträng_, "lastname": _sträng_, "efFolderNames": _lista på mappnamn (sträng)_ } | skickar användar info med existerande mappnamn                                                |
+| DEL        | user/delete        |                                             | JWT                                                                                       | HTTP-kod (_ex: 202 OK_)                                                                                                                      | Radera användarkontot och -data                                                               |
+| POST       | folder/create      | ?folderName=_sträng_& parentFolderID=_UUID_ | _params_                                                                                  | JSON: { "folderID": _UUID_, "name": _sträng_, "folderNames": _lista på mappnamn_, "fileNames": _lista på filnamn_ }                          | skapar en mapp och returnerar json-data. foderID=0 betecknar rootmappen                       |
+| GET        | folder/browse      | ?folderID=_UUID_                            | _params_                                                                                  | JSON: { "folderID": _UUID_, "name": _sträng_, "folderNames": _lista på mappnamn_, "fileNames": _lista på filnamn_ }                          | returnerar information om mappen i Json-data                                                  |
+| PUT        | folder/change-name | ?folderID=_UUID_ &newName=_sträng_          | _params_                                                                                  | _se ovan med det nya namnet_                                                                                                                 | Ändrar namnet på den angivna mappen (baserad på ID) och returnerar mappen                     |
+| GET        | folder/search      | _/sträng_                                   | _params_                                                                                  | JSON: {folders: _lista på mappobjekt_, files: _lista på filobjekt_ }                                                                         | sök och returnerar mappar och filer som matchar sökordet                                      |
+| DEL        | folder/delete      | ?folderID=_UUID_                            | _params_                                                                                  | Sträng                                                                                                                                       | Raderar mappen och dess innehåll. Returnerar informationssträng                               |
+| POST       | file/upload        | ?parentID=_UUID_                            | fil                                                                                       | JSON: { "fileID": _UUID_, "filename": _sträng_, "content": _lista på byte_, "type": _sträng_, "parentFolder": _sträng_ }                     | Ladda upp en fil till databasen med den tilldelad föräldramappen och returnerar JSON med blob |
+| PUT        | file/change-name   | ?fileID=_sträng_ &newName=_sträng_          | _params_                                                                                  | se ovan                                                                                                                                      | Ändrar namnet på filen och returner Json-objekt                                               |
+| GET        | file/download      | ?fileID=_UUID_                              | _params_                                                                                  | filinnehåll (lista på byte)                                                                                                                  | hämtar själva filen från databasen                                                            |
+| DEL        | file/delete        | ?fileID=_UUID_                              | _params_                                                                                  | Sträng                                                                                                                                       | Raderar filen och returnerar en informationssträng                                            |
+
+#### 3.3.2 Hotmodellering av EFbox
+
+Följande hotmodellering utgår från EFbox systemkomponenter och dataflöden
+identifierade i [kartläggningen](#3311-översikt). STRIDE-ramverket används
+för att kategorisera hoten.
+
+**Systemelement:**
+
+- Klient (Postman / webbläsare / frontend)
+- REST API (Spring Boot)
+- Säkerhetslager (Spring Security, JWT-filter)
+- Databas (PostgreSQL via JPA/Hibernate)
+- Fillagring (databas som blob)
+
+**Dataflöden:**
+
+- Klient till API: HTTP-förfrågningar med JWT i Authorization-header (se [end-points](#3313-end-points))
+- API till Databas: JPA-frågor för användare, mappar och filer
+- API till Klient: JSON-svar och filinnehåll
+
+| Hot (STRIDE)           | Komponent                              | Beskrivning                                                                                                                                                   | Risknivå | Åtgärd                                                                                                                                                 |
+| ---------------------- | -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Spoofing               | JWT-filter                             | Anfallaren använder [ett stulet eller förfalskat JWT](#2171-broken-access-control-bristfällig-åtkomstkontroll) för att identifiera sig som en annan användare | Hög      | [Kortlivade JWT](#212-autentisering-och-auktorisering-jwt), [säker signering med externaliserad nyckel](#213-asymmetrisk-kryptografi)                  |
+| Spoofing               | /user/login                            | [Brute force-attack](#2113-brute-force-attack) mot inloggningsendpointen                                                                                      | Hög      | [Rate limiting](#2171-broken-access-control-bristfällig-åtkomstkontroll), [stark lösenordspolicy](#2177-authentication-failures-autentiseringsbrister) |
+| Tampering              | /file/upload                           | Uppladdning av [skadlig fil med manipulerad Content-Type](#2112-code-injection)                                                                               | Hög      | [Filtypsvalidering](#216-filvalidering)                                                                                                                |
+| Tampering              | /folder/change-name, /file/change-name | Anfallaren ändrar namn på en annans resurser                                                                                                                  | Medel    | [Åtkomstkontroll före CRUD-operationer](#2171-broken-access-control-bristfällig-åtkomstkontroll)                                                       |
+| Repudiation            | Alla endpoints                         | [Inga säkerhetsloggar](#2179-security-logging-and-alerting-failures-brister-i-säkerhetsloggning-och-larmhantering) – obehöriga åtkomstförsök spåras inte      | Hög      | Implementera säkerhetsloggning                                                                                                                         |
+| Information Disclosure | /file/upload (svar)                    | Filinnehåll returneras som blob i JSON-svaret vid uppladdning                                                                                                 | Medel    | [Ta bort content-fältet ur uppladdningssvaret](#2171-broken-access-control-bristfällig-åtkomstkontroll)                                                |
+| Information Disclosure | /user/login (felmeddelanden)           | [Vaga felmeddelanden](#21710-mishandling-of-exceptional-conditions-felhantering-av-undantagstillstånd) skyddar mot user enumeration                           | Låg      | Felhantering ska returnera vaga meddelande                                                                                                             |
+| Information Disclosure | application.properties                 | [JWT-nyckel och databasuppgifter i klartext](#2177-authentication-failures-autentiseringsbrister)                                                             | Hög      | Externalisera via miljövariablar                                                                                                                       |
+| Denial of Service      | /file/upload                           | Ingen lagringskvot – [en användare kan fylla databasen](#2171-broken-access-control-bristfällig-åtkomstkontroll)                                              | Hög      | Lagringskvot per användare                                                                                                                             |
+| Denial of Service      | /user/login                            | Upprepade inloggningsförsök utan begränsning                                                                                                                  | Hög      | [Rate limiting](#2179-security-logging-and-alerting-failures-brister-i-säkerhetsloggning-och-larmhantering)                                            |
+| Elevation of Privilege | JWT-filter                             | [Manipulerat JWT-payload för att höja användarroll](#2177-authentication-failures-autentiseringsbrister)                                                      | Hög      | Validera JWT-signatur, undvik rollbaserad kontroll                                                                                                     |
+| Elevation of Privilege | /folder/search                         | Söksträng direkt i URL-sökväg – potentiellt injektionsmål                                                                                                     | Medel    | [Inputvalidering på sökparameter](#2175-injection-injektionsattacker)                                                                                  |
+
+Hotmodelleringen är förenklad och fokuserar på de mest kritiska hoten
+kopplade till OWASP Top 10:2025. En fullskalig hotmodellering med
+formella DFD-diagram är utanför studiens scope.
+
+#### 3.3.3 Automatisk och Manuell kodgranskning av EFbox ur ett säkerhetsperspektiv
+
+Kodgranskningen avser bara säkersaspekterna och inte övriga detaljer som vissa designmål (ex: valet att bara skicka tillbaka mappnamnen i _user/info_ istället för deras ID vilket hade varit med användbart för en client).
+
+##### 3.3.3.1 Analys med SonarQube
+
+[SonarQube](https://www.sonarsource.com/) är ett analysverktyg som mäter olika aspekt kodkvaliten och -komplexitet. SonarQube har även ett användarvänligt webverktyg för att analysera projekt på GitHub, rapportformatet är då lättare att läsa. Tyvärr för gratisanvändare analyserras enbart _main_-branschen i projektet. I brist på betalkonto kommer alla ändringar mergeas med _main_ för analys.
+**Resultat av analysen med SonarQube**
+SonarQube analyserar projekt olika mätpunkter som _maintanability_ (underhållsmässighet), _security_ (säkerhet), _reliability_ (tillförlitlighet), _duplications_ (dubletter), _size_ (storlek), _complexity_ (komplexitet) och _issues_ (problem).
+Varje mätpunk får ett betyg från A till E beroende på allvaret i problemen.
+Överlag får EFBox följande granskning:
+| Mätpunkt | Betyg |
+|-|-|
+| Security | E |
+| Reliability | A |
+| Maintanability | A |
+| Security Review | E |
+
+_se Bilaga A för mer information_
+
+**Säkerhet**:
+Överlag analyserade SonarQube två stora porblem med EFBox
+| Problem | Hot (OWASP Top 10) | Fil | Åtgärd |
+|-|-|-|-|
+| 1. Hårdkodade lösenord | Broken Access Control (A01), Security Misconfiguration (A02) | application.properties| Användning av miljövariablar. |
+| 2. Acceptans för stora filer (1000MB) | Denial of Service Attack, Security Misconfiguration (A02) | application.properties (2 st) | Anlysera behoven för applikationen och justera |
+
+_duplications_ (dubletter), _size_ (storlek), _complexity_ (komplexitet) och _issues_ (problem).
 
 ### 3.4 Kvalitetssäkring
 
@@ -757,7 +870,7 @@ I referenslistan
 
 [32]: Why is quantum cryptography important?, Josh Schneider, IBM, Published: December 2023. Available: https://www.ibm.com/think/topics/quantum-cryptography#Why+is+quantum+cryptography+important?
 
-[33]:
+[33]: Vad är Java Spring Boot?, Azure Microsoft, Accessed: May 2026. Available: https://azure.microsoft.com/sv-se/resources/cloud-computing-dictionary/what-is-java-spring-boot/
 
 [34]:
 
@@ -812,24 +925,9 @@ Python,” Journal of Computer Science, vol. 12, no. 3, pp. 234-245, Mar. 2023.
 
 _Anpassa efter typ av arbete:_
 
-**För teoretiska studier:**
-
-- Bilaga A: Litteratursökning och urvalskriterier
-- Bilaga B: Sammanställning av källor
-- Bilaga C: Analysscheman
-
-**För experimentella studier:**
-
-- Bilaga A: Experimentdata
-- Bilaga B: Testprotokoll
-- Bilaga C: Statistiska beräkningar
-
-**För utvecklingsprojekt:**
-
-- Bilaga A: Källkod (utdrag eller repo-referens)
-- Bilaga B: Teknisk dokumentation
-- Bilaga C: Testresultat
-
-**För alla typer:**
-
-- Bilaga X: Projektplanering och tidsrapporter
+- Bilaga A - SonarCloud-analys (före åtgärder)
+- Bilaga B - ZAP-säkerhetsrapport (före åtgärder)
+- Bilaga C - SonarCloud-analys (före åtgärder)
+- Bilaga D - ZAP-säkerhetsrapport (efter åtgärder)
+- Bilaga E - GitHub Projects Roadmap
+- Bilaga F - Claude AI-interaktioner
