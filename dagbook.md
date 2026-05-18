@@ -42,7 +42,7 @@
 
 **Time:** 8.5 hours **TOTAL**: 23.5 hours
 
-## 2026-05-11
+## 2026-05-12
 - skrivit har studerat för:
     - 1.5 Metodöversikt
     - 2.1.1 Olika attacker mot API (4 st än så länge)
@@ -62,7 +62,7 @@
 
 **NOTE**: problem med markdown, vägra länka till referencerna
 
-## 2026-05-12
+## 2026-05-13
 - förlorad tid på klassråd (2timmar) och ingen skola i em
 - skrivit och studerat för:
      - 2.1.5 HTTP and API security
@@ -80,7 +80,7 @@
 
 **NOTE**: problem med markdown, vägra länka till referencerna
 
-## 2026-05-13
+## 2026-05-14
 - Nästan klar med kapitel 2, kommer behöva se över påstående och eventuellt backa/förbättra på några punkter
 - skrivit och studerat för:
       - 2.1.7.3 Software Supply Chain Failures
@@ -105,6 +105,62 @@
 
 **NOTE**: problem med markdown, vägra länka till referencerna
 
+## 2026-05-15
+- half day, started existing studies
+### Mål för morgon dagen:
+- vore bra att få till ZAP
+- ha svårt att få ZAP att fungerar (fick det att funka men få svaren i HTTPS...)
+
+### TODO
+- boka tid med William för kontroll
+
+**NOTE**: måste kartlägga alla endpoint och JSON-objekt
+
+**NOTE**: problem med markdown, vägra länka till referencerna
+
+**Time:** 4 hours **TOTAL**: 50 hours
+## 2026-05-16
+- ett par timmar ikväll
+- ZAP fungerar (!), "enklaste" var att skaffa ett lokalt certifikat och skicka request med HTTPS från början
+
+### Mål för morgon dagen:
+- Börja analys av programmet
+
+### TODO
+- boka tid med William för kontroll
+
+**NOTE**: måste kartlägga alla endpoint och JSON-objekt
+
+**NOTE**: problem med markdown, vägra länka till referencerna
+
+**Time:** 3 hours **TOTAL**: 53 hours
+## 2026-05-17
+- 3.3.1 kartläggning av EFbox, struktur och end-points
+    - 3.3.1.1 Översikt
+    - 3.3.1.2 Struktur
+    - 3.3.1.3 End-points
+- 3.3.2 Hotmodellering av EFbox
+- 3.3.3 Automatisk och Manuell kodgranskning av EFbox ur ett säkerhetsperspektiv
+    - 3.3.3.1 Analys med SonarQube
+- har skapat en originalForEssay bransch från main
+- bra dag!
+
+### Mål för morgon dagen:
+- Börja manauelanalys av programmet
+
+### TODO
+- boka tid med William för kontroll
+
+**NOTE**: problem med markdown, vägra länka till referencerna
+
+**Time:** 6 hours **TOTAL**: 59 hours
+## SUMMERING FÖR VECKAN 2
+[x] Planering, 
+[x] förberedelse och initial analys klar -> att debatera vare sig klar eller ej
+[x] GitHub Projects uppsatt, 
+[] branches skapade, -> blir under arbetetsgång för att skapa bransch från godkända bransch
+[x] hotmodell, 
+[] samlad analysrapport med kodreferenser -> nästan
 ---
 | Vecka | Milstolpe | Leverabler |
 | ----- | --------- | ---------- |
