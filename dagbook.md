@@ -154,18 +154,30 @@
 **NOTE**: problem med markdown, vägra länka till referencerna
 
 **Time:** 6 hours **TOTAL**: 59 hours
-## SUMMERING FÖR VECKAN 2
+## SUMMERING FÖR VECKAN 2 (44 hours)
 [x] Planering, 
 [x] förberedelse och initial analys klar -> att debatera vare sig klar eller ej
 [x] GitHub Projects uppsatt, 
 [] branches skapade, -> blir under arbetetsgång för att skapa bransch från godkända bransch
 [x] hotmodell, 
 [] samlad analysrapport med kodreferenser -> nästan
+
 ---
 | Vecka | Milstolpe | Leverabler |
 | ----- | --------- | ---------- |
 | 3 | Implementering av åtgärder klar | Åtgärdad kod i feature-branch, commit per åtgärd |
 
+
+##b2026-05-17
+- bokat med wiliam: kl 11 imorgon
+- kommit halvägs på manuell granskningsrapport
+- gått igenom GitHub project
+
+### Mål för morgon dagen:
+- göra klar Granskning
+- ZAP test med rapport
+ 
+**Time:** 8 hours **TOTAL**: 67 hours
 ---
 | Vecka | Milstolpe | Leverabler |
 | ----- | --------- | ---------- |
