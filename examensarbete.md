@@ -23,7 +23,7 @@ Detta är en kortfattad sammanfattning (max 250 ord) på **engelska** som ska in
 | API                             | Application Programming Interface - Gränssnitt för kommunikation mellan mjukvarusystem                                                                                                            |
 | Backend                         | basbearbetningen (ofta på servernivå)                                                                                                                                                             |
 | Cookie                          | Kaka på svenska (efter sagan om Hans och Greta) är information som sparas i webbläsaren, oftast används det för prestanda förbättringar och/eller för att lagra användarinformation (t.ex en JWT) |
-| CORS                            | Cross-origin resource sharing, en teknik som begränsar åtkomst till websidor från specifierade                                                                                                    |
+| CORS                            | Cross-origin resource sharing, en teknik som begränsar åtkomst till websidor från specifierade domäner                                                                                            |
 | CRUD                            | Create Read Update Delete (Skapa, Läsa, Ändra, Radera), ett begrepp som beskriver möjlig hantering av data                                                                                        |
 | CSP                             | Content-Security-Policy, en response header som definierar vilka resurser en webbläsare få använda (ofta en servers ursprung)                                                                     |
 | ECDSA                           | Elliptisk kurva digital signaturalgoritm, en av de mer komplexa offentliga nyckelkrypteringsalgoritmer                                                                                            |
@@ -690,8 +690,6 @@ _se Bilaga A för mer information_
 | 1. Hårdkodade lösenord | Broken Access Control (A01), Security Misconfiguration (A02) | application.properties| Användning av miljövariablar. |
 | 2. Acceptans för stora filer (1000MB) | Denial of Service Attack, Security Misconfiguration (A02) | application.properties (2 st) | Anlysera behoven för applikationen och justera |
 
-_duplications_ (dubletter), _size_ (storlek), _complexity_ (komplexitet) och _issues_ (problem).
-
 ### 3.4 Kvalitetssäkring
 
 - Metodkvalitet och tillförlitlighet
@@ -926,6 +924,7 @@ Python,” Journal of Computer Science, vol. 12, no. 3, pp. 234-245, Mar. 2023.
 _Anpassa efter typ av arbete:_
 
 - Bilaga A - SonarCloud-analys (före åtgärder)
+- Bilaga B - Manuel kodgranskning av EFbox-API:et ur ett säkerhetsperspektiv
 - Bilaga B - ZAP-säkerhetsrapport (före åtgärder)
 - Bilaga C - SonarCloud-analys (före åtgärder)
 - Bilaga D - ZAP-säkerhetsrapport (efter åtgärder)

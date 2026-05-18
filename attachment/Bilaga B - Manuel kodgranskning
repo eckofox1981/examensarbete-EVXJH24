@@ -1,0 +1,197 @@
+# Manuell kodgranskning av EFbox-API:et ur ett säkerhetsperspektiv
+
+## 1. Metod
+
+GitHub-repository: [branch originalForEssay](https://github.com/eckofox1981/EFbox/tree/originalForEssay)
+
+För den manuella granskningen kommer studien att gå igenom varje fil och leta efter logik eller kod som kan utgöra ett hot enligt OWASP Top 10.
+
+En tabell för varje fil ritas upp nedan med fynderna.
+
+---
+
+## 2. Förkortningar
+
+| Term/Förkortning | Förklaring                                                                                                                                                                                        |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| CRUD             | Create, Read, Update, Delete – syftar på datahanteringen som skapande, läsande, uppdatering och radering                                                                                          |
+| CORS             | Cross-origin resource sharing, en teknik som begränsar åtkomst till websidor från specifierade domäner                                                                                            |
+| DTO              | Direct Transfer Object, ett objekt som används för att förmeddla enbart vald data utan logik.                                                                                                     |
+| One To Many      | En term för att beskriva förhållandet mellan objekt i en databas. One To Many syftar på att ett objekt kan relatera till flera andra objekt (en användare kan ha flera mappar)                    |
+| Many To One      | En term för att beskriva förhållandet mellan objekt i en databas. Many To One syftar på att flera objekt av samma typ kan relatera till samma objekt (flera mappar kan ägas av en enda användare) |
+
+## 3. Granskningen
+
+### 3.1 User-paketet
+
+#### 3.1.1 User.java
+
+User.java är ett enkelt användarobjekt med ett OneToMany-förhållande till mappar. Granskning noterar även rad 29:
+
+```java
+@OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+private final List<EFBoxFolder> RootFolder;
+```
+
+som kommer att se till att vid kontoradering kommer även användarens mapp att raderas.
+
+| Rad | Fynd               | OWASP-referens            | Kommentar                                                                                                                                                                                                        | Åtgärd                                    |
+| --- | ------------------ | ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- |
+| 42  | `getAuthorities()` | A01 Broken Access Control | Denna funktion är en enkel override från GrantedAuthorities. Funktionen returnerar bara en tom lista men skulle kunna användas av administratörsliknande användare för att komma åt säkerhetsloggarna (A09/A10). | Implementera GrantedAuthorities           |
+| -   | Ingen permission   | A01 Broken Access Control | I samband med ovanstående finns det ingen GrantedAuthorities för användaren.                                                                                                                                     | Skapa GrantedAuthorities och implementera |
+
+#### 3.1.2 UserController.java
+
+UserController.java exponerar alla endpoints relaterade till User-objektet.
+Generellt skickar controllern förfrågan vidare till UserService.java och hanterar svaret till användaren.
+En subklass UserDTO samt en NoPasswordUserDTO är inbakade i klassen.
+
+| Rad | Fynd                                                             | OWASP-referens                                                                        | Kommentar                                                                                                                                                                                                                                                                                                                                                | Åtgärd                                                                                       |
+| --- | ---------------------------------------------------------------- | ------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| 36  | Icke-vaga felmeddelanden                                         | A10 Mishandling of Exceptional Conditions                                             | Om något fel inträffar vid skapande av användaren skickas ett informationsmeddelande med felmeddelandet från `UserService.createUser()`. Felmeddelandet är generellt vagt vilket är positivt. Däremot fångas bara Exception, vilket innebär att om ett annat fel än det i createUser fångas kan känslig information oavsiktligt skickas till användaren. | En ytterligare catch-sats bör skrivas för att definiera ett svarsmedelande.                  |
+| 52  | LoginException fångas                                            | A09 Security Logging and Alerting Failures, A10 Mishandling of Exceptional Conditions | Enbart LoginException fångas, vilket har ett vagt meddelande (positivt), men inga andra undantag finns förberedda som backup.                                                                                                                                                                                                                            | En ytterligare catch-sats bör fånga generella undantag utan att avslöja känslig information. |
+| 69  | Icke-vaga felmeddelanden                                         | A10 Mishandling of Exceptional Conditions                                             | Se rad 36 ovan                                                                                                                                                                                                                                                                                                                                           | Se rad 36 ovan                                                                               |
+| 84  | Standard Exception skickar automatiskt genererade felmeddelanden | A10 Mishandling of Exceptional Conditions                                             | Om ett undantag inträffar i UserService.deleteUser skickas ett automatiskt felmeddelande till användaren med risk att känslig information avslöjas.                                                                                                                                                                                                      | Bör ändras till vagt felmeddelande.                                                          |
+
+#### 3.1.3 UserService.java
+
+UserService behandlar logiken för hanteringen av User-objekt och CRUD-operationer via UserRepository.
+
+| Rad    | Fynd                                       | OWASP-referens                            | Kommentar                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                | Åtgärd                                                                                                                               |
+| ------ | ------------------------------------------ | ----------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| 31     | `createUser()`                             | A07 Authentication Failures               | `createUser()` har en lösenordsvalidering som tillåter enbart mer än 5 tecken, minst en versal och gemena bokstäver och minst en siffra. OWASP refererar till [NIST-dokumentationen](https://pages.nist.gov/800-63-3/sp800-63b.html#:~:text=5.1.1%20Memorized%20Secrets) för lösenordslängd när dessa väljs av användarna själva: mellan 8 och 64 tecken. Angående komplexitet är [NIST bilaga A](https://pages.nist.gov/800-63-3/sp800-63b.html#appA) försiktig med att definiera en standard men varnar att alltför komplexa lösenord riskerar att glömmas av användaren. Introduktionen av specialtecken (@, +, $, mm) gör det svårare för anfallare att utföra brute force-attacker. | Förläng regex i passwordValidationIsOK till 8 upp till 64 tecken och introducera krav på ett specialtecken.                          |
+| 31     | `createUser()`                             | A05 Injection                             | Användarnamnet valideras inte vid registreringen.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | Inputvalidering implementeras                                                                                                        |
+| 32, 86 | `createUser()`, `passwordValidationIsOK()` | A07 Authentication Failures               | `passwordValidationIsOK()` kontrollerar inte mot vanliga eller komprometterade lösenord. OWASP föreslår en kontroll mot [Have I Been Pwned](https://haveibeenpwned.com) som tillhandahåller ett API för ändamålet.                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | Implementera kontroll av svaga eller komprometterade lösenord, antingen via Have I Been Pwned eller med hjälp av en nedladdad lista. |
+| -      | Bra undantagshantering                     | A10 Mishandling of Exceptional Conditions | UserService skickar generiska felmeddelanden utan att avslöja känslig information.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | N/A                                                                                                                                  |
+
+#### 3.1.4 UserRepository.java
+
+Denna fil hanterar kommunikationen mellan databasen och UserService.java. Utan anmärkning.
+
+### 3.2 EFBox Folder-paketet
+
+#### 3.2.1 EFBoxFolder.java
+
+EFBoxFolder.java representerar mappobjektet. Eftersom mappar kan referera till varandra via _parentFolder_ ser man även här (rad 29) till att tillhörande filer och mappar raderas i samband med föräldramappens radering:
+
+```java
+@OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+private final List<EFBoxFolder> RootFolder;
+```
+
+Inga säkerhetsavvikelser påträffades.
+
+#### 3.2.2 EFBoxFolderDTO.java och SearchResponseDTO.java
+
+Dessa DTO:er är ganska enkla och riskfria ur ett säkerhetsperspektiv. Designvalet att bara skicka tillbaka fil- och mappnamn behandlas ej i denna studie.
+Det noteras positivt att användaruppgifter (ID eller användarnamn) inte delas ut i DTO:erna.
+Utan anmärkning.
+
+#### 3.2.3 EFBoxFolderController.java
+
+EFBoxFolderController.java exponerar alla endpoints relaterade till EFBoxFolder-objektet.
+Generellt skickar controllern förfrågan vidare till EFBoxFolderService.java och hanterar svaret till användaren.
+| Rad | Fynd | OWASP-referens | Kommentar | Åtgärd |
+|-|-|-|-|-|
+| 34, 46, 63, 77, 90 | Automatiska felmeddelanden returneras | A10 Mishandling of Exceptional Conditions | De olika funktionerna har fördefinierade meddelanden för undantagshantering men som backup för oförutsedda undantag skickas automatiska felmeddelanden. Risk för att känslig information avslöjas. | Implementera generiska felmeddelanden. |
+
+#### 3.2.4 EFBoxFolderService.java
+
+EFBoxFolderService behandlar logiken för hanteringen av User-objekt och CRUD-operationer via UserRepository.
+| Rad | Fynd | OWASP-referens | Kommentar | Åtgärd |
+|-|-|-|-|-|
+| - | Bristande inputvalidering | A05 Injection | Många funktioner accepterar stränginputs från användaren men dessa valideras aldrig mot injektioner. EFBox använder visserligen JpaRepository som agerar som mellanhand för databaskommunikation, men inputvalidering är en bra praxis att adoptera. | Implementera inputvalidering |
+| 75 | Bristande inputvalidering | A05 Injection | `searchInAllFolder()` lider av inputvalideringsbristen nämnd ovan. I detta fall är det ett allvarligt problem då funktionen som anropas i EFBoxFolderRepository.java anropar databasen med en specialskriven fråga som tar in inputen obehandlad. Detta utgör en större risk för injektionsattacker. | Se ovan |
+| 120 | Undantagshantering | A10 Mishandling of Exceptional Conditions | `changeFolderName()` kan kasta två olika sorters undantag men funktionen anger bara det generella Exception. | Exception bör ändras till de specificerade undantagen i funktionen |
+| 139 | Åtkomstkontroll | A01 Broken Access Control | Funktionen `userIsNotFolderOwner()` kontrollerar att användaren äger mappen innan varje CRUD-operation, vilket är positivt. | N/A |
+
+#### 3.2.5 EFBoxFolderRepository.java
+
+EFBoxFolderRepository.java hanterar kommunikationen mellan databasen och EFBoxFolderService.
+
+| Rad | Fynd                      | OWASP-referens | Kommentar                                                                                                                                                  | Åtgärd                                  |
+| --- | ------------------------- | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------- |
+| 20  | Bristande inputvalidering | A05 Injection  | Som nämnts tidigare i [EFBoxFolderService](#324-efboxfolderservice.java) används här ett egetskrivet databasanrop som tar in ovaliderad data från service. | Implementera inputvalidering i service. |
+
+### 3.3 EFBoxFile package
+
+#### 3.3.1 EFBoxFile.java
+
+EFBoxFolder.java representerar filobjekt med ett Many To One förhållande til mapparna (eftersom flera filer kan finnas i samma mapp). Objektets egenskap 'content' av typ byte[] noteras men i övrigt inga anmärkningar.
+
+#### 3.3.2 EFBoxFileDTO
+
+Det noteras positivt att användaruppgifter (ID eller användarnamn) inte delas ut i DTO:et men i överigt inga anmärkningar.
+
+#### 3.3.3 EFBoxFileController
+
+EFBoxFileController.java exponerar alla endpoints relaterade till EFBoxFile-objektet.
+Generellt skickar controllern förfrågan vidare till EFBoxFileService.java och hanterar svaret till användaren.
+
+| Rad             | Fynd                                  | OWASP-referens                             | Kommentar                                                                                                                                                                                          | Åtgärd                                 |
+| --------------- | ------------------------------------- | ------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------- |
+| 40, 65, 85, 107 | Automatiska felmeddelanden returneras | A10 Mishandling of Exceptional Conditions  | De olika funktionerna har fördefinierade meddelanden för undantagshantering men som backup för oförutsedda undantag skickas automatiska felmeddelanden. Risk för att känslig information avslöjas. | Implementera generiska felmeddelanden. |
+| 29, 98          | bristande inputsvalidering            | A05 Injection                              | Varken `uploadFile()` eller `changeFileName()` har inputs validering för filnamnen. Risk för injection                                                                                             | Inplementera inputsvalidering          |
+| -               | Hyfsad undatangshantering             | A10 Mishhandling of Exceptional Conditions | Med undantag för _bad requests_-undantagshanteringen har de flesta undantag som fångas egna informationsmeddelanden från de funktioner de respektivt anropar.                                      | N/A                                    |
+
+#### 3.3.4 EFBoxFileService.java
+
+EFBoxFileService behandlar logiken för hanteringen av User-objekt och CRUD-operationer via UserRepository.
+| Rad | Fynd | OWASP-referens | Kommentar | Åtgärd |
+|-|-|-|-|-|
+| 34, 96 | Bristande inputvalidering | A05 Injection | `uploadFile()` och `changeFileName()` har ingen inputsvalidering. Det är allvarligt problem då funktionen som anropas i EFBoxFileRepository.java anropar databasen med en specialskriven fråga som tar in inputen obehandlad. Detta utgör en större risk för injektionsattacker. | Implementera inputsvalidering |
+| 34 | Bristande filvalidering | relaterat till A05 Injection | Filerna accepteras som de är utan att kontrolleras för innehåll. En filvalidering bör implementeras. |
+| 34, 59, 76, 96 | Automatiska felmeddelanden returneras | A10 Mishandling of Exceptional Conditions | De olika funktionerna har fördefinierade meddelanden för undantagshantering men som backup för oförutsedda undantag skickas automatiska felmeddelanden. Risk för att känslig information avslöjas. | Implementera generiska felmeddelanden. |
+
+#### 3.3.5 EFBoxFileRepository.java
+
+EFBoxFileRepository.java hanterar kommunikationen mellan databasen och EFBoxFileService.
+
+| Rad | Fynd                      | OWASP-referens | Kommentar                                                                                                                                             | Åtgärd                                  |
+| --- | ------------------------- | -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------- |
+| 21  | Bristande inputvalidering | A05 Injection  | Som nämnts tidigare i [EFBoxFileService](#334-efboxfileservicejava) används här ett egetskrivet databasanrop som tar in ovaliderad data från service. | Implementera inputvalidering i service. |
+
+#### 3.4 Security package
+
+##### 3.4.1 GlobalCorsConfig.java
+
+CORS-konfigurationen för EFBox, och enligt beskrivningskommentaren skriven av AI. Säkerhet är inte konfigurerad utan möjliggör CORS från alla origin : `config.addAllowedOrigin("*");`.
+
+CORS kommer att implementera på ett annorlunda sätt inom SecurityConfig.java.
+
+#### 3.4.2 JWTFilter.java
+
+JWTFilter.java filtrerar det mottagna JWT vid auktoriseringen och skickar förfrågan och responsen vidare till nästa filter.
+
+| Rad   | Fynd                                         | OWASP-referens                             | Kommentar                                                                                                                                                                                                                                                    | Åtgärd                                                        |
+| ----- | -------------------------------------------- | ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------- |
+| 26    | Bristande JWT-validering                     | A07 Authentication Failures                | JWTs format ska vara en lång sammanhängande sträng med två stycken punkter (.). Det finns en möjlighet här att kontrollera att JWT inte innehåller mellanrum som en enklare validering.                                                                      | Validera JWT-format innan verifiering.                        |
+| 41    | Spridning av lösenord                        | A04 Cryptographic Failures                 | När _authentication_ sätts skickas `user.getPassword()` (alltså det hashade lösenordet) med i auktoriseringen. Det hashade lösenordet kommer senare att finnas i SecurityContext och kan exponeras via loggning, debug-utskrifter eller serialisering (A08). | Ange inte lösenord i `UsernamePasswordAuthenticationToken`.   |
+| 34–43 | Bristfällig felhantering vid JWT-verifiering | A09 Security Logging and Alerting Failures | Om `verifyAuthentication()` kastar ett undantag kan filtret ge ett generiskt serverfel utan en tydlig hantering av ogiltiga tokens.                                                                                                                          | Fånga verifieringsfel och returnera fördefinierat meddelande. |
+
+#### 3.4.3 JWTService.java
+
+JWTService.java hanterar JWT.
+
+| Rad | Fynd                | OWASP-referens              | Kommentar                                                                                                                                                                                                                  | Åtgärd                                  |
+| --- | ------------------- | --------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------- |
+| 33  | _Secret_ i klartext | A04 Cryptographic Failures  | `setSecretString()` hämtar en textrad från en .txt-fil i resources-mappen. Värdet som returneras används för HMAC256-algoritmen på nästa rad.                                                                              | Ersätt funktionen med miljövariabel.    |
+| 44  | JWT-giltighetstid   | A07 Authentication Failures | JWTs giltighetstid sätts till 60 minuter, vilket inte är fel i sig tål att förkortas. Ett säkrare alternativ skulle vara kortare giltighetstid med en funktion för att förnya JWT:n vid autentiserade anrop från klienten. | Bestäm om alternativ ska implementeras. |
+
+#### 3.4.3 PasswordConfig.java
+
+#### 3.4.3 SecurityConfig.java
+
+### 3.6 Konfigurationsfiler / Övriga resurser
+
+## 4 Problemen som inte syns
+
+Granskningen ovan annalyserar problem som syns men en utökad struktur och uppgradering bör diskuteras.
+
+- exception handling central
+- exception logging central
+- alerting central
+- password recovery (user email?)
+- JWT validity / logout
+
+## Referenser
