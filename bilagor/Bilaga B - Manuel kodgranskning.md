@@ -235,7 +235,7 @@ EFbox saknar ett centralt undantagshanteringssystem. Undantag hanteras lokalt i 
 
 Ingen säkerhetsloggning finns implementerad utöver Spring Boots standardlogging i terminalen. Misslyckade inloggningar, obehöriga åtkomstförsök och ogiltiga JWT-tokens loggas inte. Ett centraliserat loggningssystem bör implementeras (A09 Security Logging and Alerting Failures).
 
-### 4.3 Centraliserat larmsystem
+### 4.3 Centraliserat varningssystem
 
 I samband med loggningen saknas ett varningssystem som varnar vid misstänkt aktivitet, t.ex. upprepade misslyckade inloggningsförsök eller ovanligt många förfrågningar från samma källa. Utan varning kan en pågående attack inte upptäckas i realtid (A09 Security Logging and Alerting Failures).
 
