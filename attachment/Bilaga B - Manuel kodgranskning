@@ -17,6 +17,8 @@ En tabell för varje fil ritas upp nedan med fynderna.
 | CRUD             | Create, Read, Update, Delete – syftar på datahanteringen som skapande, läsande, uppdatering och radering                                                                                          |
 | CORS             | Cross-origin resource sharing, en teknik som begränsar åtkomst till websidor från specifierade domäner                                                                                            |
 | DTO              | Direct Transfer Object, ett objekt som används för att förmeddla enbart vald data utan logik.                                                                                                     |
+| JDE              | Java Development Environment                                                                                                                                                                      |
+| JDK              | Java Development Kit                                                                                                                                                                              |
 | One To Many      | En term för att beskriva förhållandet mellan objekt i en databas. One To Many syftar på att ett objekt kan relatera till flera andra objekt (en användare kan ha flera mappar)                    |
 | Many To One      | En term för att beskriva förhållandet mellan objekt i en databas. Many To One syftar på att flera objekt av samma typ kan relatera till samma objekt (flera mappar kan ägas av en enda användare) |
 
@@ -117,7 +119,7 @@ EFBoxFolderRepository.java hanterar kommunikationen mellan databasen och EFBoxFo
 
 #### 3.3.1 EFBoxFile.java
 
-EFBoxFolder.java representerar filobjekt med ett Many To One förhållande til mapparna (eftersom flera filer kan finnas i samma mapp). Objektets egenskap 'content' av typ byte[] noteras men i övrigt inga anmärkningar.
+EFBoxFile.java representerar filobjekt med ett Many To One förhållande til mapparna (eftersom flera filer kan finnas i samma mapp). Objektets egenskap 'content' av typ byte[] noteras men i övrigt inga anmärkningar.
 
 #### 3.3.2 EFBoxFileDTO
 
@@ -140,7 +142,7 @@ EFBoxFileService behandlar logiken för hanteringen av User-objekt och CRUD-oper
 | Rad | Fynd | OWASP-referens | Kommentar | Åtgärd |
 |-|-|-|-|-|
 | 34, 96 | Bristande inputvalidering | A05 Injection | `uploadFile()` och `changeFileName()` har ingen inputsvalidering. Det är allvarligt problem då funktionen som anropas i EFBoxFileRepository.java anropar databasen med en specialskriven fråga som tar in inputen obehandlad. Detta utgör en större risk för injektionsattacker. | Implementera inputsvalidering |
-| 34 | Bristande filvalidering | relaterat till A05 Injection | Filerna accepteras som de är utan att kontrolleras för innehåll. En filvalidering bör implementeras. |
+| 34 | Bristande filvalidering | relaterat till A05 Injection | Filerna accepteras som de är utan att kontrolleras för innehåll. | Implementera filvalidering |
 | 34, 59, 76, 96 | Automatiska felmeddelanden returneras | A10 Mishandling of Exceptional Conditions | De olika funktionerna har fördefinierade meddelanden för undantagshantering men som backup för oförutsedda undantag skickas automatiska felmeddelanden. Risk för att känslig information avslöjas. | Implementera generiska felmeddelanden. |
 
 #### 3.3.5 EFBoxFileRepository.java
@@ -155,9 +157,9 @@ EFBoxFileRepository.java hanterar kommunikationen mellan databasen och EFBoxFile
 
 ##### 3.4.1 GlobalCorsConfig.java
 
-CORS-konfigurationen för EFBox, och enligt beskrivningskommentaren skriven av AI. Säkerhet är inte konfigurerad utan möjliggör CORS från alla origin : `config.addAllowedOrigin("*");`.
+CORS-konfigurationen för EFBox, enligt beskrivningskommentaren genererades den koden av AI för eventuell frontendimplementering. Säkerhet är inte konfigurerad utan möjliggör CORS från alla origin : `config.addAllowedOrigin("*");`.
 
-CORS kommer att implementera på ett annorlunda sätt inom SecurityConfig.java.
+CORS kommer att implementera på ett annorlunda sätt inom SecurityConfig.java i enighet med Spring Boots instruktioner [1].
 
 #### 3.4.2 JWTFilter.java
 
@@ -178,20 +180,83 @@ JWTService.java hanterar JWT.
 | 33  | _Secret_ i klartext | A04 Cryptographic Failures  | `setSecretString()` hämtar en textrad från en .txt-fil i resources-mappen. Värdet som returneras används för HMAC256-algoritmen på nästa rad.                                                                              | Ersätt funktionen med miljövariabel.    |
 | 44  | JWT-giltighetstid   | A07 Authentication Failures | JWTs giltighetstid sätts till 60 minuter, vilket inte är fel i sig tål att förkortas. Ett säkrare alternativ skulle vara kortare giltighetstid med en funktion för att förnya JWT:n vid autentiserade anrop från klienten. | Bestäm om alternativ ska implementeras. |
 
-#### 3.4.3 PasswordConfig.java
+#### 3.4.4 PasswordConfig.java
 
-#### 3.4.3 SecurityConfig.java
+PasswordConfig.java returnerar bara ett BCryptPasswordEncoder-objekt och använder BCrypt. Studien kommer att följa OWASP rekommendationer och använda Argon2.
 
-### 3.6 Konfigurationsfiler / Övriga resurser
+#### 3.4.5 SecurityConfig.java
 
-## 4 Problemen som inte syns
+SecurityConfig.java konfigurerar Spring Securitys säkerhetsfilterkedja och definierar vilka endpoints som kräver autentisering.
 
-Granskningen ovan annalyserar problem som syns men en utökad struktur och uppgradering bör diskuteras.
+| Rad   | Fynd                                         | OWASP-referens                | Kommentar                                                                                                                                                                                               | Åtgärd                                                |
+| ----- | -------------------------------------------- | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------- |
+| 33    | CSRF inaktiverat                             | A02 Security Misconfiguration | CSRF är korrekt inaktiverat för ett stateless JWT-API då CSRF-skydd är avsett för sessionsbaserade applikationer.                                                                                       | N/A                                                   |
+| 34–41 | Åtkomstkontroll                              | A01 Broken Access Control     | Publika endpoints begränsas till registrering och inloggning – alla övriga kräver autentisering.                                                                                                        | N/A                                                   |
+| -     | Bristande HTTP Security Headers              | A02 Security Misconfiguration | Spring Security lägger till vissa headers automatiskt men ingen explicit konfiguration finns för t.ex. `X-Content-Type-Options`, `X-Frame-Options` eller `X-XSS-Protection`.                            | Konfigurera security headers explicit i filterkedjan. |
+| -     | CORS saknas i SecurityConfig                 | A02 Security Misconfiguration | Ingen CORS-konfiguration finns i SecurityConfig. GlobalCorsConfig som finns i projektet täcker inte applikationens faktiska endpoints (behandlas även i [GlobalCorsConfig](#341-globalcorsconfigjava)). | Konfigurera CORS explicit via `httpSecurity.cors().   |
+| -     | Ingen rate limiting på inloggningsendpointen | A07 Authentication Failures   | `/user/login` är publik utan begränsning på antal inloggningsförsök, vilket möjliggör brute force-attacker.                                                                                             | Implementera rate limiting på inloggningsendpointen.  |
+| 42    | JWTFilter instantieras manuellt              | A02 Security Misconfiguration | Filtret skapas med `new JWTFilter(userService)` istället för att injiceras som Spring Bean, vilket innebär att Spring inte hanterar filtrets livscykel.                                                 | Registrera JWTFilter som Spring Bean.                 |
 
-- exception handling central
-- exception logging central
-- alerting central
-- password recovery (user email?)
-- JWT validity / logout
+### 3.6 Konfigurationsfiler och övriga resurser
+
+#### 3.6.1 application.properties
+
+Självförklarande.
+Problem som behandlas i _Bilaga A - SonarCloud-analys (före åtgärder)_ behandlas inte i denna sektion.
+
+| Rad  | Fynd                               | OWASP-referens                | Kommentar                                                                             | Åtgärd                       |
+| ---- | ---------------------------------- | ----------------------------- | ------------------------------------------------------------------------------------- | ---------------------------- |
+| 3, 4 | Autentiseringsuppgifter i klartext | A04 Cryptographic Failures    | Databasuppgifter syns i klartext och bör flyttas till miljövariabler.                 | Implementera miljövariabler. |
+| -    | Ingen konfiguration för HTTPS      | A02 Security Misconfiguration | För att HTTPS ska fungera lokalt bör ett lokalt certifikat skapas och konfigureras\*. | Skriv HTTPS-konfigurationen. |
+
+_\* Detta problem uppdagades i samband med förberedande forskning för denna studie utan direkta anvisningar från OWASP. För skapandet av ett lokalt certifikat används JDK:s eget `keytool`-verktyg. Inställningarna finns tillgängliga på [Spring Boots hemsida](https://docs.spring.io/spring-boot/how-to/webserver.html#howto.webserver.configure-ssl.pem-files)._
+
+#### 3.6.2 secret.txt
+
+Filen innehåller _secret_-strängen som används i [JWTService.java](#343-jwtservicejava) och ersätts av en miljövariabel.
+
+#### 3.6.3 .gitignore
+
+.gitignore innehåller filer som ska ignoreras av Git. I nuvarande läge är den i standardkonfiguration och ignorerar enbart systemfiler. När miljövariabler implementeras ska dessa ignoreras.
+
+#### 3.6.4 build.gradle.kts
+
+Konfiguration för Gradle-dependencies. Senaste commit för projektet kördes mot [osv.dev](https://osv.dev):s API utan att några sårbarheter upptäcktes (A03 Software Supply Chain Failures och A08 Software or Data Integrity Failures).
+
+## 4. Problem som inte syns
+
+Vissa säkerhetsbrister framgår inte av en fil-för-fil-granskning utan handlar om funktioner som saknas helt i applikationen.
+
+### 4.1 Centraliserad undantagshantering
+
+EFbox saknar ett centralt undantagshanteringssystem. Undantag hanteras lokalt i varje controller med risk för inkonsekvent beteende och informationsläckage. Ett centraliserat system skulle säkerställa att alla undantag hanteras på ett enhetligt och säkert sätt (A10 Mishandling of Exceptional Conditions).
+
+### 4.2 Centraliserad säkerhetsloggning
+
+Ingen säkerhetsloggning finns implementerad utöver Spring Boots standardlogging i terminalen. Misslyckade inloggningar, obehöriga åtkomstförsök och ogiltiga JWT-tokens loggas inte. Ett centraliserat loggningssystem bör implementeras (A09 Security Logging and Alerting Failures).
+
+### 4.3 Centraliserat larmsystem
+
+I samband med loggningen saknas ett varningssystem som varnar vid misstänkt aktivitet, t.ex. upprepade misslyckade inloggningsförsök eller ovanligt många förfrågningar från samma källa. Utan varning kan en pågående attack inte upptäckas i realtid (A09 Security Logging and Alerting Failures).
+
+### 4.4 Lösenordsåterställning
+
+EFbox saknar funktionalitet för lösenordsåterställning. Detta innebär att en användare som glömt sitt lösenord inte kan återfå åtkomst till sitt konto utan direktingripande i databasen. En säker återställningsfunktion kräver att användarens e-postadress lagras och verifieras (A07 Authentication Failures).
+
+### 4.5 JWT-giltighetstid och utloggning
+
+JWT-tokens i EFbox har en giltighetstid på 60 minuter och det finns ingen mekanism för att ogiltigförklara en token före dess utgång. Detta innebär att en utloggad användares token fortfarande är giltig tills den löper ut, vilket kan missbrukas vid tokenstöld.
+
+JWT-token är immutable och går inte att ogiligförklarars. Alternativa lösningar är att skapa en sk. _black list_ av JWT som kontrolleras vid varje förfråga [2], eller att hantera giltighetstiden. Tidsbegränsningar på studien gör det svårt att uppnå en felfri lösning.
+JWT är inte menade att användas på detta sätt. Studien kommer att utgå från kortare JWT giltighetstid med tanke på följande:
+
+- om applikationen hade haft en fungerande frontend skulle JWT med extremt kort liv kunna förnyas regelbundet.
+- om användaren är inaktiv en längre period (mät av frontend) skulle hen kunna loggas ut automatisk (dvs klienten slutar be om nya JWT)
+
+Av praktiska skäl kommer JWT ha en TTL (_Time To Live_) på 10 minuter och förnyas med varje förfrågan. //TODO: ändra om brist på tid för implementering.
 
 ## Referenser
+
+[1]: Cors-configuration, Spring Boot, Accessed May 2026. Available: https://docs.spring.io/spring-security/reference/servlet/integrations/cors.html#page-title
+
+[2]: JWT Blacklisting in Spring Boot for Revoked Sessions, Alexander Obregon, Medium, Published: August 2025. Avalailble: https://medium.com/@AlexanderObregon/jwt-blacklisting-in-spring-boot-for-revoked-sessions-9041592585be
