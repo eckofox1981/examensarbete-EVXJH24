@@ -168,8 +168,6 @@ Detta kan jämföras med att en tjuv lura ett offer att låsa upp hemmet för at
 
 <u>Skyddas med hjälp utav:</u> skydda känsliga handlingar som tex en banköverföring, header-verifiering (mm)
 
-##### 2.1.1.5 /TODO: spare
-
 #### 2.1.2 Autentisering och auktorisering JWT
 
 JSON Web Token (JWT) är en standard öppen för utvecklare som definierar ett säkert sätt att överföra information. Eftersom datan signeras digitalt är den tillförlitlig. Signaturen kan ske med en så kallad _secret_ ("hemlighet", använder sig av HMAC algoritmen) eller ett allmänt/privat nyckelpar med hjälp av RSA eller ECDSA.
@@ -253,9 +251,14 @@ Connection: keep-alive
 Origin: https://foo.example
 ```
 
-HTTP-headern är central för hur CORS fungerar, vilket förklaras i nästa avsnitt.
+HTTP-headern är central för hur [CORS](#2153-cross-origin-resource-sharing-cors---api-säkerhet) fungerar.
 
-#### 2.1.5.2 Cross-origin resource sharing (CORS) - API: säkerhet
+#### 2.1.5.2 HTTPS
+
+HTTPS (S för _secure_, säkrad) är ett säkrare transportprotokoll för HTTP-meddelande. En tredje part tillhandhåller ett undertecknat digitaltcertifikat som kontrolleras av klienten med hjälp av förinstallerade certifikat.
+Med HTTPS skall förbindelsen inte kunna avlyssnas av tredje part och användaren skall kunna lita på att webbservern är densamma som den utger sig för att vara [28].
+
+#### 2.1.5.3 Cross-origin resource sharing (CORS) - API: säkerhet
 
 Cross-origin resource sharing är ett HTTP-baserat system som gör det möjligt för en server att lista vilka domäner, schema eller port en webbläsare bör tillåta för att ladda resurser [26].
 
@@ -282,9 +285,9 @@ En felkonfigurerad CORS-inställning – som att tillåta alla ursprung (\*) fö
 
 #### 2.1.6 Hotmodellering med STRIDE
 
-Allt som kan störa en tjänst eller data den hanterar anses vara ett hot [28].
+Allt som kan störa en tjänst eller data den hanterar anses vara ett hot [29].
 
-Genom en systematisk och strukturerad process som **hotmodellering** kan man få inblick i säkerhetskarakteristikerna av en applikation. För att uppnå detta identifierar man de relevanta hot och responsen mot dessa [28] [29].
+Genom en systematisk och strukturerad process som **hotmodellering** kan man få inblick i säkerhetskarakteristikerna av en applikation. För att uppnå detta identifierar man de relevanta hot och responsen mot dessa [29] [30].
 
 För att skapa en hotmodell kan man ställa sig fyra frågor [30]:
 
@@ -294,7 +297,7 @@ För att skapa en hotmodell kan man ställa sig fyra frågor [30]:
 4. Är modelleringen tillräckligt effektiv?
 
 **1. Vad jobbar vi med?**
-För att definiera en hotmodell bör man identifiera följande i applikationen [28]:
+För att definiera en hotmodell bör man identifiera följande i applikationen [31]:
 
 - Systemelement (tillgångar, komponenter)
 - Dataflöden och interaktioner med tredje part
@@ -396,7 +399,7 @@ Generellt bör all data som skickas vara krypterad. Detsamma gäller för _käns
 
 Kryptografibrister syftar på bristande eller icke-implementerad kryptering, vilket inkluderar brister i hantering av krypteringsnycklar.
 
-Som all IT-teknologi är kryptografi ett område som råkar ständigt för en snabb utveckling samtidigt som olika aktörer uppnår samma utveckling på avkryptering. Kvantumdatokraft riskerar att göra traditionell kryptering irrelevant och framtiden kommer säkert att få se kvantumkryptografi bli en standard [32]. Därför bör tjänster som behandlar känslig information vara välkonfigurerade för att hantera kryptering på ett säkert sätt.
+Som all IT-teknologi är kryptografi ett område som råkar ständigt för en snabb utveckling samtidigt som olika aktörer uppnår samma utveckling på avkryptering. Kvantumdatokraft riskerar att göra traditionell kryptering irrelevant och framtiden kommer säkert att få se kvantumkryptografi bli en standard [33]. Därför bör tjänster som behandlar känslig information vara välkonfigurerade för att hantera kryptering på ett säkert sätt.
 | Åtgärd | Förklaring |
 | ------ | ---------- |
 | Klassifiera data | Data som sparas på servern bör bedömas för dess känslighet och eventuellt krypteras |
@@ -514,8 +517,6 @@ _Använd källhänvisningar_
 
 ## 3. Metod och Genomförande
 
-_Anpassa detta kapitel efter din typ av arbete:_
-
 ### 3.1 Övergripande Arbetsgång
 
 Källorna för arbetsgången är huvudsakligen OWASP eftersom studien använder deras analys av de mest förekommande hot. Annan referensmaterial kommer att användas, i synnerhet dem som rekommenderas av OWASP som anses vara en pålitlig referens.
@@ -533,21 +534,10 @@ För det praktiska arbetet ter planeringen sig enligt följande:
 
 ### 3.2 Verktyg och Tekniker
 
-**För teoretiska studier:**
-
-- Databaser för litteratursökning
-- Analysverktyg
-- Kategoriseringsmetoder
-
-**För praktiska studier:**
-
-- Programmeringsverktyg
-- Testverktyg och mätinstrument
-- Utvecklingsmiljöer
-
 Resurser använda för studien:
 
 - OWASP:s hemsida
+- Spring Boots hemsida
 - Google Scholar
 - Google för övriga referenser
 
@@ -565,31 +555,11 @@ I utvecklingsmiljön används följande verktyg:
 
 ### 3.3 Datainsamling och Analys
 
-**För utforskande arbeten:**
-
-- Sökstrategierförsöker
-- Urvalskriterier
-- Tidigare studier och forskning
-- Befintliga teorier och modeller
-- Analysmetoder
-
-**För experimentella arbeten:**
-
-- Experimentuppställning
-- Datainsamlingsmetoder
-- Statistiska metoder
-
-**För utvecklingsprojekt:**
-
-- Requirements gathering
-- Teststrategier
-- Utvärderingsmetoder
-
-#### 3.3.1 kartläggning av EFbox, struktur och end-points
+#### 3.3.1 Kartläggning av EFbox, struktur och end-points
 
 ##### 3.3.1.1 Översikt
 
-EFbox är ett Javabaserat API som använder ramverket SPring Boot. Spring Boot är ett verktyg med öppen källkod som gör det enklare att skapa mikrotjänster och webbappar med hjälp av Java-baserade ramverk [33]. Spring Boot förenklar utveckling av webb-applikationer genom att, till exempel, inte behöva skapa XML-konfigurationer vilket äldre ramverk krävde (ex: Apache Turbine).
+EFbox är ett Javabaserat API som använder ramverket SPring Boot. Spring Boot är ett verktyg med öppen källkod som gör det enklare att skapa mikrotjänster och webbappar med hjälp av Java-baserade ramverk [34]. Spring Boot förenklar utveckling av webb-applikationer genom att, till exempel, inte behöva skapa XML-konfigurationer vilket äldre ramverk krävde (ex: Apache Turbine).
 
 ##### 3.3.1.2 Struktur
 
@@ -605,24 +575,7 @@ Utöver själva koden finns konfigurationsfiler. Ingen CI/CD har implementerats.
 
 #### 3.3.1.3 End-points
 
-Alla end-points börjar sedvanligt med basurl:n.
-Alla endpoint kräver auktorisation med JWT med undantag för registrering- och loginfunktionerna.
-
-| HTTP-metod | URL                | URI                                         | Data                                                                                      | Svar                                                                                                                                         | Beskrivning                                                                                   |
-| ---------- | ------------------ | ------------------------------------------- | ----------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
-| POST       | user/register      |                                             | JSON: { username: _sträng_, firstName: _sträng_, lastName: _sträng_, password: _sträng_ } | HTTP-kod (_ex: 200 OK_)                                                                                                                      | skapa ett användarkontot                                                                      |
-| PUT        | user/login         |                                             | JSON: { username: _sträng_, firstName: "", lastName: "", password: _sträng_ }             | JWT                                                                                                                                          | loggar in användaren och skickar tillbaka JWT                                                 |
-| GET        | user/info          |                                             | JWT                                                                                       | JSON: { "userID": _UUID_, "username": _sträng_, "firstname": _sträng_, "lastname": _sträng_, "efFolderNames": _lista på mappnamn (sträng)_ } | skickar användar info med existerande mappnamn                                                |
-| DEL        | user/delete        |                                             | JWT                                                                                       | HTTP-kod (_ex: 202 OK_)                                                                                                                      | Radera användarkontot och -data                                                               |
-| POST       | folder/create      | ?folderName=_sträng_& parentFolderID=_UUID_ | _params_                                                                                  | JSON: { "folderID": _UUID_, "name": _sträng_, "folderNames": _lista på mappnamn_, "fileNames": _lista på filnamn_ }                          | skapar en mapp och returnerar json-data. foderID=0 betecknar rootmappen                       |
-| GET        | folder/browse      | ?folderID=_UUID_                            | _params_                                                                                  | JSON: { "folderID": _UUID_, "name": _sträng_, "folderNames": _lista på mappnamn_, "fileNames": _lista på filnamn_ }                          | returnerar information om mappen i Json-data                                                  |
-| PUT        | folder/change-name | ?folderID=_UUID_ &newName=_sträng_          | _params_                                                                                  | _se ovan med det nya namnet_                                                                                                                 | Ändrar namnet på den angivna mappen (baserad på ID) och returnerar mappen                     |
-| GET        | folder/search      | _/sträng_                                   | _params_                                                                                  | JSON: {folders: _lista på mappobjekt_, files: _lista på filobjekt_ }                                                                         | sök och returnerar mappar och filer som matchar sökordet                                      |
-| DEL        | folder/delete      | ?folderID=_UUID_                            | _params_                                                                                  | Sträng                                                                                                                                       | Raderar mappen och dess innehåll. Returnerar informationssträng                               |
-| POST       | file/upload        | ?parentID=_UUID_                            | fil                                                                                       | JSON: { "fileID": _UUID_, "filename": _sträng_, "content": _lista på byte_, "type": _sträng_, "parentFolder": _sträng_ }                     | Ladda upp en fil till databasen med den tilldelad föräldramappen och returnerar JSON med blob |
-| PUT        | file/change-name   | ?fileID=_sträng_ &newName=_sträng_          | _params_                                                                                  | se ovan                                                                                                                                      | Ändrar namnet på filen och returner Json-objekt                                               |
-| GET        | file/download      | ?fileID=_UUID_                              | _params_                                                                                  | filinnehåll (lista på byte)                                                                                                                  | hämtar själva filen från databasen                                                            |
-| DEL        | file/delete        | ?fileID=_UUID_                              | _params_                                                                                  | Sträng                                                                                                                                       | Raderar filen och returnerar en informationssträng                                            |
+_Se Bilaga A - End-points_
 
 #### 3.3.2 Hotmodellering av EFbox
 
@@ -690,11 +643,103 @@ _se Bilaga A för mer information_
 | 1. Hårdkodade lösenord | Broken Access Control (A01), Security Misconfiguration (A02) | application.properties| Användning av miljövariablar. |
 | 2. Acceptans för stora filer (1000MB) | Denial of Service Attack, Security Misconfiguration (A02) | application.properties (2 st) | Anlysera behoven för applikationen och justera |
 
-### 3.4 Kvalitetssäkring
+##### 3.3.3.2 Manuel kodgranskning ur ett säkerhetsperspektiv
 
-- Metodkvalitet och tillförlitlighet
-- Validering av resultat
-- Hantering av bias eller fel
+All kod i EFBox granskas fil-för-fil och fynder dokumenteras i _Bilaga B - Manuel kodgranskning av EFbox-API:et ur ett säkerhetsperspektiv_.
+**Sammanfattning av den manuella säkerhetsgranskningen**
+
+Den manuella kodgranskningen identifierade ett antal återkommande brister
+genom hela kodbasen. Nedan sammanfattas de viktigaste fynden per OWASP-kategori:
+
+| OWASP-kategori                             | Fynd                                                                                                                                                                          |
+| ------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| A01 Broken Access Control                  | Avsaknad av GrantedAuthorities och rollhantering. Ingen lagringskvot per användare.                                                                                           |
+| A02 Security Misconfiguration              | Felaktig CORS-konfiguration, avsaknad av HTTP security headers, ingen HTTPS-konfiguration, JWTFilter instantieras manuellt.                                                   |
+| A04 Cryptographic Failures                 | JWT-secret i klartext (.txt-fil), lösenordshash exponeras i SecurityContext, BCrypt bör uppgraderas till Argon2id.                                                            |
+| A05 Injection                              | Bristande inputvalidering i samtliga paket. Egenskriven databasfråga i sök-funktionen utgör en reell injektionsrisk. Ingen filvalidering.                                     |
+| A07 Authentication Failures                | Lösenordspolicy för svag (min 5 tecken, inga specialtecken). Ingen kontroll mot komprometterade lösenord. Ingen rate limiting på inloggning. JWT-giltighetstid på 60 minuter. |
+| A09 Security Logging and Alerting Failures | Ingen säkerhetsloggning eller varningssystem implementerat.                                                                                                                   |
+| A10 Mishandling of Exceptional Conditions  | Automatiska felmeddelanden exponerar känslig information i samtliga controllers. Inget centraliserat undantagshanteringssystem.                                               |
+
+##### 3.3.3.3 Säkerhetstestning av EFBox API:et med OWASP ZAP
+
+OWASP ZAP (för _Zed Attack Proxy_) är ett öppenkällkodsverktyg för att testa API [35]. Verktyget kan användas för att analysera dataflödet mellan klienten och servern. Efter initial analysen kan funktionen _Active Scan_ generera olika attack scenario och tillhörande rapport.
+För att kunna fånga upp dataflödet mellan klienten och servern används ZAP som proxy (mellanhand) med en port mot servern och en mot klienten, i detta fall Postman.
+
+**NOTERING**: under förberedande forskning för ZAP lyckades inte författaren att testa ZAP med vanliga HTTP-förfrågor då ZAP översatte dem till HTTPS, vilket logiskt inte accepterades av Postman. Eftersom HTTPS, enligt Bilaga B, behöver implementeras, konfigurerades ett privat certifikat i resursmappen med tillhörande konfigurationer i application.properties enligt [Spring Boots hemsida](https://docs.spring.io/spring-boot/how-to/webserver.html#howto.webserver.configure-ssl.pem-files).
+
+Test protokoll:
+
+- Tom databas i Docker (nämnd "efbox")
+- Starta EFbox-API:et
+- Etablera kommunikation mellan Postman - ZAP - EFBox
+- Anropa alla end-points med tre olika användar konto med fokus på hanteringen av:
+  - minst en mapp i root
+  - minst en undermapp till den ovan
+  - hantering av både text- och bildfiler
+- Aktivera _Active Scan_
+- Generera rapport
+- Analys
+
+Rapporten finns att tillgå i Bilaga C - ZAP-säkerhetsrapport (före åtgärder)
+
+##### 3.3.3.3.1 Analys av ZAP-säkerhetsrapporten
+
+_se Bilaga D - ZAP-säkerhetsrapport (före åtgärder)_
+Följande är en kort sammantfattning av ZAPs genererade rapport.
+
+##### 3.3.3.3.1.1 SQL Injection (High Risk, Medium confidence)
+
+- A05 Injection: ZAP lyckades manipulera inloggningsendpointen /user/login via `firstname`-parametern med AND '1'='1' och fick tillbaka ett giltigt JWT. Varken `firstname` eller `lastname` används i logiken och vi kan utgå från `JpaRepository`skyddet fungerar. Under studien testades även att manuellt angripa servern via Postman genom att söka på `AND '1'= 1` och `OR '1'= 1` (se Bilaga B) men fick bara en vanlig `searchResult` tillbaka (tom). Trots att angreppet inte fungerade bör inte detta vara tillåtet och inputsvalidering bör implementeras.
+
+##### 3.3.3.3.1.2 Buffer Overflow (Medium Risk, Medium confidence) :
+
+- A02 Security Misconfiguration: ZAP skickade en extremt lång sträng och fick svaret 500 med felmeddelande "UUID string too large". Buffer Overflow kan ha berott på den lokala testmiljön och IDE:s begränsade minne men det ett argument för hastighetsbegränsning (se Bilaga B).
+- A10 Mishandling of Exceptional Conditions: Svaret var inte fördefinierat utan texten från felet (dvs `e.getMessage()`). Det är ett tecken på att undantagshanteringen bör ses över.
+
+##### 3.3.3.3.1.3 Application Error Disclosure (Low Risk, Medium confidence):
+
+- A10 Mishandling of Exceptional Conditions: ZAP anses att detta är en [Security Misconfiguration](#2172-security-misconfiguration-felaktig-säkerhetskonfiguration) men kommer att hanteras som Mishandling of Exceptional Conditions då det är närmare relaterat till felhantering.
+
+##### 3.3.3.3.1.4 Insights (information som kan vara relevant):
+
+- 69% av svaren ansågs vara långsamma (se [Buffer Overflow](#333312-buffer-overflow-medium-risk-medium-confidence-))
+- 22% av svaren returnerade statuskod 5xx vilket tyder på dålig felhantering
+
+##### 3.3.3.3.2 Sammanfattning
+
+Testning med ZAP har delvis bekräftat antaganden från kodgranskningen men det noteras att injektion-försöken, som inte borde tillåtas, inte lyckats.
+
+### 3.4 Planering av åtgärder
+
+Planeringen kommer att läggas upp i förenklad form i ett [Git hub Project](https://github.com/users/eckofox1981/projects/2/views/1).
+
+Baserad på [datainsamling och analys](#33-datainsamling-och-analys) kan vi planera enligt följande:
+
+| Fix                         | Beskrivning                                                                                                                                        | Branch                                         |
+| --------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| Konfiguration och gitIgnore | Användaruppgifter, secret mm delas i klartext, `.gitignore`ej konfigurerad. GlobalCorsConfig skall ersättas. Security headers skall implementeras  | `config-fixes`                                 |
+| Infrastrukturen             | Felhanteringen är bristfällig och logging existerar inte och behöver implementeras så att vi kan använda dem senare                                | `new-exception-handling` & `logging-exception` |
+| Autentisering               | BCrypt skall ersätttas med Argon2, lösenordspolicy förstärkas, rate-limiting implementeras och JWT TTL justeras med förnyelse                      | `authentication`                               |
+| Lösenordsåterställing       | Implementera lösenordsåterställning med email                                                                                                      | `pass-recovery`                                |
+| Granted Authorities         | En användare med tillgång åt loggarna skall implementeras med hjälp av inbyggda GrantedAuthorities                                                 | `log-access`                                   |
+| Varningssystem              | Repetitiva misslyckade inloggningsförsök skall meddelas till användaren. Likaså repetitiva fel till administratörer (basera på grantedAuthorities) | `warning-system`                               |
+| Inputsvalidering            | Ej befintlig ska implementeras på de identifierade områden                                                                                         | `input-validation`                             |
+| Filvalidering               | Ej befintlig ska implementeras på de identifierade områden                                                                                         | `file-validation`                              |
+
+### 3.5 Kvalitetssäkring
+
+#### 3.5.1 Metodkvalitet och tillförlitlighet
+
+Studien baseras på OWASP Top 10 2025 vilket strukturerar metoden och implementerar en kvalitetsstandard. Studien försöker att vara så metodiskt som självgående arbete tillåter, en ensam utvecklare kan inte identifiera och åtgärda lika många fel som ett säkerhetsteam. Tidsbristen är också faktor som påverkar både analys och kodkvalitet.
+
+#### 3.5.2 Validering av resultat
+
+Verktyg som ZAP, SonarQube och kodgranskning av ClaudeAI skall hjälpa att motverka [ovannämnda problemen](#351-metodkvalitet-och-tillförlitlighet). Om resultaten från dessa verktyg avviker, undersöks det och diskuteras.
+
+#### 3.5.3 Hantering av bias eller fel
+
+Eftersom författaren granskar sin egen kod finns en risk att problem förbises. Genom att vara metodisk försöker författaren att inte studien blir lidande av bias. Genom dokumentation (hotmodellering, rapport, bilagor, versionshantering mm) försöker studien att vara så oberoende som möjligt.
 
 ---
 
@@ -800,10 +845,6 @@ Förslag på:
 
 ## 7. Referenser
 
-Använd valfri referenstil. Rekommentation: IEEE
-
-I referenslistan
-
 [1]: Bandar Alotaibi, “Cybersecurity Attacks and Detection Methods in Web 3.0 Technology: A Review”, Sensors, Januari 2025. Available: https://www.mdpi.com/1424-8220/25/2/342
 
 [2]: “Antitrust cases against Google by the European Union”, Wikipedia, Accessed Maj 2026. Available: https://en.wikipedia.org/wiki/Antitrust_cases_against_Google_by_the_European_Union
@@ -858,21 +899,21 @@ I referenslistan
 
 [27]: Cross-Origin Resource Sharing (CORS), Mozilla, Acessed: May 2026. Available: https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS
 
-[28]: Threat modeling, Mozilla, Acessed: May 2026. Available: https://developer.mozilla.org/en-US/docs/Web/Security/Threat_modeling
+[28]: Hypertext Transfer Protocol Secure, Wikipedia, Accessed: May 2026. Available: https://sv.wikipedia.org/wiki/Hypertext_Transfer_Protocol_Secure
 
-[29]: Threat Modeling Cheat Sheet, OWASP, Accessed: May 2026. Available: https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html
+[29]: Threat modeling, Mozilla, Acessed: May 2026. Available: https://developer.mozilla.org/en-US/docs/Web/Security/Threat_modeling
 
-[30]: Threat Modelling Manifesto, Zoe Braiterman, Adam Shostack, Jonathan Marcil, Stephen de Vries, Irene Michlin, Kim Wuyts, Robert Hurlbut, Brook S.E. Schoenfield, Fraser Scott, Matthew Coles, Chris Romeo, Alyssa Miller, Izar Tarandach, Avi Douglen, Marc French, Threat Modelling Manifesto, Accessed: May 2026. Available: https://www.threatmodelingmanifesto.org/
+[30]: Threat Modeling Cheat Sheet, OWASP, Accessed: May 2026. Available: https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html
 
-[31]: Threat modeling frameworks and tools, Mozilla, Acessed: May 2026. Available: https://developer.mozilla.org/en-US/docs/Web/Security/Threat_modeling/Frameworks#stride
+[31]: Threat Modelling Manifesto, Zoe Braiterman, Adam Shostack, Jonathan Marcil, Stephen de Vries, Irene Michlin, Kim Wuyts, Robert Hurlbut, Brook S.E. Schoenfield, Fraser Scott, Matthew Coles, Chris Romeo, Alyssa Miller, Izar Tarandach, Avi Douglen, Marc French, Threat Modelling Manifesto, Accessed: May 2026. Available: https://www.threatmodelingmanifesto.org/
 
-[32]: Why is quantum cryptography important?, Josh Schneider, IBM, Published: December 2023. Available: https://www.ibm.com/think/topics/quantum-cryptography#Why+is+quantum+cryptography+important?
+[32]: Threat modeling frameworks and tools, Mozilla, Acessed: May 2026. Available: https://developer.mozilla.org/en-US/docs/Web/Security/Threat_modeling/Frameworks#stride
 
-[33]: Vad är Java Spring Boot?, Azure Microsoft, Accessed: May 2026. Available: https://azure.microsoft.com/sv-se/resources/cloud-computing-dictionary/what-is-java-spring-boot/
+[33]: Why is quantum cryptography important?, Josh Schneider, IBM, Published: December 2023. Available: https://www.ibm.com/think/topics/quantum-cryptography#Why+is+quantum+cryptography+important?
 
-[34]:
+[34]: Vad är Java Spring Boot?, Azure Microsoft, Accessed: May 2026. Available: https://azure.microsoft.com/sv-se/resources/cloud-computing-dictionary/what-is-java-spring-boot/
 
-[35]:
+[35]: Zed Attack Proxy (ZAP), Accessed: May 2026. Available: https://www.zaproxy.org/
 
 [36]:
 
@@ -902,31 +943,17 @@ I referenslistan
 
 [49]:
 
-[50]:
-
-Bok: [2] A. Author, Title of Book. City, State: Publisher, Year.
-
-Webbsida: [3] Title of Website. Publisher. [Online]. Available:
-http://www.website.com. [Accessed: Day Month Year].
-
-Exempel I texten:
-“Prestandan för neurala nätverk i Python har visat sig vara 30% bättre än
-traditionella metoder [1].”
-
-I referenslistan:
-[1] K. Johnson and M. Smith, “Performance Analysis of Neural Networks in
-Python,” Journal of Computer Science, vol. 12, no. 3, pp. 234-245, Mar. 2023.
+[50]: wrf
 
 ---
 
 ## Bilagor
 
-_Anpassa efter typ av arbete:_
-
-- Bilaga A - SonarCloud-analys (före åtgärder)
-- Bilaga B - Manuel kodgranskning av EFbox-API:et ur ett säkerhetsperspektiv
-- Bilaga B - ZAP-säkerhetsrapport (före åtgärder)
-- Bilaga C - SonarCloud-analys (före åtgärder)
-- Bilaga D - ZAP-säkerhetsrapport (efter åtgärder)
-- Bilaga E - GitHub Projects Roadmap
-- Bilaga F - Claude AI-interaktioner
+- Bilaga A - End-points
+- Bilaga B -SonarCloud-analys (före åtgärder)
+- Bilaga C - Manuel kodgranskning av EFbox-API:et ur ett säkerhetsperspektiv
+- Bilaga D - ZAP-säkerhetsrapport (före åtgärder)
+- Bilaga E - SonarCloud-analys (efter åtgärder)
+- Bilaga F - ZAP-säkerhetsrapport (efter åtgärder)
+- Bilaga G - GitHub Projects Roadmap
+- Bilaga H - Claude AI-interaktioner

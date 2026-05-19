@@ -202,14 +202,15 @@ SecurityConfig.java konfigurerar Spring Securitys säkerhetsfilterkedja och defi
 #### 3.6.1 application.properties
 
 Självförklarande.
-Problem som behandlas i _Bilaga A - SonarCloud-analys (före åtgärder)_ behandlas inte i denna sektion.
+Problem som behandlas i _Bilaga A - SonarCloud-analys (före åtgärder)_ behandlas inte i denna sektion\*.
 
-| Rad  | Fynd                               | OWASP-referens                | Kommentar                                                                             | Åtgärd                       |
-| ---- | ---------------------------------- | ----------------------------- | ------------------------------------------------------------------------------------- | ---------------------------- |
-| 3, 4 | Autentiseringsuppgifter i klartext | A04 Cryptographic Failures    | Databasuppgifter syns i klartext och bör flyttas till miljövariabler.                 | Implementera miljövariabler. |
-| -    | Ingen konfiguration för HTTPS      | A02 Security Misconfiguration | För att HTTPS ska fungera lokalt bör ett lokalt certifikat skapas och konfigureras\*. | Skriv HTTPS-konfigurationen. |
+| Rad | Fynd                          | OWASP-referens                | Kommentar                                                                             | Åtgärd                       |
+| --- | ----------------------------- | ----------------------------- | ------------------------------------------------------------------------------------- | ---------------------------- |
+| -   | Ingen konfiguration för HTTPS | A02 Security Misconfiguration | För att HTTPS ska fungera lokalt bör ett lokalt certifikat skapas och konfigureras\*. | Skriv HTTPS-konfigurationen. |
 
 _\* Detta problem uppdagades i samband med förberedande forskning för denna studie utan direkta anvisningar från OWASP. För skapandet av ett lokalt certifikat används JDK:s eget `keytool`-verktyg. Inställningarna finns tillgängliga på [Spring Boots hemsida](https://docs.spring.io/spring-boot/how-to/webserver.html#howto.webserver.configure-ssl.pem-files)._
+
+_ \* rate limiting problem och autentiseringsuppgifter i klartext_
 
 #### 3.6.2 secret.txt
 

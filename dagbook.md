@@ -168,7 +168,7 @@
 | 3 | Implementering av åtgärder klar | Åtgärdad kod i feature-branch, commit per åtgärd |
 
 
-##b2026-05-17
+## 2026-05-17
 - bokat med wiliam: kl 11 imorgon
 - kommit halvägs på manuell granskningsrapport
 - gått igenom GitHub project
@@ -176,6 +176,19 @@
 ### Mål för morgon dagen:
 - göra klar Granskning
 - ZAP test med rapport
+ 
+**Time:** 8 hours **TOTAL**: 67 hours
+
+## 2026-05-17
+- möte med william, utan nån större anmärkning, dock rapport lite lång (kämpa på nu, fixa sen). Glömde länk till referenserna (googla!)
+- Alla granskningar klar (inkl. ZAP), t.o.m hunnit med planeringen och kvalitetssäkringen
+- lagt till https (kortare version pga feedback)
+
+### Mål för morgon dagen:
+- konfiguration
+- börja (eller hinna?) med infrastruktur **OBS: github project!**
+- 
+- **NOTE**: fixa länkar på egen hand
  
 **Time:** 8 hours **TOTAL**: 67 hours
 ---
