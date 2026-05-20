@@ -188,13 +188,12 @@ PasswordConfig.java returnerar bara ett BCryptPasswordEncoder-objekt och använd
 
 SecurityConfig.java konfigurerar Spring Securitys säkerhetsfilterkedja och definierar vilka endpoints som kräver autentisering.
 
-| Rad   | Fynd                                         | OWASP-referens                | Kommentar                                                                                                                                                                                               | Åtgärd                                               |
-| ----- | -------------------------------------------- | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- |
-| 33    | CSRF inaktiverat                             | A02 Security Misconfiguration | CSRF är korrekt inaktiverat för ett stateless JWT-API då CSRF-skydd är avsett för sessionsbaserade applikationer.                                                                                       | N/A                                                  |
-| 34–41 | Åtkomstkontroll                              | A01 Broken Access Control     | Publika endpoints begränsas till registrering och inloggning – alla övriga kräver autentisering.                                                                                                        | N/A                                                  |
-| -     | CORS saknas i SecurityConfig                 | A02 Security Misconfiguration | Ingen CORS-konfiguration finns i SecurityConfig. GlobalCorsConfig som finns i projektet täcker inte applikationens faktiska endpoints (behandlas även i [GlobalCorsConfig](#341-globalcorsconfigjava)). | Konfigurera CORS explicit via `httpSecurity.cors().  |
-| -     | Ingen rate limiting på inloggningsendpointen | A07 Authentication Failures   | `/user/login` är publik utan begränsning på antal inloggningsförsök, vilket möjliggör brute force-attacker.                                                                                             | Implementera rate limiting på inloggningsendpointen. |
-| 42    | JWTFilter instantieras manuellt              | A02 Security Misconfiguration | Filtret skapas med `new JWTFilter(userService)` istället för att injiceras som Spring Bean, vilket innebär att Spring inte hanterar filtrets livscykel.                                                 | Registrera JWTFilter som Spring Bean.                |
+| Rad   | Fynd                                         | OWASP-referens                | Kommentar                                                                                                                                                                                               | Åtgärd                                                   |
+| ----- | -------------------------------------------- | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
+| 33    | CSRF inaktiverat                             | A02 Security Misconfiguration | CSRF är korrekt inaktiverat för ett stateless JWT-API då CSRF-skydd är avsett för sessionsbaserade applikationer.                                                                                       | N/A                                                      |
+| 34–41 | Åtkomstkontroll                              | A01 Broken Access Control     | Publika endpoints begränsas till registrering och inloggning – alla övriga kräver autentisering.                                                                                                        | N/A                                                      |
+| -     | CORS saknas i SecurityConfig                 | A02 Security Misconfiguration | Ingen CORS-konfiguration finns i SecurityConfig. GlobalCorsConfig som finns i projektet täcker inte applikationens faktiska endpoints (behandlas även i [GlobalCorsConfig](#341-globalcorsconfigjava)). | Konfigurera CORS explicit via `CorsConfigurationSource`. |
+| -     | Ingen rate limiting på inloggningsendpointen | A07 Authentication Failures   | `/user/login` är publik utan begränsning på antal inloggningsförsök, vilket möjliggör brute force-attacker.                                                                                             | Implementera rate limiting på inloggningsendpointen.     |
 
 ### 3.6 Konfigurationsfiler och övriga resurser
 
@@ -203,13 +202,11 @@ SecurityConfig.java konfigurerar Spring Securitys säkerhetsfilterkedja och defi
 Självförklarande.
 Problem som behandlas i _Bilaga A - SonarCloud-analys (före åtgärder)_ behandlas inte i denna sektion\*.
 
-| Rad | Fynd                          | OWASP-referens                | Kommentar                                                                             | Åtgärd                       |
-| --- | ----------------------------- | ----------------------------- | ------------------------------------------------------------------------------------- | ---------------------------- |
-| -   | Ingen konfiguration för HTTPS | A02 Security Misconfiguration | För att HTTPS ska fungera lokalt bör ett lokalt certifikat skapas och konfigureras\*. | Skriv HTTPS-konfigurationen. |
+| Rad | Fynd                          | OWASP-referens                | Kommentar                                                                           | Åtgärd                       |
+| --- | ----------------------------- | ----------------------------- | ----------------------------------------------------------------------------------- | ---------------------------- |
+| -   | Ingen konfiguration för HTTPS | A02 Security Misconfiguration | För att HTTPS ska fungera lokalt bör ett lokalt certifikat skapas och konfigureras. | Skriv HTTPS-konfigurationen. |
 
 _\* Detta problem uppdagades i samband med förberedande forskning för denna studie utan direkta anvisningar från OWASP. För skapandet av ett lokalt certifikat används JDK:s eget `keytool`-verktyg. Inställningarna finns tillgängliga på [Spring Boots hemsida](https://docs.spring.io/spring-boot/how-to/webserver.html#howto.webserver.configure-ssl.pem-files)._
-
-_ \* rate limiting problem och autentiseringsuppgifter i klartext_
 
 #### 3.6.2 secret.txt
 
