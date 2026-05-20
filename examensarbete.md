@@ -307,7 +307,7 @@ För att definiera en hotmodell bör man identifiera följande i applikationen [
 - Iterera
 
 **2. Vad kan gå fel?**
-Som hjälp för att svara på dessa frågor kan man använda sig av ramverk för att kategorisera hoten. Ett populärt sådant är STRIDE [29]. Varje bokstav motsvarar en hotkategori (se tabell nedan). Ramverket underlättar kategoriseringen på ett systematiskt sätt när man ställer sig frågan "Vad kan gå fel?".
+Som hjälp för att svara på dessa frågor kan man använda sig av ramverk för att kategorisera hoten. Ett populärt sådant är STRIDE [29] [32]. Varje bokstav motsvarar en hotkategori (se tabell nedan). Ramverket underlättar kategoriseringen på ett systematiskt sätt när man ställer sig frågan "Vad kan gå fel?".
 
 | Hotkategori             | Påverkan         | Exempel                                                                                 |
 | ----------------------- | ---------------- | --------------------------------------------------------------------------------------- |
@@ -374,7 +374,7 @@ Förebyggande åtgärder kan vara:
 | Logging| Som backup bör en centraliserad konfiguration implementeras för att fånga och varna vid ovanligt många felmeddelanden |
 | CORS-konfiguration| I OWASP A02 Security Miconfiguration nämns inte CORS specifikt. CORS-konfiguration är dock nära relaterad till A02 och behandlas i denna studie inom ramen för säkerhetskonfiguration. CORS skall konfigureras för att användaren enbart kommer åt tillåtna tjänster (se även [Broken Access Control](#2171-broken-access-control-bristfällig-åtkomstkontroll)) eller att förfrågan tas emot från godkända domäner |
 
-Eftersom EFBox var en _proof of concept_ förväntas säkerhetskonfigurationen behöva ses över och stärkas, i synnerhet CORS och logging.
+Eftersom EFBox var en _proof of concept_ förväntas säkerhetskonfigurationen behöva ses över och stärkas, i synnerhet CORS och logging. Spring Boot implementerar automatiskt vissa konfigurationer som t.ex _security headers_ [33].
 
 ##### 2.1.7.3 Software Supply Chain Failures (Brister i Mjukvarans Leveranskedja)
 
@@ -654,7 +654,7 @@ genom hela kodbasen. Nedan sammanfattas de viktigaste fynden per OWASP-kategori:
 | OWASP-kategori                             | Fynd                                                                                                                                                                          |
 | ------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | A01 Broken Access Control                  | Avsaknad av GrantedAuthorities och rollhantering. Ingen lagringskvot per användare.                                                                                           |
-| A02 Security Misconfiguration              | Felaktig CORS-konfiguration, avsaknad av HTTP security headers, ingen HTTPS-konfiguration, JWTFilter instantieras manuellt.                                                   |
+| A02 Security Misconfiguration              | Felaktig CORS-konfiguration, ingen HTTPS-konfiguration, JWTFilter instantieras manuellt.                                                                                      |
 | A04 Cryptographic Failures                 | JWT-secret i klartext (.txt-fil), lösenordshash exponeras i SecurityContext, BCrypt bör uppgraderas till Argon2id.                                                            |
 | A05 Injection                              | Bristande inputvalidering i samtliga paket. Egenskriven databasfråga i sök-funktionen utgör en reell injektionsrisk. Ingen filvalidering.                                     |
 | A07 Authentication Failures                | Lösenordspolicy för svag (min 5 tecken, inga specialtecken). Ingen kontroll mot komprometterade lösenord. Ingen rate limiting på inloggning. JWT-giltighetstid på 60 minuter. |
@@ -718,7 +718,7 @@ Baserad på [datainsamling och analys](#33-datainsamling-och-analys) kan vi plan
 
 | Fix                         | Beskrivning                                                                                                                                        | Branch                                         |
 | --------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
-| Konfiguration och gitIgnore | Användaruppgifter, secret mm delas i klartext, `.gitignore`ej konfigurerad. GlobalCorsConfig skall ersättas. Security headers skall implementeras  | `config-fixes`                                 |
+| Konfiguration och gitIgnore | Användaruppgifter, secret mm delas i klartext, `.gitignore`ej konfigurerad. GlobalCorsConfig skall ersättas. Cookies implementeras                 | `config-fixes`                                 |
 | Infrastrukturen             | Felhanteringen är bristfällig och logging existerar inte och behöver implementeras så att vi kan använda dem senare                                | `new-exception-handling` & `logging-exception` |
 | Autentisering               | BCrypt skall ersätttas med Argon2, lösenordspolicy förstärkas, rate-limiting implementeras och JWT TTL justeras med förnyelse                      | `authentication`                               |
 | Lösenordsåterställing       | Implementera lösenordsåterställning med email                                                                                                      | `pass-recovery`                                |
@@ -909,7 +909,9 @@ Förslag på:
 
 [32]: Threat modeling frameworks and tools, Mozilla, Acessed: May 2026. Available: https://developer.mozilla.org/en-US/docs/Web/Security/Threat_modeling/Frameworks#stride
 
-[33]: Why is quantum cryptography important?, Josh Schneider, IBM, Published: December 2023. Available: https://www.ibm.com/think/topics/quantum-cryptography#Why+is+quantum+cryptography+important?
+[33]: Security HTTP Response Headers, Spring, Accessed: May 2026. Available: https://docs.spring.io/spring-security/reference/features/exploits/headers.html
+
+[34]: Why is quantum cryptography important?, Josh Schneider, IBM, Published: December 2023. Available: https://www.ibm.com/think/topics/quantum-cryptography#Why+is+quantum+cryptography+important?
 
 [34]: Vad är Java Spring Boot?, Azure Microsoft, Accessed: May 2026. Available: https://azure.microsoft.com/sv-se/resources/cloud-computing-dictionary/what-is-java-spring-boot/
 
