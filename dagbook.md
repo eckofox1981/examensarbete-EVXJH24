@@ -233,6 +233,20 @@
 
 ## **Time:** 9 hours **TOTAL**: 85.5 hours
 
+## 2026-05-17
+
+- `new-exception-handling` klar. Claude berömde nästan, men typiska copy/paste fel som vanligt
+- `logging-exception` påbörjat, valde att köra ett eget logsystem så jag kunde välja vad jag får med. Fastnade ett par timmar på ett oförklarigt fel som berrode på en Spring update av db:n, fick startat om db:n och revert alla kodförsök. fastnat även pga spring security's AccesDeniedException som haffade undantaget inna min GlobalExceptionHandler.
+
+### Mål för morgon dagen:
+
+- Göra klart `logging-exception`, testa, dokumentera
+- mera pauser
+- påbörja `authentication`
+- **NOTE**: fixa länkar på egen hand
+
+## **Time:** 10 hours **TOTAL**: 95.5 hours
+
 | Vecka | Milstolpe                 | Leverabler                                                    |
 | ----- | ------------------------- | ------------------------------------------------------------- |
 | 4     | Testning och rapport klar | Testrapport (före/efter per brist), fullständig rapportutkast |
