@@ -251,7 +251,7 @@
 
 - `logging-exception` klart, lite feedback från Claude men mkt kändes bristande i sammanhang som att AccessDeniedException fångas up av Spring innan den når GlobalExceptionHandler.
 - startade fel jobb men är klar med `log-access`, testat, det funkar och Claude var nästan snäll
-- ska lära my om ArgonId2 under kvällen för `authentication`
+- ska lära my om ArgonId2 och rate-limiting med Spring under kvällen för `authentication`
 - mera pauser idag, bra
 
 ### Mål för morgon dagen:
