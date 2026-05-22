@@ -235,7 +235,7 @@
 
 ## 2026-05-17
 
-- `new-exception-handling` klar. Claude berömde nästan, men typiska copy/paste fel som vanligt
+- `new-exception-handling` klar. Claude berömde nästan, men typiska copy/paste fel som vanligt. Rapport i bilaga
 - `logging-exception` påbörjat, valde att köra ett eget logsystem så jag kunde välja vad jag får med. Fastnade ett par timmar på ett oförklarigt fel som berrode på en Spring update av db:n, fick startat om db:n och revert alla kodförsök. fastnat även pga spring security's AccesDeniedException som haffade undantaget inna min GlobalExceptionHandler.
 
 ### Mål för morgon dagen:
@@ -246,6 +246,22 @@
 - **NOTE**: fixa länkar på egen hand
 
 ## **Time:** 10 hours **TOTAL**: 95.5 hours
+
+## 2026-05-17
+
+- `logging-exception` klart, lite feedback från Claude men mkt kändes bristande i sammanhang som att AccessDeniedException fångas up av Spring innan den når GlobalExceptionHandler.
+- startade fel jobb men är klar med `log-access`, testat, det funkar och Claude var nästan snäll
+- ska lära my om ArgonId2 under kvällen för `authentication`
+- mera pauser idag, bra
+
+### Mål för morgon dagen:
+
+- Göra klart `authentication`
+- **NOTE**: fixa länkar på egen hand
+
+## **Time:** 7.5 hours **TOTAL**: 73.5 hours
+
+---
 
 | Vecka | Milstolpe                 | Leverabler                                                    |
 | ----- | ------------------------- | ------------------------------------------------------------- |
