@@ -192,7 +192,7 @@
 | ----- | ------------------------------- | ------------------------------------------------ |
 | 3     | Implementering av åtgärder klar | Åtgärdad kod i feature-branch, commit per åtgärd |
 
-## 2026-05-17
+## 2026-05-18
 
 - bokat med wiliam: kl 11 imorgon
 - kommit halvägs på manuell granskningsrapport
@@ -205,7 +205,7 @@
 
 **Time:** 8 hours **TOTAL**: 67 hours
 
-## 2026-05-17
+## 2026-05-19
 
 - möte med william, utan nån större anmärkning, dock rapport lite lång (kämpa på nu, fixa sen). Glömde länk till referenserna (googla!)
 - Alla granskningar klar (inkl. ZAP), t.o.m hunnit med planeringen och kvalitetssäkringen
@@ -220,7 +220,7 @@
 
 **Time:** 8.5 hours **TOTAL**: 75.5 hours
 
-## 2026-05-17
+## 2026-05-20
 
 - `config-fixes` branchen klar och mergeat, Claude AI duktig på review men feta rapporter.
 - Påbörjat `new-exception-handling` brach på G, skapat GlobalException handler, enums for exceptions, custom exceptions, har testimplementerat i UserController och UserService, verkar funka. Har skapat en errorMessage för att förberreda inför logging.
@@ -233,7 +233,7 @@
 
 ## **Time:** 9 hours **TOTAL**: 85.5 hours
 
-## 2026-05-17
+## 2026-05-21
 
 - `new-exception-handling` klar. Claude berömde nästan, men typiska copy/paste fel som vanligt. Rapport i bilaga
 - `logging-exception` påbörjat, valde att köra ett eget logsystem så jag kunde välja vad jag får med. Fastnade ett par timmar på ett oförklarigt fel som berrode på en Spring update av db:n, fick startat om db:n och revert alla kodförsök. fastnat även pga spring security's AccesDeniedException som haffade undantaget inna min GlobalExceptionHandler.
@@ -247,7 +247,7 @@
 
 ## **Time:** 10 hours **TOTAL**: 95.5 hours
 
-## 2026-05-17
+## 2026-05-22
 
 - `logging-exception` klart, lite feedback från Claude men mkt kändes bristande i sammanhang som att AccessDeniedException fångas up av Spring innan den når GlobalExceptionHandler.
 - startade fel jobb men är klar med `log-access`, testat, det funkar och Claude var nästan snäll
@@ -260,6 +260,18 @@
 - **NOTE**: fixa länkar på egen hand
 
 ## **Time:** 7.5 hours **TOTAL**: 73.5 hours
+
+## 2026-05-23
+
+- `logging-exception`, kvällsjobb, fixade implementerade rate-limiting efter lite research (och tur), anpassat till EFBox
+- har även letat efter guide på Argon2 men inget pedagogiskt
+
+### Mål för morgon dagen:
+
+- Göra klart `authentication`
+- **NOTE**: fixa länkar på egen hand
+
+## **Time:** 2.25 hours **TOTAL**: 75.75 hours
 
 ---
 
