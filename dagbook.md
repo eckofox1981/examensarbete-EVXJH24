@@ -231,7 +231,7 @@
 - Göra klart `config-fixes`, få det reviewat, påbörja `logging-exception`
 - **NOTE**: fixa länkar på egen hand
 
-## **Time:** 9 hours **TOTAL**: 85.5 hours
+**Time:** 9 hours **TOTAL**: 84.5 hours
 
 ## 2026-05-21
 
@@ -245,7 +245,7 @@
 - påbörja `authentication`
 - **NOTE**: fixa länkar på egen hand
 
-## **Time:** 10 hours **TOTAL**: 95.5 hours
+#**Time:** 10 hours **TOTAL**: 94.5 hours
 
 ## 2026-05-22
 
@@ -259,7 +259,7 @@
 - Göra klart `authentication`
 - **NOTE**: fixa länkar på egen hand
 
-## **Time:** 7.5 hours **TOTAL**: 73.5 hours
+**Time:** 7.5 hours **TOTAL**: 102 hours
 
 ## 2026-05-23
 
@@ -271,7 +271,30 @@
 - Göra klart `authentication`
 - **NOTE**: fixa länkar på egen hand
 
-## **Time:** 2.25 hours **TOTAL**: 75.75 hours
+**Time:** 2.25 hours **TOTAL**: 104.25 hours
+
+## 2026-05-23
+
+- `logging-exception`, kvällsjobb, bytte ut BCrypt mot argon, inte felfritt, token refresh var lättare.
+- för trött att mergea, gör det imorgon.
+
+### Mål för morgon dagen:
+
+- pull request, review and merge 'authentication'
+- starta på pass-recovery
+
+- **NOTE**: fixa länkar på egen hand
+
+**Time:** 3 hours **TOTAL**: 107.25 hours
+
+## SUMMERING FÖR VECKAN 3 (48.25 hours)
+
+[x] Implementering av åtgärder klar -> LOL! Att göra:
+
+- pass-recovery (add email, send email)
+- warning system (repetiva fel till admin och loginfel till användaren med)
+- input validation (hoppas på bra lösningar online)
+- file validation (Righetoos lösning)
 
 ---
 
