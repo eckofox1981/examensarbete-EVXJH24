@@ -281,7 +281,7 @@
 ### Mål för morgon dagen:
 
 - pull request, review and merge 'authentication'
-- starta på pass-recovery
+- starta på `pass-recovery`
 
 - **NOTE**: fixa länkar på egen hand
 
@@ -302,7 +302,34 @@
 | ----- | ------------------------- | ------------------------------------------------------------- |
 | 4     | Testning och rapport klar | Testrapport (före/efter per brist), fullständig rapportutkast |
 
----
+## 2026-05-24
+
+- `logging-exception`, mergeat, gick helt ok.
+- `pass-recovery`, klart mkt bråk från SonarQube, Claude ok (efter SonarQube fixen)
+- börjat studera på warning-system (branch skapad)
+
+### Mål för morgon dagen:
+
+- `warning-system`
+
+- **NOTE**: fixa länkar på egen hand
+
+**Time:** 8 hours **TOTAL**: 115.25 hours
+
+## 2026-05-25
+
+- `warn-system` klart, login löste sig med geeksforgeeks lösning och resten anpassade jag med liknande system
+- hade även tid `input-validation` i stort sett klar (SonarQube bråkar), fixa merge imorgon
+
+### Mål för morgon dagen:
+
+- om `input-validation` PR-review OK -> file-validation
+- förrberreda postman för nytt ZAP test.
+- dokumentera-ish (om tid) (planerat den 28)
+
+- **NOTE**: fixa länkar på egen hand
+
+## **Time:** 8.5 hours **TOTAL**: 123.75 hours
 
 | Vecka | Milstolpe   | Leverabler                                       |
 | ----- | ----------- | ------------------------------------------------ |
