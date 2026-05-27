@@ -273,7 +273,7 @@
 
 **Time:** 2.25 hours **TOTAL**: 104.25 hours
 
-## 2026-05-23
+## 2026-05-24
 
 - `logging-exception`, kvällsjobb, bytte ut BCrypt mot argon, inte felfritt, token refresh var lättare.
 - för trött att mergea, gör det imorgon.
@@ -302,7 +302,7 @@
 | ----- | ------------------------- | ------------------------------------------------------------- |
 | 4     | Testning och rapport klar | Testrapport (före/efter per brist), fullständig rapportutkast |
 
-## 2026-05-24
+## 2026-05-25
 
 - `logging-exception`, mergeat, gick helt ok.
 - `pass-recovery`, klart mkt bråk från SonarQube, Claude ok (efter SonarQube fixen)
@@ -316,7 +316,7 @@
 
 **Time:** 8 hours **TOTAL**: 115.25 hours
 
-## 2026-05-25
+## 2026-05-26
 
 - `warn-system` klart, login löste sig med geeksforgeeks lösning och resten anpassade jag med liknande system
 - hade även tid `input-validation` i stort sett klar (SonarQube bråkar), fixa merge imorgon
@@ -326,6 +326,19 @@
 - om `input-validation` PR-review OK -> file-validation
 - förrberreda postman för nytt ZAP test.
 - dokumentera-ish (om tid) (planerat den 28)
+
+- **NOTE**: fixa länkar på egen hand
+
+## 2026-05-27
+
+- `input-validation` ok mergeat
+- `file-validation` var inte så jävla lätt, kodat "fult" och inte riktigt anpassat. suttit minst nio timmar med det trots Righeto's repo. Det blev acceptabelt till slut, önskar hade mer tid för fler fil format och behålla kvalitet på bilderna
+- förberedde lite inför testning imorgon
+
+### Mål för morgon dagen:
+
+- postman -> klar för nytt ZAP test.
+- testa, dokumetnera
 
 - **NOTE**: fixa länkar på egen hand
 
