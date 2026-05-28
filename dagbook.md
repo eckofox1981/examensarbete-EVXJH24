@@ -329,6 +329,8 @@
 
 - **NOTE**: fixa länkar på egen hand
 
+**Time:** 8 hours **TOTAL**: 115.25 hours
+
 ## 2026-05-27
 
 - `input-validation` ok mergeat
@@ -342,7 +344,24 @@
 
 - **NOTE**: fixa länkar på egen hand
 
-## **Time:** 8.5 hours **TOTAL**: 123.75 hours
+**Time:** 8.5 hours **TOTAL**: 123.75 hours
+
+## 2026-05-28
+
+- förbered postman, spleade upp alla endpoints för ZAP
+- ZAP test OK
+- upptäckte att jag använt OSV fel, fick skapa en till branch `dependency-fixes`, löste det till slut (men mekkigt!)
+- merge (utan review bara konfigurationer, kändes fuskigt)
+- skrev det mesta av kapitel fyra och fem (jämföra med hotmodellering kvar)
+
+### Mål för morgon dagen:
+
+- hotmodellering
+- kapitel 6
+
+- **NOTE**: fixa länkar på egen hand
+
+**Time:** 10 hours **TOTAL**: 133.75 hours
 
 | Vecka | Milstolpe   | Leverabler                                       |
 | ----- | ----------- | ------------------------------------------------ |
