@@ -1,4 +1,4 @@
-# Mall för Examensarbete
+# Säkringen av EFBox API:et enligt OWASP Top 10 2025
 
 ## Sammanfattning (Abstract)
 
@@ -604,7 +604,6 @@ för att kategorisera hoten.
 | Tampering              | /file/upload                           | Uppladdning av [skadlig fil med manipulerad Content-Type](#2112-code-injection)                                                                               | Hög      | [Filtypsvalidering](#216-filvalidering)                                                                                                                |
 | Tampering              | /folder/change-name, /file/change-name | Anfallaren ändrar namn på en annans resurser                                                                                                                  | Medel    | [Åtkomstkontroll före CRUD-operationer](#2171-broken-access-control-bristfällig-åtkomstkontroll)                                                       |
 | Repudiation            | Alla endpoints                         | [Inga säkerhetsloggar](#2179-security-logging-and-alerting-failures-brister-i-säkerhetsloggning-och-larmhantering) – obehöriga åtkomstförsök spåras inte      | Hög      | Implementera säkerhetsloggning                                                                                                                         |
-| Information Disclosure | /file/upload (svar)                    | Filinnehåll returneras som blob i JSON-svaret vid uppladdning                                                                                                 | Medel    | [Ta bort content-fältet ur uppladdningssvaret](#2171-broken-access-control-bristfällig-åtkomstkontroll)                                                |
 | Information Disclosure | /user/login (felmeddelanden)           | [Vaga felmeddelanden](#21710-mishandling-of-exceptional-conditions-felhantering-av-undantagstillstånd) skyddar mot user enumeration                           | Låg      | Felhantering ska returnera vaga meddelande                                                                                                             |
 | Information Disclosure | application.properties                 | [JWT-nyckel och databasuppgifter i klartext](#2177-authentication-failures-autentiseringsbrister)                                                             | Hög      | Externalisera via miljövariablar                                                                                                                       |
 | Denial of Service      | /file/upload                           | Ingen lagringskvot – [en användare kan fylla databasen](#2171-broken-access-control-bristfällig-åtkomstkontroll)                                              | Hög      | Lagringskvot per användare                                                                                                                             |
@@ -745,42 +744,115 @@ Eftersom författaren granskar sin egen kod finns en risk att problem förbises.
 
 ## 4. Resultat
 
-_Anpassa detta kapitel efter din typ av arbete:_
-
 ### 4.1 Huvudresultat
 
-**För teoretiska studier:**
+#### 4.1.1 Det nya EFBox-API:et
 
-- Sammanställning av litteraturfynd
-- Identifierade mönster och trender
-- Jämförelse mellan olika källor/teorier
+_se även GitHub-repository [EFBox-main brach](https://github.com/eckofox1981/EFbox)._
 
-**För experimentella studier:**
+Projektet gick igenom 10 faser (i branscher) för att försöka säkra applikationen:
 
-- Mätresultat och data
-- Statistisk analys
-- Mätmetoder
+**1. Config-fixes:**
 
-**För utvecklingsprojekt:**
+- alla säkerhetsdetaljerna som fanns i klar text (användare, lösenord mm) ingår nu i miljövariablar som inte delas på github
+- SSL implementerades och cookies används för JWT
+- JWT kontrolleras för format
 
-- Utvecklingsprocess (agile, iterativ etc.)
-- Observationer från experiment
+**2. New-Exception-Handling:**
 
-**För utvecklingsprojekt:**
+- Exceptions hanteras globalt och inkluderar specifika Exceptions för EFBox
 
-- Beskrivning av utvecklad lösning
-- Funktionalitet och egenskaper
-- Testresultat
+**3. Logging-Exception :**
 
-### 4.2 Detaljerade Fynd
+- Exceptions och andra events loggas nu centralt och sparas i databasen
+- det hade varit säkrare att spara loggarna i en separat databas men nuvarande set-up räcker för denna studie.
+  **4. Log-access:**
+- Användare har nu både roller och tillstånd beroende på vilka de kan ha tillgång tillgång till loggarna,
+- en process via mail till ägaren (ROLE_OWNER) gör det möjligt att be om adminstatus och tillgång till loggarna (i olika förfrågor)
+- Ägare definieras enbart direkt i databasen
 
-Fördjupade resultat relevanta för dina frågeställningar.
+**5. Authentication:**
+
+- BCrypt har ersatts av Argon2id,
+- lösenordspolicyn har förstärkts med krav på versaler, gemena tecken, siffror och specialtecken,
+- rate-limiting baserad på både IP-address och användar-ID har implementerats i en egen klass, en produktion miljö bör dock implementera detta via REDIS eftersom servern fortfarande förfrågas. Jag kunde märka detta under ZAP-testet (se nedan) då min dator frös ett litet tag. Denial-of-service verkar därför fortfarande vara ett problem men rate-limiting försvåra i alla fall brute-force-attacker.
+- JWT har en livslängd på 3 minuter, likaså cookien den leveras med och förnyas med ytterligare tre minuter varje gång en användare utför en auktoriserad förfråga.
+
+**6. Pass-Recovery:**
+
+- lösenordsåterställning via mail, en kod genererad med SecureRandom skickas till användaren
+- Koden för studien är bara fyrsiffrig men skulle lätt ändras till en längre sekvens
+
+**7. Warning-System:**
+
+- Repetitiva misslyckade inloggningsförsök (fem på femton minuter) meddelas till användaren och admin,
+- repetitiva exception (fem på fem minuter) meddelas likaså till admins
+  **8. Input-validation**
+
+- implementeras med en REGEX av godkända tecken,
+- om ett injektionsförsök äger rum sparas längden av strängen i loggarna (JpaHibernate hindrade redan SQL-injektion som nämnt tidigare)
+
+**9. File-validation:**
+
+- Filer som kommer in inspekteras innan de sparas och bilder saneras (manipuleras för att sen sparas på nytt för att strippa metadata och potentiellt skadlig kod),
+- de enda filtyper som godkänns är Word-, Excel-, PowerPoint-dokument, Pdf:er och bilder av olika format,
+- fler typer av filer skulle kunna accepteras på ett relativt enkelt sätt med nuvarande arkitektur.
+- Bildsaneringen orsakar en liten men tydlig kvalitetsförlust, detta kan åtgärdas men det är utanför ramen för denna studie
+
+### 4.1.2 OSV-rapport
+
+Efter att sista branchen mergeades, upptäcktes att anropen till OSV-API:et under [Datainsamling och analys](#33-datainsamling-och-analys)fasen utfördes på fel sätt. Detta berodde på en felaktning tolkning av instruktionerna och att API:et returnera: `No issues found` om det inte hittar dependency filen den ska analysera. Ett nytt anrop, korrekt formaterat, avslöjade 61 sårbarhet, varav 8 bedömdes som kritiska (_se Bilaga O_). Därför skapades en ny branch för att försöka uppdatera så många dependencyversioner som möjligt.
+
+**EXTRA 10. Dependency-fixes**
+
+- uppdatera Spring Boot-version till 3.4.6 vilket löste en större del av problemen, detta krävde dock att Gradle-version uppdaterades till Gradle 9.5.1,
+- oanvända dependencies togs bort (OWASP rekommendation) men test dependencies lämnades dock kvar för framtida utveckling (Unit testing avaktiverades i samband med detta).
+- Vissa dependencies kunde tvingas till uppgradering genom kod som `extra["spring-security.version"] = "6.4.10"` men andra fick lämnades utan åtgärd då de orsakade problem vid `build`
+- Bilaga P - OSV-rapport efter åtgärd visar slutkompromissen, 12 sårbarhet varav enbart kritisk. Den kritiska är en `spring-security-web` dependency som inte berör projektet då EFBox har egenkonfigurerad autentisering med JWT (referens i bilaga).
+
+#### 4.1.3 ZAP-säkerhetsrapport (efter åtgärder)
+
+Efter implementerade åtgärder genomfördes en ny ZAP Active Scan mot EFbox API:et enligt samma testprotokoll som i [den initiala skanningen](#3333-säkerhetstestning-av-efbox-apiet-med-owasp-zap). Rapporten finns att tillgå i Bilaga D - ZAP-säkerhetsrapport (efter åtgärder).
+
+| Fynd                              | Risk   | Confidence | Bedömning                                                                                                                                                                                                                              |
+| --------------------------------- | ------ | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| SQL Injection                     | High   | Medium     | ZAP sparade ett lösenord med SQL-kommandon `[(...)AND '1'='1' -- ]` och `[(...) OR '1'='1' -- ]`. Detta ett **falskt positivt** då lösenorden sparas i hashade former i databasen och den råa strängen hanteras enbart för att hashas. |
+| Spring4Shell (CVE-2022-22965)     | High   | Medium     | **Falskt positivt** det åtgärdats i Spring Boot 2.6.6, EFbox använder 3.4.1 och körs som executable jar [36]                                                                                                                           |
+| CSP Header Not Set                | Medium | High       | **Accepterat** då CSP är primärt relevant för webbläsarbaserade applikationer med frontend, vilket faller utanför studiens scope                                                                                                       |
+| Cookie without SameSite Attribute | Low    | Medium     | **Kvarstående brist:** SameSite-attributet är inte konfigurerat på JWT-cookien. Bör sättas till `Strict` eller `Lax` för att skydda mot CSRF-attacker (A02). Detta är en översikt.                                                     |
+
+Jämfört med den initiala skanningen noteras att Buffer Overflow och Application Error Disclosure inte längre förekommer, vilket indikerar att den centraliserade felhanteringen fungerar som avsett.
+
+#### 4.1.4 Manuellt testande via Postman
+
+Med postman testades alla säkerhetsspärrar som implementerades, från otillåten resursåtkomst till filinjektioner, genom att kalla de olika end-points.
+
+Tre användare skapades, alla med olika filer och mappar och olika otillåtna åtkomstförsöken utfördes utan framgång.
+
+För filvalideringstestet försökte författaren att skicka ett exceldokument med macros (ej tillåtet) och EFBox identifierade korrekt att filen inte var acceptabel, vilket förväntades av filvalideringen.
+
+### 4.2 Detaljerade fynd
+
+#### 4.2.1 Detaljerade fynd per OWASP-kategori
+
+| OWASP-kategori                | Identifierad brist                                            | Åtgärd                                                                                      | Verifiering                                             |
+| ----------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------- |
+| A01 Broken Access Control     | Ingen rollhantering, ingen lagringskvot                       | GrantedAuthorities, roller och tillstånd implementerade                                     | Manuell testning                                        |
+| A02 Security Misconfiguration | Felaktig CORS, ingen HTTPS, debug-logging                     | Miljövariabler, SSL, CORS i SecurityConfig                                                  | ZAP + manuell                                           |
+| A04 Cryptographic Failures    | BCrypt, secret i klartext                                     | Argon2id, miljövariabel                                                                     | Manuell testning                                        |
+| A05 Injection                 | Ingen inputvalidering, råa databasfrågor, ingen filvalidering | REGEX-validering, loggning av försök, Magic bytes-kontroll, bildåtergivning, tillåtna REGEX | ZAP + manuell                                           |
+| A07 Authentication Failures   | Svag lösenordspolicy, ingen rate limiting                     | Förstärkt policy, rate limiting, JWT TTL 3 min, lösenordsåterställningssystem               | ZAP + manuell                                           |
+| A08 Software/Data Integrity   | Ingen kontroll av leveranskedjan                              | Kontroll med OSV och uppdateringar av depencies                                             | Manuell testning                                        |
+| A09 Logging and Alerting      | Ingen loggning                                                | Centraliserad loggning i databas, varningssystem via mail                                   | Manuell testning (ZAP-testning triggade alla varningar) |
+| A10 Exceptional Conditions    | Lokala felhanterare, e.getMessage() exponerat                 | GlobalExceptionHandler, generiska meddelanden                                               | ZAP (Buffer Overflow borta)                             |
+
+#### 4.2.2 Kontroll med hotmodeleringen
+
+_se [Hotmodellering av EFBox](#332-hotmodellering-av-efbox)_
 
 ### 4.3 Oväntade Resultat
 
-Resultat som inte förväntades eller avvikelser från hypoteser.
-
-_Presentera alla resultat objektivt utan värderingar - spara analysen till diskussionsavsnittet_
+Det förekom inga oväntade resultat från studien däremot framhävdes den ständiga kompromissen mellan det praktiska underhållet, och de kommersiella och säkerhetsaspekterna som internetleverantörer ständigt får balansera: Hur avancerat ska ett lösenord vara, hur rigid ska en filvalidering vara och vilka filer ska tillåtas, när ska varningar triggas osv. Den svåraste aspekten för detta projekt var att acceptera att författaren inte kunde få en "ren" OSV-rapport utan _issues_.
 
 ---
 
@@ -788,25 +860,65 @@ _Presentera alla resultat objektivt utan värderingar - spara analysen till disk
 
 ### 5.1 Analys av Resultat
 
-- Uppfylldes arbetets syfte?
-- Svarar resultaten på frågeställningarna?
-- Jämförelse med befintlig forskniförsökerng/lösningar
+#### 5.1.1. Vilka säkerhetsbrister identifieras i EFbox REST API utifrån OWASP Top 10:2025?
+
+OWASP dokumentation är väldigt detaljerad och dess _cheat sheet_ serie är väldigt användbar för att implementera åtgärder och tankegångar. Listan av säkerhetsbrister listad i [3.3.3.3.2 Sammanfattning](#33332-sammanfattning) får antagligen med de flesta brister som fanns med i projektet när studien började.
+Tyvärr är det svårt som ensam utvecklare att diskutera runt de olika säkerhetsaspekterna, potentiella hot och lösningar. Kunskap är också begränsad i ett team av en person. AI skulle helt klart bredda ut ramen för studien och driva fram olika lösningar men den underliggande tanken för denna studie var att få lära sig de olika säkerhetskoncepterna på egen hand.
+
+#### 5.1.2. Hur kan de identifierade bristerna åtgärdas inom ramen för det befintliga systemets arkitektur?
+
+Denna fråga är svår att svara eftersom det enda sättet att åtgärda bristerna var att **utöka arkitekturen**. Jämför man originalprojektet (sparad i branchen `originalForEssay`) med slutprodukten (branch `main`) kan vi konstatera att 4.193 tillägg gjordes mot 847 borttagningar.
+Den grundlägande arkitekturen finns kvar med `fileobject` och `user` packages. Men för att åstadkomma OWASP rekommendationerna fick en parallell säkerhetsarkitektur skapas där all data trafik filtreras och fördelas mellan de olika services.
+
+Därmed är den största lärdom av studien:
+
+> **För att säkra ett existerande API enligt OWASP Top 10 måste man analysera, testa, planera, åtgärda och analysera igen. Repetera.**
+
+Tidsramen för säkringen av EFBox är för kort för att repetera hela processen, men ska ett litet team utvecklare utan specialiserat säkerhetsteam anta en sån omstrukturering är det ett effektivt sätt att göra det på.
+
+#### 5.1.3. Hur verifieras att implementerade åtgärder är effektiva?
+
+Eftersom studien riktar in sig speciellt på EFBox är det svårt att kvalitetssäkra åtgärderna specifikt som ensamstående utvecklare. Det hittades tyvärr ingen jämförbar studie för att kontrollera resultaten med och hjälpverktygen har alla säregna brister.
+SonarQube inriktar sig speciellt på kodkvalitet men är också mån om att varna om potentiella säkerhetshot. Dock saknar SonarQube förmågan att analysera sammanhang och gav några falskt positiva fel, som t.ex denna kodrad i UserService.class:
+
+```java
+private boolean isUsernameValid(String username) {
+        final String PASSWORD_REGEX = "^[a-zA-Z0-9]{5,20}$";
+        return username.matches(PASSWORD_REGEX);
+    }
+```
+
+Vid varje merge av branchen flaggades `PASSWORD_REGEX` som ett säkerhets hot eftersom SonarQube antog att ett lösenord hade hårdkodas, vilket sänkte förtroendet för verktyget.
+
+I tillägg till SonarQube granskades _pull requests_, en kodanalys av skillnader innan en branch ska mergeas av Claude AI för kodkvalitet (se Bilagor F till M). Detta har varit hjälpsamt för att hålla kodkvalitet och rätta enkla misstag som studien, med en ensam utvecklare, hade missat. Även där dock brister förtroende med pga hallucinationer; flera rapporter påpekar att `.env.example` har två st `OWNER_EMAIL` miljövariablar vilka inte fanns. Överlag dock har Claude AI:s kodgranskning varit hjälpsam. Utan att få syftet med branchen i förväg kunnat analysera syftet med den och beskriva det på ett korrekt sätt i rapporterna. Det i sig har varit förtroendeingivande med att målen uppnåts vid varje fas av projektet.
+
+ZAP är ett fantastiskt verktyg för en smidig analys. Alla registrerade end-points skannas och testas och antalet förfrågan på kort tid testa serverns kapacitet. T.ex kunde studien konstatera att Rate-limiting åtgärderna, baserade på IP för anonyma användare alternativt på användarID, skulle uppenbarligen inte räcka mot en _Denial of Service_-attack då servern frös testdatorn i ett par minuter. Alla registrerade exception finns i Bilaga Q - EFBox_event_log efter ZAP test (EFbox skapa en HTML-verion av loggarna), där det konstateras att de implementerade skydden fyller sina syften.
+Rapporten fyllde sitt syfte men även här fanns ett falskt positiv fynd om en SQL-injektion eftersom lösenord har ingen inputvalidering för att de hashas i databasen. ZAP skickade inte heller några filer för att testa injektionsangrep utan ett excelblad med macro skickades manuellt för att testa filvalideringen. Andra manuella tester har varit att ljuga om filtypen, skicka förbjudna filer mm.
+
+Sist har en del av kvalitetssäkring varit att arbeta metodiskt enligt de planerade åtgärder med hjälp av verktyget GitHub Project med utrymme för anpassning till de olika problem som uppstod. Om inga fel hittades i samband med en granskning, en logik eller av test verktygen så dubbelkollades noga. Det var så OSV granskningen av dependencies uppdagades och kunde åtgärdas. Det hade dock varit bättre, och mer givande, att arbeta i team och diskutera resultat.
+
+Utan en bred erfarenhetsbas är det orimligt att täcka alla hotscenario som kan förekomma hos specifika applikationer.
 
 ### 5.2 Reflektion över Metod
 
-**För alla typer av arbeten:**
+Metoden som användes i studien anser författaren vara metodiskt och anpassad. Forskning på ämnet ägde rum i en förberedande fas och en initial plan las fram för sutdien. Efter att hotmodeleringen skapades användes den som bas för analys och planering. Varje kväll gjordes en SCRUM-lik analys över vad som fungerat och vad som behöver förbättras och/eller behövas. Innan en pull-requests testades den nya koden och SonarQube-plugginen granskades för allvariga problem.
 
-- Styrkor och svagheter i vald metod
-- Problem och lösningar under arbetsgången
-- Vad som fungerade bra/mindre bra
-- Lärdomar från processen
+Överlag har metoden varit korrekt, dess brister diskuteras i nästa avsnitt.
 
 ### 5.3 Begränsningar och Kritisk Granskning
 
-- Metodologiska begränsningar
-- Tekniska eller teoretiska begränsningar
-- Vad som kunde gjorts annorlunda
-- Påverkan på resultatens tillförlitlighet
+Begränsingarna har huvudsakligen grundat sig i att arbeta själv. Ett team kan fördela resurser (tidsbristen har varit ett problem) och stämma av med projektdeltagarna. Kunskapsbasen är inte heller så bred med bara en person som ska läsa sig på alla tekniska möjligheter att lösa ett problem, kanske har enkla lösningar förbisetts och tid förlorats pga detta. De lösningar som har implementerats är kanske bristfälliga på ett sätt studien inte förutsett?
+
+Ett misstag som gjordes pga tidsbristen under hotmodelleringen var att en lagringskvot för användaren förbisågs och planerades aldrig. Det resulterade i sin tur att det inte planerades och följaktigen inte implementerades. Tråkigt då åtgärden hade inte varit svår att implementera.
+
+Skulle studien göras om, skulle följande rekommenderas:
+
+- tillräckligt med tid för de involverade (team eller ensam utvecklare),
+- arbeta metodisk
+- planera noga
+- förbli anpassningsbar
+
+Trots dessa funderingar är EFBox API:et mycket säkrare än det var innan och författaren tror att den skulle klara en enklare (eller kanske mer?) OWASP-granskning.
 
 ### 5.4 Bredare Perspektiv
 
@@ -917,35 +1029,7 @@ Förslag på:
 
 [35]: Zed Attack Proxy (ZAP), Accessed: May 2026. Available: https://www.zaproxy.org/
 
-[36]:
-
-[37]:
-
-[38]:
-
-[39]:
-
-[40]:
-
-[41]:
-
-[42]:
-
-[43]:
-
-[44]:
-
-[45]:
-
-[46]:
-
-[47]:
-
-[48]:
-
-[49]:
-
-[50]: wrf
+[36]: Spring4Shell: New info and fixes (CVE-2022-22965), Accessed: May 2026. Available: https://www.helpnetsecurity.com/2022/04/01/cve-2022-22965/
 
 ---
 
@@ -955,7 +1039,16 @@ Förslag på:
 - Bilaga B -SonarCloud-analys (före åtgärder)
 - Bilaga C - Manuel kodgranskning av EFbox-API:et ur ett säkerhetsperspektiv
 - Bilaga D - ZAP-säkerhetsrapport (före åtgärder)
-- Bilaga E - SonarCloud-analys (efter åtgärder)
-- Bilaga F - ZAP-säkerhetsrapport (efter åtgärder)
-- Bilaga G - GitHub Projects Roadmap
-- Bilaga H - Claude AI-interaktioner
+- Bilaga E - Claude Exchange: EFBox-PR1-Code-Review
+- Bilaga F - EFBox_PR2_CodeQualityReport
+- Bilaga G - EFBox_PR3_CodeQualityReport
+- Bilaga H - EFBox_PR4_CodeQualityReport
+- Bilaga I - EFBox_PR5_CodeQualityReport
+- Bilaga J - EFBox_PR6_CodeQualityReport
+- Bilaga K - EFBox_PR7_CodeQualityReport
+- Bilaga L - EFBox_PR8_CodeQualityReport
+- Bilaga M - EFBox_PR9_CodeQualityReport
+- Bilaga N - ZAP Scanning Report efter åtgärd
+- Bilaga O - OSV-rapport
+- Bilaga P - OSV-rapport efter åtgärd
+- Bilaga Q - EFBox event_log efter ZAP test

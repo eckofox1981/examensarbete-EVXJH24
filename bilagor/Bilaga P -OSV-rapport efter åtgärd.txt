@@ -1,0 +1,30 @@
+osv-scanner -r gradle.lockfile
+Scanning dir gradle.lockfile
+Starting filesystem walk for root: /
+Scanned /home/eckofox/Programming/EC-utbildning/13 Examens Arbete/EFbox/gradle.lockfile file and found 122 packages
+End status: 0 dirs visited, 1 inodes visited, 1 Extract calls, 650.846µs elapsed, 651.036µs wall time
+
+Total 7 packages affected by 12 known vulnerabilities (1 Critical, 3 High, 5 Medium, 2 Low, 1 Unknown) from 1 ecosystem.
+12 vulnerabilities can be fixed.
+
+╭─────────────────────────────────────┬──────┬───────────┬───────────────────────────────────────────────────┬─────────┬───────────────┬──────────── ≈
+│ OSV URL                             │ CVSS │ ECOSYSTEM │ PACKAGE                                           │ VERSION │ FIXED VERSION │ SOURCE      ≈
+├─────────────────────────────────────┼──────┼───────────┼───────────────────────────────────────────────────┼─────────┼───────────────┼──────────── ≈
+│ https://osv.dev/GHSA-rqfh-9r24-8c9r │ 8.2  │ Maven     │ org.assertj:assertj-core                          │ 3.26.3  │ 3.27.7        │ gradle.lock ≈
+│ https://osv.dev/GHSA-wwpq-f5c3-7hvx │ 7.0  │ Maven     │ org.springframework.boot:spring-boot              │ 3.4.6   │ 3.5.14        │ gradle.lock ≈
+│ https://osv.dev/GHSA-vxf7-qj7q-83fh │ 3.7  │ Maven     │ org.springframework.security:spring-security-core │ 6.4.10  │ 6.5.10        │ gradle.lock ≈
+│ https://osv.dev/GHSA-x2wq-9x2f-fhj7 │ 4.8  │ Maven     │ org.springframework.security:spring-security-core │ 6.4.10  │ 6.5.10        │ gradle.lock ≈
+│ https://osv.dev/GHSA-mf92-479x-3373 │ 9.1  │ Maven     │ org.springframework.security:spring-security-web  │ 6.4.10  │ 6.5.9         │ gradle.lock ≈
+│ https://osv.dev/GHSA-jmp9-x22r-554x │ 7.5  │ Maven     │ org.springframework:spring-core                   │ 6.2.7   │ 6.2.11        │ gradle.lock ≈
+│ https://osv.dev/GHSA-6r3c-xf4w-jxjm │ 6.5  │ Maven     │ org.springframework:spring-web                    │ 6.2.7   │ 6.2.8         │ gradle.lock ≈
+│ https://osv.dev/GHSA-4773-3jfm-qmx3 │ 5.9  │ Maven     │ org.springframework:spring-webmvc                 │ 6.2.7   │ 6.2.17        │ gradle.lock ≈
+│ https://osv.dev/GHSA-6hcq-hmm3-jj3c │ 2.6  │ Maven     │ org.springframework:spring-webmvc                 │ 6.2.7   │ 6.2.17        │ gradle.lock ≈
+│ https://osv.dev/GHSA-6p4f-wcwh-5vvm │ 5.3  │ Maven     │ org.springframework:spring-webmvc                 │ 6.2.7   │ 6.2.18        │ gradle.lock ≈
+│ https://osv.dev/GHSA-r936-gwx5-v52f │ 5.9  │ Maven     │ org.springframework:spring-webmvc                 │ 6.2.7   │ 6.2.10        │ gradle.lock ≈
+│ https://osv.dev/GHSA-wg35-8jpf-2xv3 │      │ Maven     │ org.springframework:spring-webmvc                 │ 6.2.7   │ 6.2.18        │ gradle.lock ≈
+╰─────────────────────────────────────┴──────┴───────────┴───────────────────────────────────────────────────┴─────────┴───────────────┴──────────── ≈
+
+NOTERINGAR från författaren: 
+ - org.assertj:assertj-core                             används inte produktion (test ramverk)
+ - org.springframework.security:spring-security-web     bör inte påverka EFBox eftersom det använder sig av egenkonfigurerad inloggningssytem med JWT
+ - övriga ansågs svåra att åtgärda utan att skapa en ny kedja av problem i projektets slutskede eftersom de är beroende av Spring versionen.
