@@ -250,7 +250,7 @@ JWT är inte menade att användas på detta sätt. Studien kommer att utgå frå
 - om applikationen hade haft en fungerande frontend skulle JWT med extremt kort liv kunna förnyas regelbundet.
 - om användaren är inaktiv en längre period (mät av frontend) skulle hen kunna loggas ut automatisk (dvs klienten slutar be om nya JWT)
 
-Av praktiska skäl kommer JWT ha en TTL (_Time To Live_) på 10 minuter och förnyas med varje förfrågan. //TODO: ändra om brist på tid för implementering.
+Av praktiska skäl kommer JWT ha en TTL (_Time To Live_) på 3 minuter och förnyas med varje förfrågan. //TODO: ändra om brist på tid för implementering.
 
 ## Referenser
 

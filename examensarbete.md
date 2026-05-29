@@ -3,7 +3,7 @@
 ## Sammanfattning (Abstract)
 
 _Skriv detta avsnitt sist, även om det kommer först i rapporten._
-
+//TODO
 Detta är en kortfattad sammanfattning (max 250 ord) på **engelska** som ska innehålla:
 
 - Bakgrund och problemområde
@@ -16,6 +16,97 @@ Detta är en kortfattad sammanfattning (max 250 ord) på **engelska** som ska in
 
 ---
 
+## Innehållsförteckning
+
+- [Säkringen av EFBox API:et enligt OWASP Top 10 2025](#säkringen-av-efbox-apiet-enligt-owasp-top-10-2025)
+  - [Sammanfattning (Abstract)](#sammanfattning-abstract)
+  - [Innehållsförteckning](#innehållsförteckning)
+  - [Förkortningar och Begrepp](#förkortningar-och-begrepp)
+  - [1. Inledning](#1-inledning)
+    - [1.1 Bakgrund](#11-bakgrund)
+    - [1.2 Syfte](#12-syfte)
+    - [1.3 Frågeställningar](#13-frågeställningar)
+    - [1.4 Avgränsningar](#14-avgränsningar)
+    - [1.5 Metodöversikt](#15-metodöversikt)
+  - [2. Teoretisk Grund och Relaterat Arbete](#2-teoretisk-grund-och-relaterat-arbete)
+    - [2.1 Tekniska Koncept](#21-tekniska-koncept)
+      - [2.1.1 Olika attacker mot API](#211-olika-attacker-mot-api)
+        - [2.1.1.1 Man in middle attack (MITM)](#2111-man-in-middle-attack-mitm)
+        - [2.1.1.2 Code-Injection](#2112-code-injection)
+        - [2.1.1.3 Brute force attack](#2113-brute-force-attack)
+        - [2.1.1.4 Cross Site Request Forgery](#2114-cross-site-request-forgery)
+      - [2.1.2 Autentisering och auktorisering JWT](#212-autentisering-och-auktorisering-jwt)
+      - [2.1.3 Asymmetrisk kryptografi](#213-asymmetrisk-kryptografi)
+      - [2.1.4 Kryptering, lösenordhashing och salting](#214-kryptering-lösenordhashing-och-salting)
+      - [2.1.5 Inputvalidering](#215-inputvalidering)
+      - [2.1.6 Filvalidering](#216-filvalidering)
+      - [2.1.5 HTTP- och API-säkerhet (CORS)](#215-http--och-api-säkerhet-cors)
+        - [2.1.5.1 Grundläggande om HTTP](#2151-grundläggande-om-http)
+      - [2.1.5.2 HTTPS](#2152-https)
+      - [2.1.5.3 Cross-origin resource sharing (CORS) - API: säkerhet](#2153-cross-origin-resource-sharing-cors---api-säkerhet)
+      - [2.1.6 Hotmodellering med STRIDE](#216-hotmodellering-med-stride)
+      - [2.1.7 OWASP Top 10 hot 2025](#217-owasp-top-10-hot-2025)
+        - [2.1.7.1 Broken Access Control (Bristfällig åtkomstkontroll)](#2171-broken-access-control-bristfällig-åtkomstkontroll)
+        - [2.1.7.2 Security Misconfiguration (Felaktig säkerhetskonfiguration)](#2172-security-misconfiguration-felaktig-säkerhetskonfiguration)
+        - [2.1.7.3 Software Supply Chain Failures (Brister i Mjukvarans Leveranskedja)](#2173-software-supply-chain-failures-brister-i-mjukvarans-leveranskedja)
+        - [2.1.7.4 Cryptographic Failures (Kryptografibrister)](#2174-cryptographic-failures-kryptografibrister)
+        - [2.1.7.5 Injection (Injektionsattacker)](#2175-injection-injektionsattacker)
+        - [2.1.7.6 Insecure Design (Osäker design)](#2176-insecure-design-osäker-design)
+        - [2.1.7.7 Authentication Failures (Autentiseringsbrister)](#2177-authentication-failures-autentiseringsbrister)
+        - [2.1.7.8 Software och Data Integrity Failures (Brister i mjukvaru- och dataintegritet)](#2178-software-och-data-integrity-failures-brister-i-mjukvaru--och-dataintegritet)
+        - [2.1.7.9 Security Logging and Alerting Failures (Brister i säkerhetsloggning och larmhantering)](#2179-security-logging-and-alerting-failures-brister-i-säkerhetsloggning-och-larmhantering)
+        - [2.1.7.10 Mishandling Of exceptional Conditions (Felhantering av undantagstillstånd)](#21710-mishandling-of-exceptional-conditions-felhantering-av-undantagstillstånd)
+    - [2.2 Befintlig Forskning och Lösningar](#22-befintlig-forskning-och-lösningar)
+    - [2.3 Teknisk/Teoretisk Jämförelse](#23-tekniskteoretisk-jämförelse)
+  - [3. Metod och Genomförande](#3-metod-och-genomförande)
+    - [3.1 Övergripande Arbetsgång](#31-övergripande-arbetsgång)
+    - [3.2 Verktyg och Tekniker](#32-verktyg-och-tekniker)
+    - [3.3 Datainsamling och Analys](#33-datainsamling-och-analys)
+      - [3.3.1 Kartläggning av EFbox, struktur och end-points](#331-kartläggning-av-efbox-struktur-och-end-points)
+        - [3.3.1.1 Översikt](#3311-översikt)
+        - [3.3.1.2 Struktur](#3312-struktur)
+      - [3.3.1.3 End-points](#3313-end-points)
+      - [3.3.2 Hotmodellering av EFbox](#332-hotmodellering-av-efbox)
+      - [3.3.3 Automatisk och Manuell kodgranskning av EFbox ur ett säkerhetsperspektiv](#333-automatisk-och-manuell-kodgranskning-av-efbox-ur-ett-säkerhetsperspektiv)
+        - [3.3.3.1 Analys med SonarQube](#3331-analys-med-sonarqube)
+        - [3.3.3.2 Manuel kodgranskning ur ett säkerhetsperspektiv](#3332-manuel-kodgranskning-ur-ett-säkerhetsperspektiv)
+        - [3.3.3.3 Säkerhetstestning av EFBox API:et med OWASP ZAP](#3333-säkerhetstestning-av-efbox-apiet-med-owasp-zap)
+        - [3.3.3.3.1 Analys av ZAP-säkerhetsrapporten](#33331-analys-av-zap-säkerhetsrapporten)
+        - [3.3.3.3.1.1 SQL Injection (High Risk, Medium confidence)](#333311-sql-injection-high-risk-medium-confidence)
+        - [3.3.3.3.1.2 Buffer Overflow (Medium Risk, Medium confidence) :](#333312-buffer-overflow-medium-risk-medium-confidence-)
+        - [3.3.3.3.1.3 Application Error Disclosure (Low Risk, Medium confidence):](#333313-application-error-disclosure-low-risk-medium-confidence)
+        - [3.3.3.3.1.4 Insights (information som kan vara relevant):](#333314-insights-information-som-kan-vara-relevant)
+        - [3.3.3.3.2 Sammanfattning](#33332-sammanfattning)
+    - [3.4 Planering av åtgärder](#34-planering-av-åtgärder)
+    - [3.5 Kvalitetssäkring](#35-kvalitetssäkring)
+      - [3.5.1 Metodkvalitet och tillförlitlighet](#351-metodkvalitet-och-tillförlitlighet)
+      - [3.5.2 Validering av resultat](#352-validering-av-resultat)
+      - [3.5.3 Hantering av bias eller fel](#353-hantering-av-bias-eller-fel)
+  - [4. Resultat](#4-resultat)
+    - [4.1 Huvudresultat](#41-huvudresultat)
+      - [4.1.1 Det nya EFBox-API:et](#411-det-nya-efbox-apiet)
+    - [4.1.2 OSV-rapport](#412-osv-rapport)
+      - [4.1.3 ZAP-säkerhetsrapport (efter åtgärder)](#413-zap-säkerhetsrapport-efter-åtgärder)
+      - [4.1.4 Manuellt testande via Postman](#414-manuellt-testande-via-postman)
+    - [4.2 Detaljerade fynd](#42-detaljerade-fynd)
+      - [4.2.1 Detaljerade fynd per OWASP-kategori](#421-detaljerade-fynd-per-owasp-kategori)
+      - [4.2.2 Kontroll med hotmodelleringen](#422-kontroll-med-hotmodelleringen)
+    - [4.3 Oväntade Resultat](#43-oväntade-resultat)
+  - [5. Diskussion](#5-diskussion)
+    - [5.1 Analys av Resultat](#51-analys-av-resultat)
+      - [5.1.1. Vilka säkerhetsbrister identifieras i EFbox REST API utifrån OWASP Top 10:2025?](#511-vilka-säkerhetsbrister-identifieras-i-efbox-rest-api-utifrån-owasp-top-102025)
+      - [5.1.2. Hur kan de identifierade bristerna åtgärdas inom ramen för det befintliga systemets arkitektur?](#512-hur-kan-de-identifierade-bristerna-åtgärdas-inom-ramen-för-det-befintliga-systemets-arkitektur)
+      - [5.1.3. Hur verifieras att implementerade åtgärder är effektiva?](#513-hur-verifieras-att-implementerade-åtgärder-är-effektiva)
+    - [5.2 Reflektion över Metod](#52-reflektion-över-metod)
+    - [5.3 Begränsningar och Kritisk Granskning](#53-begränsningar-och-kritisk-granskning)
+    - [5.4 Bredare Perspektiv](#54-bredare-perspektiv)
+  - [6. Slutsatser](#6-slutsatser)
+    - [6.1 Huvudslutsatser](#61-huvudslutsatser)
+    - [6.2 Bidrag och Betydelse](#62-bidrag-och-betydelse)
+    - [6.3 Framtida Arbete](#63-framtida-arbete)
+  - [7. Referenser](#7-referenser)
+  - [Bilagor](#bilagor)
+
 ## Förkortningar och Begrepp
 
 | Term/Förkortning                | Förklaring                                                                                                                                                                                        |
@@ -26,11 +117,13 @@ Detta är en kortfattad sammanfattning (max 250 ord) på **engelska** som ska in
 | CORS                            | Cross-origin resource sharing, en teknik som begränsar åtkomst till websidor från specifierade domäner                                                                                            |
 | CRUD                            | Create Read Update Delete (Skapa, Läsa, Ändra, Radera), ett begrepp som beskriver möjlig hantering av data                                                                                        |
 | CSP                             | Content-Security-Policy, en response header som definierar vilka resurser en webbläsare få använda (ofta en servers ursprung)                                                                     |
+| dependency                      | beroende eller avhängighet, inom programmering syftas det på program eller ramverk som en applikation är beroende av                                                                              |
 | ECDSA                           | Elliptisk kurva digital signaturalgoritm, en av de mer komplexa offentliga nyckelkrypteringsalgoritmer                                                                                            |
 | Dependency (inom programmering) | Beroende på svenska, syftar på mjukvara som en applikation är beroende av                                                                                                                         |
 | EU                              | Europeiska Unionen                                                                                                                                                                                |
 | Frontend                        | Användargränssnittsorienterad bearbetning (webbsida, mobilapplikationer mm)                                                                                                                       |
 | GDPR                            | General Data Protection Regulation                                                                                                                                                                |
+| Git                             | En versionhateringsprogram                                                                                                                                                                        |
 | GitHub                          | Ett kodbibliotek för olika programmeringsprojekt där innehåll kan hämtas eller laddas upp                                                                                                         |
 | Header                          | "Huvud" på svenska, början på ett meddelande inom datateknik som innehåller metadata om meddelandet (hur den ska tolkas)                                                                          |
 | HTML                            | HyperText Markup Language, programmeringsspråket som lägger grunden till webbsidor                                                                                                                |
@@ -52,7 +145,9 @@ Detta är en kortfattad sammanfattning (max 250 ord) på **engelska** som ska in
 | PCI DSS                         | Payment Card Industry Data Security Standard                                                                                                                                                      |
 | Plug-in                         | Tilläggsprogram om inte körs fristående utan installeras som ett tillägg i ett annat program                                                                                                      |
 | Postman                         | Ett verktyg för utvecklare för att testa API                                                                                                                                                      |
+| Pull request (PR)               | begäranden för att ändra, granska och slå samman kod i en Git-lagringsplats                                                                                                                       |
 | RSA                             | Ett krypteringsalgoritm döpt uppkallad efter dess skapare Rivest, Shamir och Adleman. Systemet kräver en nyckel för kryptering och en annan för avkryptering                                      |
+| Repository                      | Kodbibliotek                                                                                                                                                                                      |
 | REST                            | Representational State Transfer - Arkitekturstil för webbaserade API:er                                                                                                                           |
 | Spring Boot                     | Ett open-source Java-ramverk som förenklar utvecklingen av webbapplikationer genom att erbjuda en snabb och enkel konfiguration                                                                   |
 | Statefull                       | Syftar på att information (eller _state_) sparas för kommunikationen för snabbare åtkomst                                                                                                         |
@@ -62,6 +157,7 @@ Detta är en kortfattad sammanfattning (max 250 ord) på **engelska** som ska in
 | TLS                             | Transport Layer Security, ett kryp­te­rings­pro­to­koll som sä­ker­stäl­ler säker da­taö­ver­fö­ring på internet.                                                                                 |
 | URI                             | Uniform Resource Identifier, en teckensträng som används för att identifiera en resurs. URI kan användas för att lokalisera en webbplats, fil eller en specifik del av data                       |
 | URL                             | Uniform Resource Locator, är den teckensträng som identifierar en viss resurs på internet, till exempel en webbsida. I folkmun kallas URL i för "webbadress"                                      |
+| white hats                      | hackers som angripper i syftet att dela med sig av sina fynder till utvecklarna av en applikation                                                                                                 |
 | XML                             | Extensible Markup Language                                                                                                                                                                        |
 | XSS                             | [Cross Site Scripting](#2112)                                                                                                                                                                     |
 | ZAP                             | Zed Attack Proxy, en _open-source_ programvara som används i samband säkerhetstestning av applikationer                                                                                           |
@@ -120,12 +216,12 @@ Sista steg är att återanalysera API:et för att se om åtgärdena är effektiv
 De verktyg som används i denna studie är:
 
 - IntelliJ (IDE)
-- Java version 21 (programmeringspråk)
+- Java version 23 (programmeringspråk)
 - Postman
 - ZAP
 - SonarQube för IDE (en plug-in för IDE:er för kodkvalitetsgranskning och olika komplexitetsmätningar)
 - Claude AI kommer också att användas för kodgranskning (eftersom arbetet bedrivs på egen hand) <u>inte för att driva studien</u>.
-- FILLER /TODO: ta bort om ej mer
+- Git Hub för att lagra repositoryn
 
 ---
 
@@ -212,7 +308,6 @@ Inputvalidering uppfyller två syfte:
 Inputvalidering kan ske på olika sätt, denna studie kommer att fokusera på följande:
 
 - REGEX-validering: vissa strängkombinationer, -längd eller tecken förbjuds
-- Apache Commons Validators: inhemskt till Java API:er, tillåter valideringen av inkommande data (//TODO: ska vi verkligen bråka med det???)
 - Json schema: Json-objekt valideras innan de behandlas
 
 #### 2.1.6 Filvalidering
@@ -220,7 +315,7 @@ Inputvalidering kan ske på olika sätt, denna studie kommer att fokusera på f�
 Eftersom en filhanteringstjänst studeras i denna studie måste ansträngningar läggas på filvalidering. Hackers kan ladda upp filer som antingen orsakar skador på servern (t.ex enorma filer eller filer som innehåller farlig kod) eller används för sekundära attacker som t.ex phishing.
 
 Filvalidering liknar delvis inputvalidering då man försäkrar sig att själva filnamnet inte är farligt för systemet (kanske innehåller den systemrelaterade tecken som semi-colon ( ; )), för försök till injection.
-Dess extension inspekteras också för att identifiera dess typ (efter punkten t.ex image<strong>.png</strong>). En vanlig filhanteringsapplikation skulle behöva tillåta många olika filtyper men denna studie är en _proof of concept_ och antalet tillåtna filer kommer att begränsas (//TODO hänvisa till relevant kapitel). Denna metod har dock en svaghet då man kan namnge en körbar fil med en annan extension. T.ex filen _virus.exe_ kan få sitt namn bytt till _flower.png_. I ett sånt fall skulle den körbara filen fortfarande ta sig igenom serverns försvar [22].
+Dess extension inspekteras också för att identifiera dess typ (efter punkten t.ex image<strong>.png</strong>). En vanlig filhanteringsapplikation skulle behöva tillåta många olika filtyper men denna studie är en _proof of concept_ och antalet tillåtna filer kommer att begränsas (se [Resultat](#411-det-nya-efbox-apiet)). Denna metod har dock en svaghet då man kan namnge en körbar fil med en annan extension. T.ex filen _virus.exe_ kan få sitt namn bytt till _flower.png_. I ett sånt fall skulle den körbara filen fortfarande ta sig igenom serverns försvar [22].
 
 I en förfrågans header kan nyckeln 'Content-type' hittas med en beskrivning av innehållet. Data i Content-type defineras av användaren och kan inte litas på men det kan agera som ett första steg i valideringen (dvs om Content-type värdet är bristfälligt så avslutas behandlingen av förfrågan)[23].
 
@@ -281,7 +376,7 @@ Access-Control-Allow-Origin: https://foo.example //bara Foo Example kan anropa s
 Access-Control-Allow-Methods: POST, GET, OPTIONS //enbart dessa HTTP-request kan utföras
 ```
 
-En felkonfigurerad CORS-inställning – som att tillåta alla ursprung (\*) för en tjänst som hanterar känslig information – kan exponera API:et för obehöriga förfrågningar. Korrekt CORS-konfiguration är därför en viktig säkerhetsåtgärd som analyseras vidare i denna studie. Vilket behandlas vidare under [Security Misconfiguration](//TODO:länk).
+En felkonfigurerad CORS-inställning – som att tillåta alla ursprung (\*) för en tjänst som hanterar känslig information – kan exponera API:et för obehöriga förfrågningar. Korrekt CORS-konfiguration är därför en viktig säkerhetsåtgärd som analyseras vidare i denna studie. Vilket behandlas vidare under [Security Misconfiguration](#2172-security-misconfiguration-felaktig-säkerhetskonfiguration).
 
 #### 2.1.6 Hotmodellering med STRIDE
 
@@ -835,20 +930,29 @@ För filvalideringstestet försökte författaren att skicka ett exceldokument m
 
 #### 4.2.1 Detaljerade fynd per OWASP-kategori
 
-| OWASP-kategori                | Identifierad brist                                            | Åtgärd                                                                                      | Verifiering                                             |
-| ----------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------- |
-| A01 Broken Access Control     | Ingen rollhantering, ingen lagringskvot                       | GrantedAuthorities, roller och tillstånd implementerade                                     | Manuell testning                                        |
-| A02 Security Misconfiguration | Felaktig CORS, ingen HTTPS, debug-logging                     | Miljövariabler, SSL, CORS i SecurityConfig                                                  | ZAP + manuell                                           |
-| A04 Cryptographic Failures    | BCrypt, secret i klartext                                     | Argon2id, miljövariabel                                                                     | Manuell testning                                        |
-| A05 Injection                 | Ingen inputvalidering, råa databasfrågor, ingen filvalidering | REGEX-validering, loggning av försök, Magic bytes-kontroll, bildåtergivning, tillåtna REGEX | ZAP + manuell                                           |
-| A07 Authentication Failures   | Svag lösenordspolicy, ingen rate limiting                     | Förstärkt policy, rate limiting, JWT TTL 3 min, lösenordsåterställningssystem               | ZAP + manuell                                           |
-| A08 Software/Data Integrity   | Ingen kontroll av leveranskedjan                              | Kontroll med OSV och uppdateringar av depencies                                             | Manuell testning                                        |
-| A09 Logging and Alerting      | Ingen loggning                                                | Centraliserad loggning i databas, varningssystem via mail                                   | Manuell testning (ZAP-testning triggade alla varningar) |
-| A10 Exceptional Conditions    | Lokala felhanterare, e.getMessage() exponerat                 | GlobalExceptionHandler, generiska meddelanden                                               | ZAP (Buffer Overflow borta)                             |
+| OWASP-kategori                     | Identifierad brist                                                                             | Åtgärd                                                                                                                                                                              | Verifiering                                             |
+| ---------------------------------- | ---------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------- |
+| A01 Broken Access Control          | Ingen rollhantering, ingen lagringskvot                                                        | GrantedAuthorities, roller och tillstånd implementerade                                                                                                                             | Manuell testning                                        |
+| A02 Security Misconfiguration      | Felaktig CORS, ingen HTTPS, debug-logging                                                      | Miljövariabler, SSL, CORS i SecurityConfig                                                                                                                                          | ZAP + manuell                                           |
+| A03 Software Supply Chain Failures | Felaktig OSV-skanning, sårbara dependencies identifierades sent under studiens gång (Bilaga O) | Uppdatering av Spring Boot till 3.4.6, Gradle till 9.5.1, tvingade versionsuppgraderingar, borttagna oanvända dependencies, identifiering och accepterande av säkerhetskompromisser | OSV-rapport (Bilaga P)                                  |
+| A04 Cryptographic Failures         | BCrypt, secret i klartext                                                                      | Argon2id, miljövariabel                                                                                                                                                             | Manuell testning                                        |
+| A05 Injection                      | Ingen inputvalidering, råa databasfrågor, ingen filvalidering                                  | REGEX-validering, loggning av försök, Magic bytes-kontroll, bildåtergivning, tillåtna REGEX                                                                                         | ZAP + manuell                                           |
+| A07 Authentication Failures        | Svag lösenordspolicy, ingen rate limiting                                                      | Förstärkt policy, rate limiting, JWT TTL 3 min, lösenordsåterställningssystem                                                                                                       | ZAP + manuell                                           |
+| A08 Software/Data Integrity        | Ingen kontroll av leveranskedjan                                                               | Kontroll med OSV, användning av betrodda källor, detta gjordes redan och fortsatte med under studien                                                                                | Manuell kontroll                                        |
+| A09 Logging and Alerting           | Ingen loggning                                                                                 | Centraliserad loggning i databas, varningssystem via mail                                                                                                                           | Manuell testning (ZAP-testning triggade alla varningar) |
+| A10 Exceptional Conditions         | Lokala felhanterare, e.getMessage() exponerat                                                  | GlobalExceptionHandler, generiska meddelanden                                                                                                                                       | ZAP (Buffer Overflow borta)                             |
 
-#### 4.2.2 Kontroll med hotmodeleringen
+#### 4.2.2 Kontroll med hotmodelleringen
 
 _se [Hotmodellering av EFBox](#332-hotmodellering-av-efbox)_
+
+Hotmodelleringen visade sig vara ett användbart verktyg för att förutse de brister som senare identifierades i kodgranskningen. Samtliga hot med risknivå Hög åtgärdades, med ett undantag: lagringskvoten per användare förbisågs under planeringsfasen och implementerades aldrig (se [5.3 Begränsningar](#53-begränsningar-och-kritisk-granskning)).
+
+De två hoten med risknivå Medel åtgärdades – inputvalidering implementerades på samtliga användarinputs (med undantag för lösenord som hashas direkt) och ägarskapskontrollen skyddar mot obehörig namnändring av andras resurser.
+
+Hotmodelleringen förutsåg inte OSV-sårbarheter i leveranskedjan, vilket uppdagades sent i projektet. Det understryker värdet av att kombinera flera analysmetoder snarare än att förlita sig på en enskild.
+
+Det sistnämnda avslöjar en svaghet av STRIDE-hotmodelleringen: den mänskliga faktorn nämns inte i STRIDE men bör räknas in. Detta görs sen länge i andra riskutsatta branscher, mest påtagligt flygbranschen som implementerar kontroller och procedurer för alla tänkbara riskscenario.
 
 ### 4.3 Oväntade Resultat
 
@@ -911,6 +1015,8 @@ Begränsingarna har huvudsakligen grundat sig i att arbeta själv. Ett team kan 
 
 Ett misstag som gjordes pga tidsbristen under hotmodelleringen var att en lagringskvot för användaren förbisågs och planerades aldrig. Det resulterade i sin tur att det inte planerades och följaktigen inte implementerades. Tråkigt då åtgärden hade inte varit svår att implementera.
 
+Att arbeta ensam ökar också risken för partiskhet när man analysera sitt eget arbete: har rätt verktyg, metodologi och koncept används och implementerats på rätt sätt eller har mindre anpassade sätt tillämpats för att de var enklare att använda?
+
 Skulle studien göras om, skulle följande rekommenderas:
 
 - tillräckligt med tid för de involverade (team eller ensam utvecklare),
@@ -922,9 +1028,8 @@ Trots dessa funderingar är EFBox API:et mycket säkrare än det var innan och f
 
 ### 5.4 Bredare Perspektiv
 
-- Implikationer för området
-- Praktisk tillämpbarhet
-- Teoretiskt bidrag
+Trots att denna studie är riktad specifikt mot EFBox så finns lärdomar för andra utvecklare som ska säkra andra API. Att säkra ett befintligt system är ett vanligare scenario i industrin än att bygga nytt från grunden, vilket gör studiens approach relevant. Utan att använda studiens lösningar kan man basera sin egen forskning på den tillämpade metodologin som beskrivs i detta dokument. Man skulle även kunna tillämpa arbetssättet till andra språk (OWASP-koncepten är inte språkberoende) och ramverk och dokumenteras det kan en bredare kunskapsbas byggas för framtiden.
+Inga andra studier av denna typ hittades under förberedande forskning och projektet kan komma till användning för att etablera bättre metodologi och standard lösningar för säkring av befintliga REST API.
 
 ---
 
@@ -932,26 +1037,22 @@ Trots dessa funderingar är EFBox API:et mycket säkrare än det var innan och f
 
 ### 6.1 Huvudslutsatser
 
-Konkreta slutsatser baserade på resultaten:
-
-- Tydliga svar på frågeställningarna
-- Måluppfyllelse
-- Nya insikter eller kunskap
+Websäkerhet i allmänhet är inte väldefinierad i den mening att kompromiss måste uppnås beroende på de kommersiella intressen. En väderapplikation utsätts inte för samma hot som ett socialt nätverk. Därför var frågeställningen svår att både definiera och svara på. Säkerhetsbristerna identifierades systematiskt med OWASP Top 10 och hotmodellering som referensram enligt denna studie. Åtgärderna krävde en utökning av arkitekturen snarare än enbart modifieringar, vilket i sig är en viktig lärdom.
+Det är dock tydligt att det enda sätt att verkligen granska de implementerade lösningarna är effektiva vore att med riktig _penetration testing_ hitta problemen att granska EFBox.
+Studien avser ett småskaligt projekt men understryker tydligt hur stort och invecklat säkerhetsområdet är. Små start-ups drivna av kodentusiaster bör ta detta i beaktning, särskilt med tanke på att studien inte ta upp alla regler runt GDPR och dess krav på lagring av personlig data. Det sistnämnda blev ännu viktigare då användaremail las till som krav för att skapa EFBox konto.
 
 ### 6.2 Bidrag och Betydelse
 
-- Vad tillför arbetet till området?
-- Praktisk eller teoretisk betydelse
-- Värde för yrkeskåren
+Under förberedande forskning hittades många olika lösningar online på specifika problem men ingen övergripande logik eller metodologi. OWASP, NIST och andra organisationer har detaljerade lösningar men ingen metodologi. Betydelsen av denna studie är att visa ett sätt att implementera säkerhet. Utvecklare kan dra lärdomar från de misttag som begicks här och få inspiration för metodologi, verktyg mm.
 
 ### 6.3 Framtida Arbete
 
-Förslag på:
+Studien täcker säkringen av EFBox API:et men det framgår tydligt av slutsatserna att vidare forskning bör läggas på bl.a:
 
-- Vidareutveckling av forskning/utveckling
-- Oresolerade frågor
-- Nya forsknings-/utvecklingsområden
-- Praktiska tillämpningar
+- Att etablera en metodologi för säkringen av applikationer, möjligen utvecklingen av en checklista
+- Att undersöka säkerhetspåverkan av att arbeta som ensamutvecklare
+- Att ta fram en metod för mäta förhållandet mellan säkerheten / kommersiella behoven / arbetsbelastningen av en applikation
+- Att bedöma påverkan av GDPR på säkerhetsarkitekturen av en applikation
 
 ---
 

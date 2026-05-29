@@ -1,4 +1,4 @@
-#Kartläggning av EFBox API:s End-Points
+# Kartläggning av EFBox API:s End-Points
 
 Alla end-points börjar sedvanligt med basurl:n.
 Alla endpoint kräver auktorisation med JWT med undantag för registrering- och loginfunktionerna.
