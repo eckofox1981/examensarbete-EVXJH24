@@ -100,8 +100,8 @@ The study contributes a concrete methodology for security analysis of existing R
     - [6.1 Huvudslutsatser](#61-huvudslutsatser)
     - [6.2 Bidrag och Betydelse](#62-bidrag-och-betydelse)
     - [6.3 Framtida Arbete](#63-framtida-arbete)
-  - [7. Referenser](#7-referenser)
   - [Bilagor](#bilagor)
+  - [Referenser](#referenser)
 
 ## Förkortningar och Begrepp
 
@@ -164,22 +164,22 @@ The study contributes a concrete methodology for security analysis of existing R
 
 ### 1.1 Bakgrund
 
-Internet anses ha genomgått tre perioder [1] sen dess specifikation i 1989.
+Internet anses ha genomgått tre perioder [^1] sen dess specifikation i 1989.
 Man pratar om **Web 1.0** där användarna kunde, för det mesta, bara söka och läsa innehåll online. Kommunikationen skulle kunna beskrivas, på ett förenklat sätt, ensidig och användarinputs var begränsade.
 
 Sedan 2000-talet tog **Web 2.0** över världen med interaktiva tjänster och sociala media. Användarna kan nu skicka information på ett enkelt sätt. Det fanns redan säkerhetsproblem under Web 1.0, men nu behöver online-tjänster kunna hantera, på ett säkert sätt, information och kommando som skickas till servrerna. Säkerhet tas på desto större allvar då många lagrar personlig information online som måste skyddas på ett säkert sätt. Web 2.0 gjorde det möjligt för företag som Meta, Google, Amazon, Twitter/X och andra att bli värdsledande och implementera ett affärssystem där användardatan är en produkt som säljs i marknadsföringssyften. Hackerkulturen fortsatte samtidigt att utvecklas och attackerna blev alltmer avancerade. Man-in-the-middle-attacks, brute force attacks, Denial Of Service mm är hot som alla online-leverantörer måste ta i beaktning. Andra aktörer som statligt sponsrade hacker gör det ännu svårare att skydda informationen online.
 
 På senare år har misstron mot internetjättarnas sätt att hantera vår personliga information tilltagit. De stora företagens sätt att hantera vår data ifrågasätts och i Europa tar E.U fram ett regelverk för att skydda användarna; GDPR, som ska skydda både lagring och överföring av data online. Samtidigt försöker många att decentralisera sig från de stora nätverken (statliga eller privata) genom att förlita sig mer på _peer-to-peer_ filosofin. Detta anses vara **Web 3.0**, ett decentraliserat internet.
 
-Samtidigt i Europa har EU startat många konkurrensmål mot IT-jättarna [2][3], de politiska spänningarna mellan USA (där de flesta internationella tjänsteleverantörer finns) och Europa [4][5] har bidragit till att vissa EU-länder börjar leta efter alternativa tjänster, som t.ex Frankrikes mål att ersätta Microsoft tjänster med Linux baserade system för att uppnå digitalt självständighet [6].
+Samtidigt i Europa har EU startat många konkurrensmål mot IT-jättarna [^2][^3], de politiska spänningarna mellan USA (där de flesta internationella tjänsteleverantörer finns) och Europa [^4][^5] har bidragit till att vissa EU-länder börjar leta efter alternativa tjänster, som t.ex Frankrikes mål att ersätta Microsoft tjänster med Linux baserade system för att uppnå digitalt självständighet [^6].
 
 Sammanfattningsvis genomgår internet en ny era där säkerheten kan komma att läggas på mindre utvecklingsteam, en ny marknad kommer att öppnas i samband med att EU-regionen minskar sitt beroende av uteomeuropeiska tjänster. Internetanvändare kan förvänta sig att nya tjänster publiceras online men frågan om datasäkerhet kommer att kvarstå: _hur säker är min information online?_
 
 Denna studie avser att studera hur man kan göra en applikation säker baserat på OWASP Top 10 hot.
 
-Open Worldwide Application Security Project (OWASP) är en internationell non-profit organisation med målet att förbättra säkerheten i programvaror och webbtjänster [7]. Organisationen är öppen och transparent – all dokumentation, verktyg och forskning publiceras fritt tillgängligt online.
-Ett av organisationens mest kända bidrag är OWASP Top 10, en lista över de tio mest förekommande och kritiska säkerhetshoten i webbapplikationer. Listan baseras på data insamlad från hundratals organisationer världen över och uppdateras regelbundet för att spegla det aktuella hotlandskapet. Den senaste versionen publicerades 2025 [8].
-OWASP Top 10 används globalt som referensram inom websäkerhet – både av enskilda utvecklare och av stora organisationer. Listan fungerar som ett gemensamt språk mellan utvecklare, säkerhetsexperter och verksamheter för att identifiera, prioritera och åtgärda säkerhetsrisker. Flera regulatoriska ramverk, däribland PCI DSS (betalkortsstandarden), refererar explicit till OWASP Top 10 som en del av sina krav [9].
+Open Worldwide Application Security Project (OWASP) är en internationell non-profit organisation med målet att förbättra säkerheten i programvaror och webbtjänster [^7]. Organisationen är öppen och transparent – all dokumentation, verktyg och forskning publiceras fritt tillgängligt online.
+Ett av organisationens mest kända bidrag är OWASP Top 10, en lista över de tio mest förekommande och kritiska säkerhetshoten i webbapplikationer. Listan baseras på data insamlad från hundratals organisationer världen över och uppdateras regelbundet för att spegla det aktuella hotlandskapet. Den senaste versionen publicerades 2025 [^8].
+OWASP Top 10 används globalt som referensram inom websäkerhet – både av enskilda utvecklare och av stora organisationer. Listan fungerar som ett gemensamt språk mellan utvecklare, säkerhetsexperter och verksamheter för att identifiera, prioritera och åtgärda säkerhetsrisker. Flera regulatoriska ramverk, däribland PCI DSS (betalkortsstandarden), refererar explicit till OWASP Top 10 som en del av sina krav [^9].
 I denna studie används OWASP Top 10:2025 som referensram för att systematiskt identifiera och åtgärda säkerhetsbrister i EFbox REST API.
 
 ### 1.2 Syfte
@@ -229,14 +229,14 @@ De verktyg som används i denna studie är:
 
 ##### 2.1.1.1 Man in middle attack (MITM)
 
-En Man-in-the-middle-attack (MITM), "mannen i mitten" på svenska, är en cyberattack där angriparen i hemlighet fångar upp och vidarebefordrar meddelanden mellan två parter som tror att de kommunicerar direkt med varandra. Genom att positionera sig som mellanhand kan anfallaren läsa av och kontrollera informationsflödet. Detta gör det möjligt att skicka egen data eller kod [10] [11] [12]. En jämförelse skulle vara att man skickar en beställning till ett företag med posten. Under postgången får en tredje part tag på beställningsformulär, ändrar dess innehåll (kanske ändra mottagaradressen till sitt eget) och skickar det vidare.
+En Man-in-the-middle-attack (MITM), "mannen i mitten" på svenska, är en cyberattack där angriparen i hemlighet fångar upp och vidarebefordrar meddelanden mellan två parter som tror att de kommunicerar direkt med varandra. Genom att positionera sig som mellanhand kan anfallaren läsa av och kontrollera informationsflödet. Detta gör det möjligt att skicka egen data eller kod [^10] [^11] [^12]. En jämförelse skulle vara att man skickar en beställning till ett företag med posten. Under postgången får en tredje part tag på beställningsformulär, ändrar dess innehåll (kanske ändra mottagaradressen till sitt eget) och skickar det vidare.
 
 <u>Skyddas med hjälp utav:</u> HTTPS/TLS (kryptering av dataflödet)
 
 ##### 2.1.1.2 Code-Injection
 
 En attack där hackern _injicerar_ sin egen kod i en applikation som körs för att ändra dess beteende. En vanlig injection är så kallade **SQL-injection** där användarinputsfält används för att anropa databasen direkt. T.ex kan anfallaren försöka skriva ett SQL-kommando i ett textinput\* och läsa av svaret från servern om denna inte är skyddad mot detta. Det är även möjligt att ändra data i databasen (som att göra sitt eget konto till admin).
-**Cross-site scripting (XSS)** är också en vanlig form av injection där kod injiceras med hjälp av HTML- eller javascriptkod [12] [13].
+**Cross-site scripting (XSS)** är också en vanlig form av injection där kod injiceras med hjälp av HTML- eller javascriptkod [^12] [^13].
 
 <u>Skyddas med hjälp utav:</u> inputvalidering (kontroll att inga kommando injiceras)
 
@@ -244,7 +244,7 @@ _*Förenklad exempel: 'SELECT * FROM users;' skulle kunna ge all användardata f
 
 ##### 2.1.1.3 Brute force attack
 
-Brute force (engelska för råstyrka) är en metod för att hitta exempelvis lösenord genom att pröva alla möjliga kombinationer. Termen brute force syftar oftast på att hitta lösenord och nycklar [14]. Om ett lösenord är enkelt går attack snabbare medan väldigt komplicerade lösenord tar längre tid att hitta. Detta kan jämföras med ett kombinationslås med bara tre siffror och ett med sex stycken där en tjuv testar alla möjliga kombinationer [15].
+Brute force (engelska för råstyrka) är en metod för att hitta exempelvis lösenord genom att pröva alla möjliga kombinationer. Termen brute force syftar oftast på att hitta lösenord och nycklar [^14]. Om ett lösenord är enkelt går attack snabbare medan väldigt komplicerade lösenord tar längre tid att hitta. Detta kan jämföras med ett kombinationslås med bara tre siffror och ett med sex stycken där en tjuv testar alla möjliga kombinationer [^15].
 
 <u>Skyddas med hjälp utav:</u> varningar vid upprepade misslyckade inloggningsförsök och låsning av berörda konton, starkt lösenordspolicy
 
@@ -252,9 +252,9 @@ Brute force (engelska för råstyrka) är en metod för att hitta exempelvis lö
 
 En hacker kan använda en annans rättigheter hos en tjänst och lura till sig en oönskad handling. Istället för att, på ett avancerat sätt, få tag på en användarens uppgifter kan man använda dess rättigheter direkt (_Request Forgery_). Detta kan ske via en extern länk från en annan sajt (_Cross Site_).
 
-De flesta online-leverantörer delar ut en nyckel, så kallad token eller session-token, till sina användare som fungerar som ett tillstånd att använda tjänsten och komma åt sin data. En hacker kan lyckas nyttja nyckelns privilegier genom att få användaren att omedvetet utföra handlingar [12].
+De flesta online-leverantörer delar ut en nyckel, så kallad token eller session-token, till sina användare som fungerar som ett tillstånd att använda tjänsten och komma åt sin data. En hacker kan lyckas nyttja nyckelns privilegier genom att få användaren att omedvetet utföra handlingar [^12].
 
-Ett bra exempel är att anfallaren skickar en phishinglänk via email till offret som klickar på det. Länken skickar egentligen en förfrågan till offrets bank om att överföra pengar till anfallaren. Om offret är inloggad på bankenshemsida vid klickandet kan överföringen ske [16].
+Ett bra exempel är att anfallaren skickar en phishinglänk via email till offret som klickar på det. Länken skickar egentligen en förfrågan till offrets bank om att överföra pengar till anfallaren. Om offret är inloggad på bankenshemsida vid klickandet kan överföringen ske [^16].
 
 Detta kan jämföras med att en tjuv lura ett offer att låsa upp hemmet för att kunna komma in.
 
@@ -274,27 +274,27 @@ JWT används vid **auktorisering** för att bekräfta att användaren har tillg�
 
 JWT-strukturen har följande mönster "xxxx.yyyy.zzzzz" där "xxxx" representerar en _header_ (metadata med tokentyp och signeringsalgoritm), "yyyy" är själva innehållet och "zzzz" står för signeringen.
 
-JWT kan skickas i Authorization-headern och implementerar 'Bearer'-schemat (dvs att det står 'Bearer', bärare på svenska, före token med mellanslag). Alternativt kan JWT:n skickas som en cookie men kräver då att CORS konfigureras för detta [12].
+JWT kan skickas i Authorization-headern och implementerar 'Bearer'-schemat (dvs att det står 'Bearer', bärare på svenska, före token med mellanslag). Alternativt kan JWT:n skickas som en cookie men kräver då att CORS konfigureras för detta [^12].
 
 #### 2.1.3 Asymmetrisk kryptografi
 
 Vid asymmetrisk kryptografi används ett nyckelpar – en offentlig och en privat nyckel. Den offentliga nyckeln kan delas fritt medan den privata aldrig lämnar ägaren.
-Det som signeras med den privata nyckeln kan verifieras av vem som helst med den offentliga nyckeln. Den offentliga nyckeln kan vara identifierad av en certifikatutfärdare (CA), vilket säkerställer att parterna verkligen är ägare till sina respektive offentliga nycklar [17]. På så sätt försäkras parterna att innehållet i meddelanden inte har manipulerats under utbytet (se [MITM](#2111-man-in-middle-attack-mitm)).
+Det som signeras med den privata nyckeln kan verifieras av vem som helst med den offentliga nyckeln. Den offentliga nyckeln kan vara identifierad av en certifikatutfärdare (CA), vilket säkerställer att parterna verkligen är ägare till sina respektive offentliga nycklar [^17]. På så sätt försäkras parterna att innehållet i meddelanden inte har manipulerats under utbytet (se [MITM](#2111-man-in-middle-attack-mitm)).
 
 #### 2.1.4 Kryptering, lösenordhashing och salting
 
-**Kryptering** är konverteringen av data till ett format som inte kan avkodas utan en hemlig nyckel. Det gör det alltså möjligt att hålla information hemlig från de utan nyckeln [18].
+**Kryptering** är konverteringen av data till ett format som inte kan avkodas utan en hemlig nyckel. Det gör det alltså möjligt att hålla information hemlig från de utan nyckeln [^18].
 
-**Hashing** omvandlar data till en bestämd längd av bokstäver och siffror. Denna process <u>kan inte</u> bli ogjord och hashad data kan inte användas för att avkryptera originalinnehållet [18].
+**Hashing** omvandlar data till en bestämd längd av bokstäver och siffror. Denna process <u>kan inte</u> bli ogjord och hashad data kan inte användas för att avkryptera originalinnehållet [^18].
 Hashing är ett populärt sätt att förvara **lösenord** i databaser pga envägsprocessen. När en användare loggar in, hashas det angivna lösenordet och det jämförs med hashen i databasen.
-Stark lösenordspolicy som långa komplex tecken och best practice hashing (med system som t.ex Argon2id) gör det nästan omöjligt att komma åt datan [19].
+Stark lösenordspolicy som långa komplex tecken och best practice hashing (med system som t.ex Argon2id) gör det nästan omöjligt att komma åt datan [^19].
 
-Hackers kan använda sig av så kallade _Rainbow Table_ [20], en tabell där fördefinerade lösenord har hashats enligt bestämda metoder, och försöka hitta ett hashat lösenord som överensstämmer med det i den attackerade databasen. Om ett hittas, kan anfallaren enkelt kolla upp klartextversionen av hashet (dvs användarens lösenord). Som en ytterligare säkerhetsåtgärd mot detta kan **salting** implementeras.
-Salting lägger till en slumpmässig vald radtecken <u>unik för varje användare</u> till lösenordet vilket gör det ännu svårare för hackers att komma åt datan [18].
+Hackers kan använda sig av så kallade _Rainbow Table_ [^20], en tabell där fördefinerade lösenord har hashats enligt bestämda metoder, och försöka hitta ett hashat lösenord som överensstämmer med det i den attackerade databasen. Om ett hittas, kan anfallaren enkelt kolla upp klartextversionen av hashet (dvs användarens lösenord). Som en ytterligare säkerhetsåtgärd mot detta kan **salting** implementeras.
+Salting lägger till en slumpmässig vald radtecken <u>unik för varje användare</u> till lösenordet vilket gör det ännu svårare för hackers att komma åt datan [^18].
 
 #### 2.1.5 Inputvalidering
 
-\*\*Inputvalidering är kontrollen av data som skickas direkt av användaren, som t.ex tecken i ett textflält på en hemsida. Valideringen kontrollerar även Json-objekt som skickas från clienten [21].
+\*\*Inputvalidering är kontrollen av data som skickas direkt av användaren, som t.ex tecken i ett textflält på en hemsida. Valideringen kontrollerar även Json-objekt som skickas från clienten [^21].
 
 Inputvalidering uppfyller två syfte:
 
@@ -311,9 +311,9 @@ Inputvalidering kan ske på olika sätt, denna studie kommer att fokusera på f�
 Eftersom en filhanteringstjänst studeras i denna studie måste ansträngningar läggas på filvalidering. Hackers kan ladda upp filer som antingen orsakar skador på servern (t.ex enorma filer eller filer som innehåller farlig kod) eller används för sekundära attacker som t.ex phishing.
 
 Filvalidering liknar delvis inputvalidering då man försäkrar sig att själva filnamnet inte är farligt för systemet (kanske innehåller den systemrelaterade tecken som semi-colon ( ; )), för försök till injection.
-Dess extension inspekteras också för att identifiera dess typ (efter punkten t.ex image<strong>.png</strong>). En vanlig filhanteringsapplikation skulle behöva tillåta många olika filtyper men denna studie är en _proof of concept_ och antalet tillåtna filer kommer att begränsas (se [Resultat](#411-det-nya-efbox-apiet)). Denna metod har dock en svaghet då man kan namnge en körbar fil med en annan extension. T.ex filen _virus.exe_ kan få sitt namn bytt till _flower.png_. I ett sånt fall skulle den körbara filen fortfarande ta sig igenom serverns försvar [22].
+Dess extension inspekteras också för att identifiera dess typ (efter punkten t.ex image<strong>.png</strong>). En vanlig filhanteringsapplikation skulle behöva tillåta många olika filtyper men denna studie är en _proof of concept_ och antalet tillåtna filer kommer att begränsas (se [Resultat](#411-det-nya-efbox-apiet)). Denna metod har dock en svaghet då man kan namnge en körbar fil med en annan extension. T.ex filen _virus.exe_ kan få sitt namn bytt till _flower.png_. I ett sånt fall skulle den körbara filen fortfarande ta sig igenom serverns försvar [^22].
 
-I en förfrågans header kan nyckeln 'Content-type' hittas med en beskrivning av innehållet. Data i Content-type defineras av användaren och kan inte litas på men det kan agera som ett första steg i valideringen (dvs om Content-type värdet är bristfälligt så avslutas behandlingen av förfrågan)[23].
+I en förfrågans header kan nyckeln 'Content-type' hittas med en beskrivning av innehållet. Data i Content-type defineras av användaren och kan inte litas på men det kan agera som ett första steg i valideringen (dvs om Content-type värdet är bristfälligt så avslutas behandlingen av förfrågan)[^23].
 
 De ovannämnda steg är viktiga men otillräckliga pga sina brister. Om en förfrågans header och filnamn valideras måste filinnehållet fortfarande valideras. OWASP anger inte specifikt vilket ramverk de föredrar men en länk till Dominique Righettos javaprojekt på GitHub ([länk till DocumentUpload-klassen](https://github.com/righettod/document-upload-protection/blob/master/src/main/java/eu/righettod/poc/web/DocumentUpload.java)) visar en sätt som anväder I/O (Input/Output) och NIO-importen (Non-blocking Input / output). Righettos i sitt projekt följer alla ovannämnda steg för att sen parsa filerna i en DocumentDetector subklass för att kontrollera deras filtyp.
 
@@ -323,7 +323,7 @@ I denna studie används Righettos approach som inspiration för implementationen
 
 ##### 2.1.5.1 Grundläggande om HTTP
 
-HyperText Transfer Protocol (HTTP) är ett underliggande nätverksprotokoll för överföring av hypermedia dokument. I de flesta fallen sker denna överföring mellan en klient (t.ex en browser) och en server. HTTP-kommunikation är textbaserad, all information skickas i klar text, vilket gör det lättare för människor att läsa. HTTP är _stateless_, vilket innebär att all kommunikation sker utan minne av tidigare utbyte [24]. Skulle en stateful kommunikation behövas kan _cookies_ användas. Dessa sparar relevant information (t.ex inloggningsinformation) i webbläsaren [25] [26].
+HyperText Transfer Protocol (HTTP) är ett underliggande nätverksprotokoll för överföring av hypermedia dokument. I de flesta fallen sker denna överföring mellan en klient (t.ex en browser) och en server. HTTP-kommunikation är textbaserad, all information skickas i klar text, vilket gör det lättare för människor att läsa. HTTP är _stateless_, vilket innebär att all kommunikation sker utan minne av tidigare utbyte [^24]. Skulle en stateful kommunikation behövas kan _cookies_ användas. Dessa sparar relevant information (t.ex inloggningsinformation) i webbläsaren [^25] [^26].
 Dessa egenskaper är fördelaktiga när man utvecklar REST-API:er eftersom dessa ska utvecklas stateless, i.e nödvändig information hämtas vid behov och sparas inte i det aktiva minne med vissa undantag för caching.
 
 HTTP meddelande innehåller en så kallad _header_ som innehåller information om hur det ska läsas. Innehållet i en header varierar men kan hålla information om vilken sorts anrop som görs till servern (GET, POST, PUT mm.) eller om innehållet (text, fil mm).
@@ -347,18 +347,18 @@ HTTP-headern är central för hur [CORS](#2153-cross-origin-resource-sharing-cor
 #### 2.1.5.2 HTTPS
 
 HTTPS (S för _secure_, säkrad) är ett säkrare transportprotokoll för HTTP-meddelande. En tredje part tillhandhåller ett undertecknat digitaltcertifikat som kontrolleras av klienten med hjälp av förinstallerade certifikat.
-Med HTTPS skall förbindelsen inte kunna avlyssnas av tredje part och användaren skall kunna lita på att webbservern är densamma som den utger sig för att vara [28].
+Med HTTPS skall förbindelsen inte kunna avlyssnas av tredje part och användaren skall kunna lita på att webbservern är densamma som den utger sig för att vara [^28].
 
 #### 2.1.5.3 Cross-origin resource sharing (CORS) - API: säkerhet
 
-Cross-origin resource sharing är ett HTTP-baserat system som gör det möjligt för en server att lista vilka domäner, schema eller port en webbläsare bör tillåta för att ladda resurser [26].
+Cross-origin resource sharing är ett HTTP-baserat system som gör det möjligt för en server att lista vilka domäner, schema eller port en webbläsare bör tillåta för att ladda resurser [^26].
 
 Om ingen CORS-inställningdefineras, accepteras enbart förfågningar från servern, sk _same-origin_. CORS gör det möjligt att tillåta förfrågningar från andra källor **på ett kontrollerat sätt**.
 
 Webbläsaren gör en _preflight request_ (preflight: kontroll före flygning på svenska), dvs den granskar förfrågan, för att försäkra sig att servern kommer att tillåta den. I denna granskning skickas en OPTIONS-header som beskriver HTTP-metod (GET, POST, PUT, DEL mm) och den ursprungliga header för förfrågan.
 Man kan säga att preflight request kontrollerar att förfrågan är giltig innan den skickas.
 
-Enklare förfrågor behöver inte alltid trigga en preflight. Dessa defineras med headers med specifika HTTP-metod (GET, HEAD, POST), ett begränsat val av användardefinerade headers (ex: Accept, Accept-language mm) och enklare Content-type (ex: text eller formdata)[27].
+Enklare förfrågor behöver inte alltid trigga en preflight. Dessa defineras med headers med specifika HTTP-metod (GET, HEAD, POST), ett begränsat val av användardefinerade headers (ex: Accept, Accept-language mm) och enklare Content-type (ex: text eller formdata)[^27].
 
 En viktig del av CORS är kontrollen av ursprunget för förfrågan, detta bl.a för att förebygga [Cross Site Request Forgery (CSRF)](#2114-cross-site-request-forgery). Vissa servrar tillåter bara same-origin (se ovan) men andra kan tillåta en lista med domäner vars förfrågningar accepteras. Om servern inte hanterar känslig information (t.ex [Dog API](https://dog.ceo/dog-api/)) kan alla ursprung tillåtas.
 
@@ -376,11 +376,11 @@ En felkonfigurerad CORS-inställning – som att tillåta alla ursprung (\*) fö
 
 #### 2.1.6 Hotmodellering med STRIDE
 
-Allt som kan störa en tjänst eller data den hanterar anses vara ett hot [29].
+Allt som kan störa en tjänst eller data den hanterar anses vara ett hot [^29].
 
-Genom en systematisk och strukturerad process som **hotmodellering** kan man få inblick i säkerhetskarakteristikerna av en applikation. För att uppnå detta identifierar man de relevanta hot och responsen mot dessa [29] [30].
+Genom en systematisk och strukturerad process som **hotmodellering** kan man få inblick i säkerhetskarakteristikerna av en applikation. För att uppnå detta identifierar man de relevanta hot och responsen mot dessa [^29] [^30].
 
-För att skapa en hotmodell kan man ställa sig fyra frågor [30]:
+För att skapa en hotmodell kan man ställa sig fyra frågor [^30]:
 
 1. Vad jobbar vi med?
 2. Vad kan gå fel?
@@ -388,7 +388,7 @@ För att skapa en hotmodell kan man ställa sig fyra frågor [30]:
 4. Är modelleringen tillräckligt effektiv?
 
 **1. Vad jobbar vi med?**
-För att definiera en hotmodell bör man identifiera följande i applikationen [31]:
+För att definiera en hotmodell bör man identifiera följande i applikationen [^31]:
 
 - Systemelement (tillgångar, komponenter)
 - Dataflöden och interaktioner med tredje part
@@ -398,7 +398,7 @@ För att definiera en hotmodell bör man identifiera följande i applikationen [
 - Iterera
 
 **2. Vad kan gå fel?**
-Som hjälp för att svara på dessa frågor kan man använda sig av ramverk för att kategorisera hoten. Ett populärt sådant är STRIDE [29] [32]. Varje bokstav motsvarar en hotkategori (se tabell nedan). Ramverket underlättar kategoriseringen på ett systematiskt sätt när man ställer sig frågan "Vad kan gå fel?".
+Som hjälp för att svara på dessa frågor kan man använda sig av ramverk för att kategorisera hoten. Ett populärt sådant är STRIDE [^29] [^32]. Varje bokstav motsvarar en hotkategori (se tabell nedan). Ramverket underlättar kategoriseringen på ett systematiskt sätt när man ställer sig frågan "Vad kan gå fel?".
 
 | Hotkategori             | Påverkan         | Exempel                                                                                 |
 | ----------------------- | ---------------- | --------------------------------------------------------------------------------------- |
@@ -412,7 +412,7 @@ Som hjälp för att svara på dessa frågor kan man använda sig av ramverk för
 Vanligtvis ordnas hoten efter produkten av hur sannolikt hotet är och dess påverkan. I denna studie kommer detta utföras i förminskad omfattning då hotmodellering är ett ämne i sig.
 
 **3. Vad ska vi göra åt det?**
-När hoten är identifierade ska responser utvecklas [29]:
+När hoten är identifierade ska responser utvecklas [^29]:
 
 - Mitigera: förebygga att hotet kommer att genomföras
 - Eliminera: Ta bort komponenten eller tjänsten som orsakar hotet
@@ -420,7 +420,7 @@ När hoten är identifierade ska responser utvecklas [29]:
 - Acceptera: Beroende på den kommersiella modellen får tjänstleverantören acceptera hoten
 
 **4. Är modelleringen tillräckligt effektiv?**
-Hotmodellering måste granskas av alla berörda aktörer [29]:
+Hotmodellering måste granskas av alla berörda aktörer [^29]:
 
 - Är det använda schemat representativt?
 - Har alla hot identiferats?
@@ -433,7 +433,7 @@ För att lyckas skydda EFBox-applikationen på ett effektivt sätt kommer en fö
 
 #### 2.1.7 OWASP Top 10 hot 2025
 
-Open Worldwide Application Security Project (OWASP) publicerar regelbundet en lista på de mest kritiska säkerhetsrisker för webbapplikationer [8]. Denna studie kommer att säkra EFBox-API enligt OWASP Top 10 med undantag för [Insecure Design](#2176)(se innehåll). I detta avsnitt behandlas dessa hot och hur en utvecklare kan åtgärda dem.
+Open Worldwide Application Security Project (OWASP) publicerar regelbundet en lista på de mest kritiska säkerhetsrisker för webbapplikationer [^8]. Denna studie kommer att säkra EFBox-API enligt OWASP Top 10 med undantag för [Insecure Design](#2176)(se innehåll). I detta avsnitt behandlas dessa hot och hur en utvecklare kan åtgärda dem.
 
 ##### 2.1.7.1 Broken Access Control (Bristfällig åtkomstkontroll)
 
@@ -490,7 +490,7 @@ Generellt bör all data som skickas vara krypterad. Detsamma gäller för _käns
 
 Kryptografibrister syftar på bristande eller icke-implementerad kryptering, vilket inkluderar brister i hantering av krypteringsnycklar.
 
-Som all IT-teknologi är kryptografi ett område som råkar ständigt för en snabb utveckling samtidigt som olika aktörer uppnår samma utveckling på avkryptering. Kvantumdatokraft riskerar att göra traditionell kryptering irrelevant och framtiden kommer säkert att få se kvantumkryptografi bli en standard [33]. Därför bör tjänster som behandlar känslig information vara välkonfigurerade för att hantera kryptering på ett säkert sätt.
+Som all IT-teknologi är kryptografi ett område som råkar ständigt för en snabb utveckling samtidigt som olika aktörer uppnår samma utveckling på avkryptering. Kvantumdatokraft riskerar att göra traditionell kryptering irrelevant och framtiden kommer säkert att få se kvantumkryptografi bli en standard [^33]. Därför bör tjänster som behandlar känslig information vara välkonfigurerade för att hantera kryptering på ett säkert sätt.
 | Åtgärd | Förklaring |
 | ------ | ---------- |
 | Klassifiera data | Data som sparas på servern bör bedömas för dess känslighet och eventuellt krypteras |
@@ -651,7 +651,7 @@ I utvecklingsmiljön används följande verktyg:
 
 ##### 3.3.1.1 Översikt
 
-EFbox är ett Javabaserat API som använder ramverket SPring Boot. Spring Boot är ett verktyg med öppen källkod som gör det enklare att skapa mikrotjänster och webbappar med hjälp av Java-baserade ramverk [34]. Spring Boot förenklar utveckling av webb-applikationer genom att, till exempel, inte behöva skapa XML-konfigurationer vilket äldre ramverk krävde (ex: Apache Turbine).
+EFbox är ett Javabaserat API som använder ramverket Spring Boot. Spring Boot är ett verktyg med öppen källkod som gör det enklare att skapa mikrotjänster och webbappar med hjälp av Java-baserade ramverk [^34]. Spring Boot förenklar utveckling av webb-applikationer genom att, till exempel, inte behöva skapa XML-konfigurationer vilket äldre ramverk krävde (ex: Apache Turbine).
 
 ##### 3.3.1.2 Struktur
 
@@ -672,7 +672,7 @@ _Se Bilaga A - End-points_
 #### 3.3.2 Hotmodellering av EFbox
 
 Följande hotmodellering utgår från EFbox systemkomponenter och dataflöden
-identifierade i [kartläggningen](#3311-översikt). STRIDE-ramverket används
+identifierade i [^kartläggningen](#3311-översikt). STRIDE-ramverket används
 för att kategorisera hoten.
 
 **Systemelement:**
@@ -754,7 +754,7 @@ genom hela kodbasen. Nedan sammanfattas de viktigaste fynden per OWASP-kategori:
 
 ##### 3.3.3.3 Säkerhetstestning av EFBox API:et med OWASP ZAP
 
-OWASP ZAP (för _Zed Attack Proxy_) är ett öppenkällkodsverktyg för att testa API [35]. Verktyget kan användas för att analysera dataflödet mellan klienten och servern. Efter initial analysen kan funktionen _Active Scan_ generera olika attack scenario och tillhörande rapport.
+OWASP ZAP (för _Zed Attack Proxy_) är ett öppenkällkodsverktyg för att testa API [^36]. Verktyget kan användas för att analysera dataflödet mellan klienten och servern. Efter initial analysen kan funktionen _Active Scan_ generera olika attack scenario och tillhörande rapport.
 För att kunna fånga upp dataflödet mellan klienten och servern används ZAP som proxy (mellanhand) med en port mot servern och en mot klienten, i detta fall Postman.
 
 **NOTERING**: under förberedande forskning för ZAP lyckades inte författaren att testa ZAP med vanliga HTTP-förfrågor då ZAP översatte dem till HTTPS, vilket logiskt inte accepterades av Postman. Eftersom HTTPS, enligt Bilaga B, behöver implementeras, konfigurerades ett privat certifikat i resursmappen med tillhörande konfigurationer i application.properties enligt [Spring Boots hemsida](https://docs.spring.io/spring-boot/how-to/webserver.html#howto.webserver.configure-ssl.pem-files).
@@ -909,7 +909,7 @@ Efter implementerade åtgärder genomfördes en ny ZAP Active Scan mot EFbox API
 | Fynd                              | Risk   | Confidence | Bedömning                                                                                                                                                                                                                              |
 | --------------------------------- | ------ | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | SQL Injection                     | High   | Medium     | ZAP sparade ett lösenord med SQL-kommandon `[(...)AND '1'='1' -- ]` och `[(...) OR '1'='1' -- ]`. Detta ett **falskt positivt** då lösenorden sparas i hashade former i databasen och den råa strängen hanteras enbart för att hashas. |
-| Spring4Shell (CVE-2022-22965)     | High   | Medium     | **Falskt positivt** det åtgärdats i Spring Boot 2.6.6, EFbox använder 3.4.1 och körs som executable jar [36]                                                                                                                           |
+| Spring4Shell (CVE-2022-22965)     | High   | Medium     | **Falskt positivt** det åtgärdats i Spring Boot 2.6.6, EFbox använder 3.4.1 och körs som executable jar [^37]                                                                                                                          |
 | CSP Header Not Set                | Medium | High       | **Accepterat** då CSP är primärt relevant för webbläsarbaserade applikationer med frontend, vilket faller utanför studiens scope                                                                                                       |
 | Cookie without SameSite Attribute | Low    | Medium     | **Kvarstående brist:** SameSite-attributet är inte konfigurerat på JWT-cookien. Bör sättas till `Strict` eller `Lax` för att skydda mot CSRF-attacker (A02). Detta är en översikt.                                                     |
 
@@ -1053,84 +1053,6 @@ Studien täcker säkringen av EFBox API:et men det framgår tydligt av slutsatse
 
 ---
 
-## 7. Referenser
-
-[1]: Bandar Alotaibi, “Cybersecurity Attacks and Detection Methods in Web 3.0 Technology: A Review”, Sensors, Januari 2025. Available: https://www.mdpi.com/1424-8220/25/2/342
-
-[2]: “Antitrust cases against Google by the European Union”, Wikipedia, Accessed Maj 2026. Available: https://en.wikipedia.org/wiki/Antitrust_cases_against_Google_by_the_European_Union
-
-[3]: Vatsala Gaur, “How the EU is taking on Big Tech: Meta, Apple, Google, face heightened scrutiny, penalties”, Invezz, December 2025. Available: https://invezz.com/news/2025/12/04/how-the-eu-is-taking-on-big-tech-meta-apple-google-face-heightened-scrutiny-penalties/
-
-[4]: “Digital Sovereignty in Tension: U.S. Pushback Against the EU’s Digital Services Act”, The Cyber Institute, Augusti 2025. Available: https://www.cyber-institute.org/post/digital-sovereignty-in-tension-u-s-pushback-against-the-eu-s-digital-services-act
-
-[5]: Clare Duffy, “Trump administration’s vision of US tech dominance is colliding with Europe ”, CNN, Januari 2026. Available: https://edition.cnn.com/2026/01/12/tech/us-eu-tech-regulation-fight-explained
-
-[6]: Marius Laffont, “Pour son indépendance numérique, l'État français souhaite passer à Linux”, RFI, April 2026. Available: https://www.rfi.fr/fr/france/20260410-pour-son-ind%C3%A9pendance-num%C3%A9rique-l-%C3%A9tat-fran%C3%A7ais-souhaite-passer-%C3%A0-linux
-
-[7]: OWASP about page, Accessed: Maj 2026. Available: https://owasp.org/about/
-
-[8]: OWASP Top 10 threats, Accessed: Januri -Juni 2026. Available: https://owasp.org/www-project-top-ten/
-
-[9]: Lorikeet Security Team, "PCI DSS Requirement 6: Secure Development Practices Your QSA Will Scrutinize", Accessed: Maj 2026. Available: https://lorikeetsecurity.com/blog/pci-dss-requirement-6-secure-development
-
-[10]: NordVPN, Accessed May 2026. Available: https://nordvpn.com/sv/blog/mitm-attack/
-
-[11]: Wikipedia, Accessed May 2026. Available: https://en.wikipedia.org/wiki/Man-in-the-middle_attack
-
-[12]: JWT HANDBOOK, Sebastiàn Peyrott, Publisher; Auth0 by Okta. Available: https://www.jwt.io
-
-[13]: ItSecurityDemand, Accessed: May 2026. Available: https://www.itsecuritydemand.com/insights/security/code-injection-attacks-a-guide-to-security-prevention/
-
-[14]: Wikipedia, Accessed May 2026. Available: https://sv.wikipedia.org/wiki/Brute_force
-
-[15]: Tom Krantz & Alexandra Jonker, IBM, Accessed: May 2026. Accessible: https://www.ibm.com/think/topics/brute-force-attack
-
-[16]: Mozilla, Accessed: May 2026. Available: https://developer.mozilla.org/en-US/docs/Web/Security/Attacks/CSRF
-
-[17]: Asymmetrisk kryptografi: Vad är det och varför använda det inom cybersäkerhet?, HMS, Ewon Ewon, översatt till svenska, Accessed: May 2026. Available: https://www.hms-networks.com/sv/industrial-iot-blog/blogpost/hms-blog/2024/01/08/asymmetric-cryptography-what-is-it-and-why-use-it-in-cyber-security
-
-[18]: Encryption vs Hashing vs Salting, Geeks For Geeks, July 2025. Available: https://www.geeksforgeeks.org/computer-networks/encryption-vs-hashing-vs-salting/
-
-[19]: Password Storage Cheat Sheet, OWASP, Accessed: May 2026. Available: https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html
-
-[20]: Understanding Rainbow Table Attack, Geeks For Geeks, Feb 2023. Available: https://www.geeksforgeeks.org/ethical-hacking/understanding-rainbow-table-attack/
-
-[21]: Input Validation Cheat Sheet, OWASP, Accessed: May 2026. Available: https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
-
-[22]: File Content Validation in Java and Spring, Null Gaming India, YouTube, Published March 2024. Available: https://youtu.be/A_reBQO6n30?si=8n8LE3mfoDAxzmOI
-
-[23]: File Upload Cheat Sheet, OWASP, Accessed: May 2026. Available: https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html
-
-[24]: HTTP, Mozilla, Acessed: May 2026. Available: https://developer.mozilla.org/en-US/docs/Glossary/HTTP
-
-[25]: Overview of HTTP, Mozilla, Accessed: May 2026. Available: https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Overview
-
-[26]: Using HTTP cookies, Mozilla, Acessed: May 2026. Available: https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Cookies
-
-[27]: Cross-Origin Resource Sharing (CORS), Mozilla, Acessed: May 2026. Available: https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS
-
-[28]: Hypertext Transfer Protocol Secure, Wikipedia, Accessed: May 2026. Available: https://sv.wikipedia.org/wiki/Hypertext_Transfer_Protocol_Secure
-
-[29]: Threat modeling, Mozilla, Acessed: May 2026. Available: https://developer.mozilla.org/en-US/docs/Web/Security/Threat_modeling
-
-[30]: Threat Modeling Cheat Sheet, OWASP, Accessed: May 2026. Available: https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html
-
-[31]: Threat Modelling Manifesto, Zoe Braiterman, Adam Shostack, Jonathan Marcil, Stephen de Vries, Irene Michlin, Kim Wuyts, Robert Hurlbut, Brook S.E. Schoenfield, Fraser Scott, Matthew Coles, Chris Romeo, Alyssa Miller, Izar Tarandach, Avi Douglen, Marc French, Threat Modelling Manifesto, Accessed: May 2026. Available: https://www.threatmodelingmanifesto.org/
-
-[32]: Threat modeling frameworks and tools, Mozilla, Acessed: May 2026. Available: https://developer.mozilla.org/en-US/docs/Web/Security/Threat_modeling/Frameworks#stride
-
-[33]: Security HTTP Response Headers, Spring, Accessed: May 2026. Available: https://docs.spring.io/spring-security/reference/features/exploits/headers.html
-
-[34]: Why is quantum cryptography important?, Josh Schneider, IBM, Published: December 2023. Available: https://www.ibm.com/think/topics/quantum-cryptography#Why+is+quantum+cryptography+important?
-
-[34]: Vad är Java Spring Boot?, Azure Microsoft, Accessed: May 2026. Available: https://azure.microsoft.com/sv-se/resources/cloud-computing-dictionary/what-is-java-spring-boot/
-
-[35]: Zed Attack Proxy (ZAP), Accessed: May 2026. Available: https://www.zaproxy.org/
-
-[36]: Spring4Shell: New info and fixes (CVE-2022-22965), Accessed: May 2026. Available: https://www.helpnetsecurity.com/2022/04/01/cve-2022-22965/
-
----
-
 ## Bilagor
 
 - Bilaga A - End-points
@@ -1150,3 +1072,79 @@ Studien täcker säkringen av EFBox API:et men det framgår tydligt av slutsatse
 - Bilaga O - OSV-rapport
 - Bilaga P - OSV-rapport efter åtgärd
 - Bilaga Q - EFBox event_log efter ZAP test
+
+## Referenser
+
+[^1]: Bandar Alotaibi, “Cybersecurity Attacks and Detection Methods in Web 3.0 Technology: A Review”, Sensors, Januari 2025. Available: https://www.mdpi.com/1424-8220/25/2/342
+
+[^2]: “Antitrust cases against Google by the European Union”, Wikipedia, Accessed Maj 2026. Available: https://en.wikipedia.org/wiki/Antitrust_cases_against_Google_by_the_European_Union
+
+[^3]: Vatsala Gaur, “How the EU is taking on Big Tech: Meta, Apple, Google, face heightened scrutiny, penalties”, Invezz, December 2025. Available: https://invezz.com/news/2025/12/04/how-the-eu-is-taking-on-big-tech-meta-apple-google-face-heightened-scrutiny-penalties/
+
+[^4]: “Digital Sovereignty in Tension: U.S. Pushback Against the EU’s Digital Services Act”, The Cyber Institute, Augusti 2025. Available: https://www.cyber-institute.org/post/digital-sovereignty-in-tension-u-s-pushback-against-the-eu-s-digital-services-act
+
+[^5]: Clare Duffy, “Trump administration’s vision of US tech dominance is colliding with Europe ”, CNN, Januari 2026. Available: https://edition.cnn.com/2026/01/12/tech/us-eu-tech-regulation-fight-explained
+
+[^6]: Marius Laffont, “Pour son indépendance numérique, l'État français souhaite passer à Linux”, RFI, April 2026. Available: https://www.rfi.fr/fr/france/20260410-pour-son-ind%C3%A9pendance-num%C3%A9rique-l-%C3%A9tat-fran%C3%A7ais-souhaite-passer-%C3%A0-linux
+
+[^7]: OWASP about page, Accessed: Maj 2026. Available: https://owasp.org/about/
+
+[^8]: OWASP Top 10 threats, Accessed: Januri -Juni 2026. Available: https://owasp.org/www-project-top-ten/
+
+[^9]: Lorikeet Security Team, "PCI DSS Requirement 6: Secure Development Practices Your QSA Will Scrutinize", Accessed: Maj 2026. Available: https://lorikeetsecurity.com/blog/pci-dss-requirement-6-secure-development
+
+[^10]: NordVPN, Accessed May 2026. Available: https://nordvpn.com/sv/blog/mitm-attack/
+
+[^11]: Wikipedia, Accessed May 2026. Available: https://en.wikipedia.org/wiki/Man-in-the-middle_attack
+
+[^12]: JWT HANDBOOK, Sebastiàn Peyrott, Publisher; Auth0 by Okta. Available: https://www.jwt.io
+
+[^13]: ItSecurityDemand, Accessed: May 2026. Available: https://www.itsecuritydemand.com/insights/security/code-injection-attacks-a-guide-to-security-prevention/
+
+[^14]: Wikipedia, Accessed May 2026. Available: https://sv.wikipedia.org/wiki/Brute_force
+
+[^15]: Tom Krantz & Alexandra Jonker, IBM, Accessed: May 2026. Accessible: https://www.ibm.com/think/topics/brute-force-attack
+
+[^16]: Mozilla, Accessed: May 2026. Available: https://developer.mozilla.org/en-US/docs/Web/Security/Attacks/CSRF
+
+[^17]: Asymmetrisk kryptografi: Vad är det och varför använda det inom cybersäkerhet?, HMS, Ewon Ewon, översatt till svenska, Accessed: May 2026. Available: https://www.hms-networks.com/sv/industrial-iot-blog/blogpost/hms-blog/2024/01/08/asymmetric-cryptography-what-is-it-and-why-use-it-in-cyber-security
+
+[^18]: Encryption vs Hashing vs Salting, Geeks For Geeks, July 2025. Available: https://www.geeksforgeeks.org/computer-networks/encryption-vs-hashing-vs-salting/
+
+[^19]: Password Storage Cheat Sheet, OWASP, Accessed: May 2026. Available: https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html
+
+[^20]: Understanding Rainbow Table Attack, Geeks For Geeks, Feb 2023. Available: https://www.geeksforgeeks.org/ethical-hacking/understanding-rainbow-table-attack/
+
+[^21]: Input Validation Cheat Sheet, OWASP, Accessed: May 2026. Available: https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+
+[^22]: File Content Validation in Java and Spring, Null Gaming India, YouTube, Published March 2024. Available: https://youtu.be/A_reBQO6n30?si=8n8LE3mfoDAxzmOI
+
+[^23]: File Upload Cheat Sheet, OWASP, Accessed: May 2026. Available: https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html
+
+[^24]: HTTP, Mozilla, Acessed: May 2026. Available: https://developer.mozilla.org/en-US/docs/Glossary/HTTP
+
+[^25]: Overview of HTTP, Mozilla, Accessed: May 2026. Available: https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Overview
+
+[^26]: Using HTTP cookies, Mozilla, Acessed: May 2026. Available: https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Cookies
+
+[^27]: Cross-Origin Resource Sharing (CORS), Mozilla, Acessed: May 2026. Available: https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS
+
+[^28]: Hypertext Transfer Protocol Secure, Wikipedia, Accessed: May 2026. Available: https://sv.wikipedia.org/wiki/Hypertext_Transfer_Protocol_Secure
+
+[^29]: Threat modeling, Mozilla, Acessed: May 2026. Available: https://developer.mozilla.org/en-US/docs/Web/Security/Threat_modeling
+
+[^30]: Threat Modeling Cheat Sheet, OWASP, Accessed: May 2026. Available: https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html
+
+[^31]: Threat Modelling Manifesto, Zoe Braiterman, Adam Shostack, Jonathan Marcil, Stephen de Vries, Irene Michlin, Kim Wuyts, Robert Hurlbut, Brook S.E. Schoenfield, Fraser Scott, Matthew Coles, Chris Romeo, Alyssa Miller, Izar Tarandach, Avi Douglen, Marc French, Threat Modelling Manifesto, Accessed: May 2026. Available: https://www.threatmodelingmanifesto.org/
+
+[^32]: Threat modeling frameworks and tools, Mozilla, Acessed: May 2026. Available: https://developer.mozilla.org/en-US/docs/Web/Security/Threat_modeling/Frameworks#stride
+
+[^33]: Security HTTP Response Headers, Spring, Accessed: May 2026. Available: https://docs.spring.io/spring-security/reference/features/exploits/headers.html
+
+[^34]: Why is quantum cryptography important?, Josh Schneider, IBM, Published: December 2023. Available: https://www.ibm.com/think/topics/quantum-cryptography#Why+is+quantum+cryptography+important?
+
+[^35]: Vad är Java Spring Boot?, Azure Microsoft, Accessed: May 2026. Available: https://azure.microsoft.com/sv-se/resources/cloud-computing-dictionary/what-is-java-spring-boot/
+
+[^36]: Zed Attack Proxy (ZAP), Accessed: May 2026. Available: https://www.zaproxy.org/
+
+[^37]: Spring4Shell: New info and fixes (CVE-2022-22965), Accessed: May 2026. Available: https://www.helpnetsecurity.com/2022/04/01/cve-2022-22965/
