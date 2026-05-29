@@ -363,6 +363,19 @@
 
 **Time:** 10 hours **TOTAL**: 133.75 hours
 
+## 2026-05-29
+
+- klar med 6
+- edits, förkortat där möjligt och omformulerat (fixat ref!)
+- bokat möte med W
+
+### Mål för morgon dagen:
+
+- hotmodellering
+- kapitel 6
+
+**Time:** 6 hours **TOTAL**: 139.75 hours
+
 | Vecka | Milstolpe   | Leverabler                                       |
 | ----- | ----------- | ------------------------------------------------ |
 | 5     | Redovisning | Inlämnad rapport, genomförd muntlig presentation |

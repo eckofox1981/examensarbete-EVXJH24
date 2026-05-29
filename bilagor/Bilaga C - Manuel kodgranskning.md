@@ -159,7 +159,7 @@ EFBoxFileRepository.java hanterar kommunikationen mellan databasen och EFBoxFile
 
 CORS-konfigurationen för EFBox, enligt beskrivningskommentaren genererades den koden av AI för eventuell frontendimplementering. Säkerhet är inte konfigurerad utan möjliggör CORS från alla origin : `config.addAllowedOrigin("*");`.
 
-CORS kommer att implementera på ett annorlunda sätt inom SecurityConfig.java i enighet med Spring Boots instruktioner [1].
+CORS kommer att implementera på ett annorlunda sätt inom SecurityConfig.java i enighet med Spring Boots instruktioner[^1].
 
 #### 3.4.2 JWTFilter.java
 
@@ -244,7 +244,7 @@ EFbox saknar funktionalitet för lösenordsåterställning. Detta innebär att e
 
 JWT-tokens i EFbox har en giltighetstid på 60 minuter och det finns ingen mekanism för att ogiltigförklara en token före dess utgång. Detta innebär att en utloggad användares token fortfarande är giltig tills den löper ut, vilket kan missbrukas vid tokenstöld.
 
-JWT-token är immutable och går inte att ogiligförklarars. Alternativa lösningar är att skapa en sk. _black list_ av JWT som kontrolleras vid varje förfråga [2], eller att hantera giltighetstiden. Tidsbegränsningar på studien gör det svårt att uppnå en felfri lösning.
+JWT-token är immutable och går inte att ogiligförklarars. Alternativa lösningar är att skapa en sk. _black list_ av JWT som kontrolleras vid varje förfråga[^2], eller att hantera giltighetstiden. Tidsbegränsningar på studien gör det svårt att uppnå en felfri lösning.
 JWT är inte menade att användas på detta sätt. Studien kommer att utgå från kortare JWT giltighetstid med tanke på följande:
 
 - om applikationen hade haft en fungerande frontend skulle JWT med extremt kort liv kunna förnyas regelbundet.
@@ -254,6 +254,6 @@ Av praktiska skäl kommer JWT ha en TTL (_Time To Live_) på 3 minuter och förn
 
 ## Referenser
 
-[1]: Cors-configuration, Spring Boot, Accessed May 2026. Available: https://docs.spring.io/spring-security/reference/servlet/integrations/cors.html#page-title
+[^1]: Cors-configuration, Spring Boot, Accessed May 2026. Available: https://docs.spring.io/spring-security/reference/servlet/integrations/cors.html#page-title
 
-[2]: JWT Blacklisting in Spring Boot for Revoked Sessions, Alexander Obregon, Medium, Published: August 2025. Avalailble: https://medium.com/@AlexanderObregon/jwt-blacklisting-in-spring-boot-for-revoked-sessions-9041592585be
+[^2]: JWT Blacklisting in Spring Boot for Revoked Sessions, Alexander Obregon, Medium, Published: August 2025. Avalailble: https://medium.com/@AlexanderObregon/jwt-blacklisting-in-spring-boot-for-revoked-sessions-9041592585be
