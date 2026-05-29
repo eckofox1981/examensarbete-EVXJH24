@@ -2,17 +2,13 @@
 
 ## Sammanfattning (Abstract)
 
-_Skriv detta avsnitt sist, även om det kommer först i rapporten._
-//TODO
-Detta är en kortfattad sammanfattning (max 250 ord) på **engelska** som ska innehålla:
+Many systems are developed as proof-of-concept projects without security as a primary focus, leaving them vulnerable when deployed. This study examines how an existing Java Spring Boot REST API can be systematically secured using OWASP Top 0:2025 as a reference framework, combining theoretical research with practical implementation.
 
-- Bakgrund och problemområde
-- Syfte med arbetet
-- Metod/approach (teoretisk, praktisk eller kombinerad)
-- Huvudresultat och slutsatser
-- Praktisk betydelse
+Security vulnerabilities were identified across nine OWASP categories and subsequently remediated. Verification was performed using OWASP ZAP, SonarQube, OSV dependency scanning and manual testing. Results demonstrate that securing an existing API requires extending its architecture rather than modifying it, and that systematic iteration is essential.
 
-**Nyckelord:** _Lista 3-5 tekniska nyckelord på engelska_
+The study contributes a concrete methodology for security analysis of existing REST APIs, an area where comparable studies are scarce.
+
+**Keywords:** REST API, OWASP Top 10, web security, Spring Boot, threat modeling
 
 ---
 
@@ -604,6 +600,7 @@ Webbsäkerhet är tyvärr ett ofullständigt kunskapsområde då nya exploaterin
 
 ### 2.3 Teknisk/Teoretisk Jämförelse
 
+//TODO: att göra, idéer Argon vs bcrypt, manuellkodgranskning vs sonarqube, zap mot manuella tester, OWASP 10 mot NIST mm
 Analys av olika alternativ eller approaches inom ditt område.
 
 _Använd källhänvisningar_
