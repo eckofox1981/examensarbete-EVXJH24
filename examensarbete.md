@@ -114,6 +114,7 @@ The study contributes a concrete methodology for security analysis of existing R
 | CRUD                            | Create Read Update Delete (Skapa, Läsa, Ändra, Radera), ett begrepp som beskriver möjlig hantering av data                                                                                        |
 | CSP                             | Content-Security-Policy, en response header som definierar vilka resurser en webbläsare få använda (ofta en servers ursprung)                                                                     |
 | dependency                      | beroende eller avhängighet, inom programmering syftas det på program eller ramverk som en applikation är beroende av                                                                              |
+| DFD                             | Data Flow Diagram (Dataflödesdiagram)                                                                                                                                                             |
 | ECDSA                           | Elliptisk kurva digital signaturalgoritm, en av de mer komplexa offentliga nyckelkrypteringsalgoritmer                                                                                            |
 | Dependency (inom programmering) | Beroende på svenska, syftar på mjukvara som en applikation är beroende av                                                                                                                         |
 | EU                              | Europeiska Unionen                                                                                                                                                                                |
@@ -776,6 +777,7 @@ Rapporten finns att tillgå i Bilaga D - ZAP-säkerhetsrapport (före åtgärder
 ##### 3.3.3.3.1 Analys av ZAP-säkerhetsrapporten
 
 _se Bilaga D - ZAP-säkerhetsrapport (före åtgärder)_
+
 Följande är en kort sammantfattning av ZAPs genererade rapport.
 
 ##### 3.3.3.3.1.1 SQL Injection (High Risk, Medium confidence)
@@ -914,7 +916,7 @@ Efter implementerade åtgärder genomfördes en ny ZAP Active Scan mot EFbox API
 | SQL Injection                     | High   | Medium     | ZAP sparade ett lösenord med SQL-kommandon `[(...)AND '1'='1' -- ]` och `[(...) OR '1'='1' -- ]`. Detta ett **falskt positivt** då lösenorden sparas i hashade former i databasen och den råa strängen hanteras enbart för att hashas. |
 | Spring4Shell (CVE-2022-22965)     | High   | Medium     | **Falskt positivt** det åtgärdats i Spring Boot 2.6.6, EFbox använder 3.4.1 och körs som executable jar [^37]                                                                                                                          |
 | CSP Header Not Set                | Medium | High       | **Accepterat** då CSP är primärt relevant för webbläsarbaserade applikationer med frontend, vilket faller utanför studiens scope                                                                                                       |
-| Cookie without SameSite Attribute | Low    | Medium     | **Kvarstående brist:** SameSite-attributet är inte konfigurerat på JWT-cookien. Bör sättas till `Strict` eller `Lax` för att skydda mot CSRF-attacker (A02). Detta är en översikt.                                                     |
+| Cookie without SameSite Attribute | Low    | Medium     | **Kvarstående brist:** SameSite-attributet är inte konfigurerat på JWT-cookien. **Detta är en översikt.**                                                                                                                              |
 
 Jämfört med den initiala skanningen noteras att Buffer Overflow och Application Error Disclosure inte längre förekommer, vilket indikerar att den centraliserade felhanteringen fungerar som avsett.
 
@@ -946,7 +948,7 @@ För filvalideringstestet försökte författaren att skicka ett exceldokument m
 
 _se [Hotmodellering av EFBox](#332-hotmodellering-av-efbox)_
 
-Hotmodelleringen visade sig vara ett användbart verktyg för att förutse de brister som senare identifierades i kodgranskningen. Samtliga hot med risknivå Hög åtgärdades, med ett undantag: lagringskvoten per användare förbisågs under planeringsfasen och implementerades aldrig (se [5.3 Begränsningar](#53-begränsningar-och-kritisk-granskning)).
+Hotmodelleringen visade sig vara ett användbart verktyg för att förutse de brister som senare identifierades i kodgranskningen. Samtliga hot med risknivå Hög och Låg åtgärdades, med ett undantag: lagringskvoten per användare förbisågs under planeringsfasen och implementerades aldrig (se [5.3 Begränsningar](#53-begränsningar-och-kritisk-granskning)).
 
 De två hoten med risknivå Medel åtgärdades – inputvalidering implementerades på samtliga användarinputs (med undantag för lösenord som hashas direkt) och ägarskapskontrollen skyddar mot obehörig namnändring av andras resurser.
 
@@ -972,7 +974,8 @@ Tyvärr är det svårt som ensam utvecklare att diskutera runt de olika säkerhe
 
 #### 5.1.2. Hur kan de identifierade bristerna åtgärdas inom ramen för det befintliga systemets arkitektur?
 
-Denna fråga är svår att svara eftersom det enda sättet att åtgärda bristerna var att **utöka arkitekturen**. Jämför man originalprojektet (sparad i branchen `originalForEssay`) med slutprodukten (branch `main`) kan vi konstatera att 4.193 tillägg gjordes mot 847 borttagningar.
+Denna fråga är svår att svara eftersom det enda sättet att åtgärda bristerna var att **utöka arkitekturen**. Jämför man originalprojektet (sparad i branchen `originalForEssay`) med slutprodukten (branch `main`) kan vi konstatera att 4.193 tillägg gjordes mot 847 borttagningar. **Elva nya _packages_ las till med totalt 49 nya klasser** och sex nya _end-points_ skapades för att hantera det olika roller och tillstånd.
+
 Den grundlägande arkitekturen finns kvar med `fileobject` och `user` packages. Men för att åstadkomma OWASP rekommendationerna fick en parallell säkerhetsarkitektur skapas där all data trafik filtreras och fördelas mellan de olika services.
 
 Därmed är den största lärdom av studien:
@@ -995,14 +998,14 @@ private boolean isUsernameValid(String username) {
 
 Vid varje pull request flaggades `PASSWORD_REGEX` som ett säkerhets hot eftersom SonarQube antog att ett lösenord hade hårdkodas, vilket sänkte förtroendet för verktyget.
 
-Pull requests analyserades även av Claude AI för kodkvalitet (se Bilagor F till M). Detta har varit hjälpsamt för att hålla kodkvalitet och rätta enkla misstag som studien, med en ensam utvecklare, hade missat. Cluade AI kunde ibland lida av bristande sammanhangshålning och även hallucinationer. Flera rapporter påpekar att `.env.example` har två st `OWNER_EMAIL` miljövariablar vilka inte fanns. Överlag dock har Claude AI:s kodgranskning varit hjälpsam. Utan att få syftet med branchen i förväg kunde verktyget analysera syftet med den och beskriva det på ett korrekt sätt i rapporterna. Det ansågs vara ett tecken på kodtydlighet och att målen uppnåtts.
+Pull requests analyserades även av Claude AI för kodkvalitet (se Bilagor F till M). Detta har varit hjälpsamt för att hålla kodkvalitet och rätta enkla misstag som studien, med en ensam utvecklare, hade missat. Claude AI kunde ibland lida av bristande sammanhangshålning och även hallucinationer. Flera rapporter påpekar att `.env.example` har två st `OWNER_EMAIL` miljövariablar vilka inte fanns. Överlag dock har Claude AI:s kodgranskning varit hjälpsam. Utan att information om branchens syftet kunde verktyget analysera syftet med den och beskriva det på ett korrekt sätt i rapporterna. Det ansågs vara ett tecken på kodtydlighet och att målen uppnåtts.
 
-ZAP är ett fantastiskt verktyg för en smidig analys. Alla registrerade end-points skannas och testas och antalet förfrågan på kort tid testa serverns kapacitet. T.ex kunde studien konstatera att Rate-limiting åtgärderna, baserade på IP för anonyma användare alternativt på användarID, skulle uppenbarligen inte räcka mot en _Denial of Service_-attack då testmiljön "frös" i ett par minuter. Alla registrerade exception finns i Bilaga Q - EFBox_event_log efter ZAP test (EFbox skapa en HTML-verion av loggarna). Det konstateras att de implementerade skydden fyller sina syften.
+ZAP är ett fantastiskt verktyg för en smidig analys. Alla registrerade end-points skannas och testas och antalet förfrågan på kort tid testa serverns kapacitet. T.ex kunde studien konstatera att Rate-limiting åtgärderna, baserade på IP för anonyma användare alternativt på användarID, skulle inte räcka mot en _Denial of Service_-attack då testmiljön "frös" i ett par minuter. Alla registrerade exception finns i Bilaga Q - EFBox_event_log efter ZAP test (EFbox skapa en HTML-verion av loggarna). Det konstateras att de implementerade skydden fyller sina syften.
 Rapporten fyllde sitt syfte men även här fanns ett falskt positiv fynd om en SQL-injektion eftersom lösenord har ingen inputvalidering för att de hashas i databasen. ZAP skickade inte heller några filer för att testa injektionsangrep utan ett excelblad med macro skickades manuellt för att testa filvalideringen. Andra manuella tester har varit att ljuga om filtypen, skicka förbjudna filer mm.
 
 Sist har en del av kvalitetssäkring varit att arbeta metodiskt enligt de planerade åtgärder med hjälp av verktyget GitHub Project med utrymme för anpassning till de olika problem som uppstod. Om inga fel hittades i samband med en granskning, en logik eller av test verktygen så dubbelkollades noga. Det var så OSV granskningen av dependencies uppdagades och kunde åtgärdas. Det hade dock varit bättre, och mer givande, att arbeta i team och diskutera resultat.
 
-Utan en bred erfarenhetsbas är det orimligt att täcka alla hotscenario som kan förekomma hos specifika applikationer.
+> Utan en bred erfarenhetsbas är det orimligt att täcka alla hotscenario som kan förekomma hos specifika applikationer.
 
 ### 5.2 Reflektion över Metod
 
@@ -1012,7 +1015,7 @@ Metoden som används i studien anser författaren vara metodiskt och anpassad. F
 
 ### 5.3 Begränsningar och Kritisk Granskning
 
-Begränsingarna har huvudsakligen grundat sig i att arbeta själv. Ett team kan fördela resurser (tidsbristen har varit ett problem) och stämma av med projektdeltagarna. Kunskapsbasen är inte heller så bred med bara en person som ska läsa sig på alla tekniska möjligheter att lösa ett problem. Kanske har enkla lösningar förbisetts och tid förlorats pga detta. De lösningar som har implementerats är kanske bristfälliga på ett sätt studien inte förutsett.
+Begränsingarna har huvudsakligen grundat sig i att arbeta själv. Ett team kan fördela resurser och stämma av med projektdeltagarna. Kunskapsbasen är inte heller så bred med bara en person som ska läsa sig på alla tekniska möjligheter att lösa ett problem. Kanske har enkla lösningar förbisetts och tid förlorats pga detta. De lösningar som har implementerats är kanske bristfälliga på ett sätt studien inte förutsett.
 
 Ett misstag som gjordes pga tidsbristen under hotmodelleringen var att en lagringskvot för användaren förbisågs och planerades aldrig. Det resulterade i sin tur att det inte planerades och följaktigen inte implementerades.
 
@@ -1038,13 +1041,13 @@ Inga andra studier av denna typ hittades under förberedande forskning och proje
 
 ### 6.1 Huvudslutsatser
 
-Websäkerhet i allmänhet är inte väldefinierad i den mening att kompromiss måste uppnås beroende på de kommersiella intressen. En väderapplikation utsätts inte för samma hot som ett socialt nätverk. Därför var frågeställningen svår att både definiera och svara på. Säkerhetsbristerna identifierades systematiskt med OWASP Top 10 och hotmodellering som referensram enligt denna studie. Åtgärderna krävde en utökning av arkitekturen snarare än enbart modifieringar, vilket i sig är en viktig lärdom.
+Websäkerhet i allmänhet är inte väldefinierad i den mening att kompromiss måste uppnås beroende på de kommersiella intressen. En väderapplikation utsätts inte för samma hot som ett socialt nätverk. Därför var frågeställningen svår att både definiera och svara på. Säkerhetsbristerna identifierades systematiskt med OWASP Top 10 och hotmodellering som referensram. Åtgärderna krävde en utökning av arkitekturen snarare än enbart modifieringar, vilket i sig är en viktig lärdom.
 Det är dock tydligt att det enda sätt att verkligen granska de implementerade lösningarna är effektiva vore att med riktig _penetration testing_ hitta problemen att granska EFBox.
 Studien avser ett småskaligt projekt men understryker tydligt hur stort och invecklat säkerhetsområdet är. Små start-ups drivna av kodentusiaster bör ta detta i beaktning, särskilt med tanke på att studien inte ta upp alla regler runt GDPR och dess krav på lagring av personlig data. Det sistnämnda blev ännu viktigare då användaremail las till som krav för att skapa EFBox konto.
 
 ### 6.2 Bidrag och Betydelse
 
-Under förberedande forskning hittades många olika lösningar online på specifika problem men ingen övergripande logik eller metodologi. OWASP, NIST och andra organisationer har detaljerade lösningar men ingen metodologi. Betydelsen av denna studie är att visa ett sätt att implementera säkerhet. Utvecklare kan dra lärdomar från de misttag som begicks här och få inspiration för metodologi, verktyg mm.
+Under förberedande forskning hittades många olika lösningar online på specifika problem men ingen övergripande logik eller metodologi. OWASP, NIST och andra organisationer har detaljerade lösningar men inte metodologi. Betydelsen av denna studie är att visa ett sätt att implementera säkerhet. Utvecklare kan dra lärdomar från de misttag som begicks här och få inspiration för metodologi, verktyg mm.
 
 ### 6.3 Framtida Arbete
 
