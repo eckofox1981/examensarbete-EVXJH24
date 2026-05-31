@@ -1,5 +1,6 @@
 # Kartläggning av EFBox API:s End-Points
 
+Detta är en karläggning av EFBox:s end-point innan säkerhetsproblemen åtgärdas. Finns sparade i branchen [originalForEssay](https://github.com/eckofox1981/EFbox/tree/originalForEssay).
 Alla end-points börjar sedvanligt med basurl:n.
 Alla endpoint kräver auktorisation med JWT med undantag för registrering- och loginfunktionerna.
 

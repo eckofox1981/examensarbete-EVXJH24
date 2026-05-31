@@ -16,7 +16,7 @@ En tabell för varje fil ritas upp nedan med fynderna.
 | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | CRUD             | Create, Read, Update, Delete – syftar på datahanteringen som skapande, läsande, uppdatering och radering                                                                                          |
 | CORS             | Cross-origin resource sharing, en teknik som begränsar åtkomst till websidor från specifierade domäner                                                                                            |
-| DTO              | Direct Transfer Object, ett objekt som används för att förmeddla enbart vald data utan logik.                                                                                                     |
+| DTO              | Direct Transfer Object, ett objekt som används för att förmedla enbart vald data utan logik.                                                                                                      |
 | JDE              | Java Development Environment                                                                                                                                                                      |
 | JDK              | Java Development Kit                                                                                                                                                                              |
 | One To Many      | En term för att beskriva förhållandet mellan objekt i en databas. One To Many syftar på att ett objekt kan relatera till flera andra objekt (en användare kan ha flera mappar)                    |
@@ -130,11 +130,11 @@ Det noteras positivt att användaruppgifter (ID eller användarnamn) inte delas 
 EFBoxFileController.java exponerar alla endpoints relaterade till EFBoxFile-objektet.
 Generellt skickar controllern förfrågan vidare till EFBoxFileService.java och hanterar svaret till användaren.
 
-| Rad             | Fynd                                  | OWASP-referens                             | Kommentar                                                                                                                                                                                          | Åtgärd                                 |
-| --------------- | ------------------------------------- | ------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------- |
-| 40, 65, 85, 107 | Automatiska felmeddelanden returneras | A10 Mishandling of Exceptional Conditions  | De olika funktionerna har fördefinierade meddelanden för undantagshantering men som backup för oförutsedda undantag skickas automatiska felmeddelanden. Risk för att känslig information avslöjas. | Implementera generiska felmeddelanden. |
-| 29, 98          | bristande inputsvalidering            | A05 Injection                              | Varken `uploadFile()` eller `changeFileName()` har inputs validering för filnamnen. Risk för injection                                                                                             | Inplementera inputsvalidering          |
-| -               | Hyfsad undatangshantering             | A10 Mishhandling of Exceptional Conditions | Med undantag för _bad requests_-undantagshanteringen har de flesta undantag som fångas egna informationsmeddelanden från de funktioner de respektivt anropar.                                      | N/A                                    |
+| Rad             | Fynd                                  | OWASP-referens                            | Kommentar                                                                                                                                                                                          | Åtgärd                                 |
+| --------------- | ------------------------------------- | ----------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------- |
+| 40, 65, 85, 107 | Automatiska felmeddelanden returneras | A10 Mishandling of Exceptional Conditions | De olika funktionerna har fördefinierade meddelanden för undantagshantering men som backup för oförutsedda undantag skickas automatiska felmeddelanden. Risk för att känslig information avslöjas. | Implementera generiska felmeddelanden. |
+| 29, 98          | bristande inputsvalidering            | A05 Injection                             | Varken `uploadFile()` eller `changeFileName()` har inputs validering för filnamnen. Risk för injection                                                                                             | Implementera inputsvalidering          |
+| -               | Hyfsad undantagshantering             | A10 Mishandling of Exceptional Conditions | Med undantag för _bad requests_-undantagshanteringen har de flesta undantag som fångas egna informationsmeddelanden från de funktioner de respektivt anropar.                                      | N/A                                    |
 
 #### 3.3.4 EFBoxFileService.java
 
@@ -256,4 +256,4 @@ Av praktiska skäl kommer JWT ha en TTL (_Time To Live_) på 5 minuter och förn
 
 [^1]: Cors-configuration, Spring Boot, Accessed May 2026. Available: https://docs.spring.io/spring-security/reference/servlet/integrations/cors.html#page-title
 
-[^2]: JWT Blacklisting in Spring Boot for Revoked Sessions, Alexander Obregon, Medium, Published: August 2025. Avalailble: https://medium.com/@AlexanderObregon/jwt-blacklisting-in-spring-boot-for-revoked-sessions-9041592585be
+[^2]: JWT Blacklisting in Spring Boot for Revoked Sessions, Alexander Obregon, Medium, Published: August 2025. Avalailable: https://medium.com/@AlexanderObregon/jwt-blacklisting-in-spring-boot-for-revoked-sessions-9041592585be
