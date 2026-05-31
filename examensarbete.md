@@ -165,9 +165,9 @@ The study contributes a concrete methodology for security analysis of existing R
 ### 1.1 Bakgrund
 
 Internet anses ha genomgått tre perioder [^1] sen dess specifikation i 1989.
-Man pratar om **Web 1.0** där användarna kunde, för det mesta, bara söka och läsa innehåll online. Kommunikationen skulle kunna beskrivas, på ett förenklat sätt, ensidig och användarinputs var begränsade.
+Man pratar om **Web 1.0** där användarna kunde, för det mesta, bara söka och läsa innehåll online. Kommunikationen skulle, förenklat, kunna beskrivas ensidig och användarinputs var begränsade.
 
-Sedan 2000-talet tog **Web 2.0** över världen med interaktiva tjänster och sociala media. Användarna kan nu skicka information på ett enkelt sätt. Det fanns redan säkerhetsproblem under Web 1.0, men nu behöver online-tjänster kunna hantera, på ett säkert sätt, information och kommando som skickas till servrerna. Säkerhet tas på desto större allvar då många lagrar personlig information online som måste skyddas på ett säkert sätt. Web 2.0 gjorde det möjligt för företag som Meta, Google, Amazon, Twitter/X och andra att bli värdsledande och implementera ett affärssystem där användardatan är en produkt som säljs i marknadsföringssyften. Hackerkulturen fortsatte samtidigt att utvecklas och attackerna blev alltmer avancerade. Man-in-the-middle-attacks, brute force attacks, Denial Of Service mm är hot som alla online-leverantörer måste ta i beaktning. Andra aktörer som statligt sponsrade hacker gör det ännu svårare att skydda informationen online.
+Sedan 2000-talet tog **Web 2.0** över världen med interaktiva tjänster och sociala medier. Användarna kan nu skicka information på ett enkelt sätt. Det fanns redan säkerhetsproblem under Web 1.0, men nu behöver online-tjänster kunna hantera, på ett säkert sätt, information och kommando som skickas till servrerna. Säkerhet tas på desto större allvar då många lagrar personlig information online som måste skyddas på ett säkert sätt. Web 2.0 gjorde det möjligt för företag som Meta, Google, Amazon, Twitter/X och andra att bli värdsledande och implementera ett affärssystem där användardatan är en produkt som säljs i marknadsföringssyften. Hackerkulturen fortsatte samtidigt att utvecklas och attackerna blev alltmer avancerade. Man-in-the-middle-attacks, brute force attacks, Denial Of Service mm är hot som alla online-leverantörer måste ta i beaktning. Andra aktörer som statligt sponsrade hacker gör det ännu svårare att skydda informationen online.
 
 På senare år har misstron mot internetjättarnas sätt att hantera vår personliga information tilltagit. De stora företagens sätt att hantera vår data ifrågasätts och i Europa tar E.U fram ett regelverk för att skydda användarna; GDPR, som ska skydda både lagring och överföring av data online. Samtidigt försöker många att decentralisera sig från de stora nätverken (statliga eller privata) genom att förlita sig mer på _peer-to-peer_ filosofin. Detta anses vara **Web 3.0**, ett decentraliserat internet.
 
@@ -196,7 +196,8 @@ Syftet med detta examensarbete är att, med OWASP Top 10:2025 som referensram, s
 
 - Projektet omfattar endast backend-API:et (EFbox) – ingen frontend analyseras
 - Analysen begränsas till de OWASP Top 10-kategorier som är relevanta för applikationens typ och funktionalitet (A01, A02, A03, A04, A05, A07, A08, A09, A10\*)
-- Penetrationstestning mot en live-miljö ingår inte – testning sker i lokal utvecklingsmiljö
+- Hänsyn till GDPR tas inte
+- Penetrationstestning mot en live-miljö ingår inte utan testning sker i lokal utvecklingsmiljö
 - Projektet inkluderar inte prestandaoptimering eller funktionsutveckling utanför säkerhetsåtgärder
 - Applikationen är ej avsedd för produktionsdrift inom ramen för detta projekt
 
@@ -206,7 +207,7 @@ _\*A06 - Insecure design är för subjektivt för att kunna bedömas på ett emp
 
 Målet med detta arbete är att åstadkomma en **kombinerad teoretisk och utvecklingsstudie** där teori och praktik sammanstrålar.
 
-I första stadiet studeras de olika hot listade i OWASP Top 10 följd av en analys av EFBox-API:et för att identifiera dess svaghet. Nästa steg är att åtgärda dessa brister på ett effektivt sätt dvs genom att lösa flera stycken på en gång (ex: log och felhantering är vanligtvis närbesläktade).
+I första stadiet studeras hoten listade i OWASP Top 10 följd av en analys av EFBox-API:et för att identifiera dess svaghet. Nästa steg är att åtgärda dessa brister på ett effektivt sätt dvs genom att lösa flera stycken på en gång (ex: log och felhantering är vanligtvis närbesläktade).
 Sista steg är att återanalysera API:et för att se om åtgärdena är effektiva.
 
 De verktyg som används i denna studie är:
@@ -425,12 +426,13 @@ Hotmodellering måste granskas av alla berörda aktörer [^29]:
 - Har modelleringen dokumenterats och är tillgänglig för det som behöver kan komma åt det?
 - Kan mitigeringen testas?
 
-**Hotmodellering i denna studie**
+**Hotmodellering i denna studie**:
+
 För att lyckas skydda EFBox-applikationen på ett effektivt sätt kommer en förenklad version av hotmodellering, som täcker de mest kritiska hoten, skapas. Systemet kommer att inventeras och tillgängliga funktioner granskas för definera hoten med STRIDE. Men utan ett team av säkerhetsexperter bli en fullskalig hotmodellering orealistiskt och det kommer att implementeras som en _proof of concept_.
 
 #### 2.1.7 OWASP Top 10 hot 2025
 
-Open Worldwide Application Security Project (OWASP) publicerar regelbundet en lista på de mest kritiska säkerhetsrisker för webbapplikationer [^8]. Denna studie kommer att säkra EFBox-API enligt OWASP Top 10 med undantag för [Insecure Design](#2176). I detta avsnitt behandlas dessa hot och hur en utvecklare kan åtgärda dem.
+Open Worldwide Application Security Project (OWASP) publicerar regelbundet en lista på de mest kritiska säkerhetsrisker för webbapplikationer[^8]. Denna studie kommer att säkra EFBox-API enligt OWASP Top 10 med undantag för [Insecure Design](#2176). I detta avsnitt behandlas dessa hot och hur en utvecklare kan åtgärda dem.
 
 ##### 2.1.7.1 Broken Access Control (Bristfällig åtkomstkontroll)
 
@@ -479,7 +481,7 @@ Andra åtgärd för Brister i Mjukvarans Leveranskedja kan vara:
 
 Att övervaka Brister i Mjukvarans Leveranskedja är en komplicerad process med många fallgropar. OWASP har utvecklat verktyg som [OWASP Dependency Track](https://owasp.org/www-project-dependency-track/) för att hjälpa utvecklare.
 
-För denna studie kommer Brister i Mjukvarans Leveranskedja att granskas med hjälp av [Open Source Vulnerabilities (OSV) verktyget](https://osv.dev/) och uppdateras vid behov.
+För denna studie kommer Brister i Mjukvarans Leveranskedja att granskas med hjälp av [Open Source Vulnerabilities (OSV) verktyget](https://osv.dev/) och uppdateras vid behov. Valet av OSV över OWASP egna verktyg beror på snabbare implementering.
 
 ##### 2.1.7.4 Cryptographic Failures (Kryptografibrister)
 
@@ -731,7 +733,7 @@ _se Bilaga B för mer information_
 
 ##### 3.3.3.2 Manuel kodgranskning ur ett säkerhetsperspektiv
 
-All kod i EFBox granskas fil-för-fil och fynder dokumenteras i _Bilaga B - Manuel kodgranskning av EFbox-API:et ur ett säkerhetsperspektiv_.
+All kod i EFBox granskas fil-för-fil och fynder dokumenteras i _Bilaga C - Manuel kodgranskning av EFbox-API:et ur ett säkerhetsperspektiv_.
 **Sammanfattning av den manuella säkerhetsgranskningen**
 
 Den manuella kodgranskningen identifierade ett antal återkommande brister
@@ -780,7 +782,7 @@ Följande är en kort sammantfattning av ZAPs genererade rapport.
 
 ##### 3.3.3.3.1.2 Buffer Overflow (Medium Risk, Medium confidence) :
 
-- A02 Security Misconfiguration: ZAP skickade en extremt lång sträng och fick svaret 500 med felmeddelande "UUID string too large". Buffer Overflow kan ha berott på den lokala testmiljön och IDE:s begränsade minne men det ett argument för hastighetsbegränsning (se Bilaga B) och inputsvalidering.
+- A02 Security Misconfiguration: ZAP skickade en extremt lång sträng och fick svaret 500 med felmeddelande "UUID string too large". Buffer Overflow kan ha berott på den lokala testmiljön och IDE:s begränsade minne men det ett argument för hastighetsbegränsning och inputsvalidering.
 - A10 Mishandling of Exceptional Conditions: Svaret var inte fördefinierat utan texten från felet (dvs `e.getMessage()`). Det är ett tecken på att undantagshanteringen bör ses över.
 
 ##### 3.3.3.3.1.3 Application Error Disclosure (Low Risk, Medium confidence):
@@ -926,17 +928,17 @@ För filvalideringstestet försökte författaren att skicka ett exceldokument m
 
 #### 4.2.1 Detaljerade fynd per OWASP-kategori
 
-| OWASP-kategori                     | Identifierad brist                                                                             | Åtgärd                                                                                                                                                                              | Verifiering                                             |
-| ---------------------------------- | ---------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------- |
-| A01 Broken Access Control          | Ingen rollhantering, ingen lagringskvot                                                        | GrantedAuthorities, roller och tillstånd implementerade                                                                                                                             | Manuell testning                                        |
-| A02 Security Misconfiguration      | Felaktig CORS, ingen HTTPS, debug-logging                                                      | Miljövariabler, SSL, CORS i SecurityConfig                                                                                                                                          | ZAP + manuell                                           |
-| A03 Software Supply Chain Failures | Felaktig OSV-skanning, sårbara dependencies identifierades sent under studiens gång (Bilaga O) | Uppdatering av Spring Boot till 3.4.6, Gradle till 9.5.1, tvingade versionsuppgraderingar, borttagna oanvända dependencies, identifiering och accepterande av säkerhetskompromisser | OSV-rapport (Bilaga P)                                  |
-| A04 Cryptographic Failures         | BCrypt, secret i klartext                                                                      | Argon2id, miljövariabel                                                                                                                                                             | Manuell testning                                        |
-| A05 Injection                      | Ingen inputvalidering, råa databasfrågor, ingen filvalidering                                  | REGEX-validering, loggning av försök, Magic bytes-kontroll, bildåtergivning, tillåtna REGEX                                                                                         | ZAP + manuell                                           |
-| A07 Authentication Failures        | Svag lösenordspolicy, ingen rate limiting                                                      | Förstärkt policy, rate limiting, JWT TTL 3 min, lösenordsåterställningssystem                                                                                                       | ZAP + manuell                                           |
-| A08 Software/Data Integrity        | Ingen kontroll av leveranskedjan                                                               | Kontroll med OSV, användning av betrodda källor, detta gjordes redan och fortsatte med under studien                                                                                | Manuell kontroll                                        |
-| A09 Logging and Alerting           | Ingen loggning                                                                                 | Centraliserad loggning i databas, varningssystem via mail                                                                                                                           | Manuell testning (ZAP-testning triggade alla varningar) |
-| A10 Exceptional Conditions         | Lokala felhanterare, e.getMessage() exponerat                                                  | GlobalExceptionHandler, generiska meddelanden                                                                                                                                       | ZAP (Buffer Overflow borta)                             |
+| OWASP-kategori                     | Identifierad brist                                                                                                              | Åtgärd                                                                                                                                                                              | Verifiering                                                                      |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| A01 Broken Access Control          | Ingen rollhantering, ingen lagringskvot                                                                                         | GrantedAuthorities, roller och tillstånd implementerade, ostandardiserade URI ("bossmang" istället för "admin")                                                                     | Manuell testning                                                                 |
+| A02 Security Misconfiguration      | Felaktig CORS, ingen HTTPS, debug-logging                                                                                       | Miljövariabler, SSL, CORS i SecurityConfig                                                                                                                                          | ZAP + manuell                                                                    |
+| A03 Software Supply Chain Failures | Felaktig OSV-skanning, oanvända dependencies raderades, sårbara dependencies identifierades sent under studiens gång (Bilaga O) | Uppdatering av Spring Boot till 3.4.6, Gradle till 9.5.1, tvingade versionsuppgraderingar, borttagna oanvända dependencies, identifiering och accepterande av säkerhetskompromisser | OSV-rapport (Bilaga P)                                                           |
+| A04 Cryptographic Failures         | BCrypt, secret i klartext, lösenord bortaget från SecurityContext                                                               | Argon2id, miljövariabel, debugg lines                                                                                                                                               | Manuell testning                                                                 |
+| A05 Injection                      | Ingen inputvalidering, råa databasfrågor, ingen filvalidering                                                                   | Global REGEX-validering, loggning av försök, bildåtergivning, vanliga injektionskod triggar en Exception och loggas                                                                 | ZAP + manuell                                                                    |
+| A07 Authentication Failures        | Svag lösenordspolicy (REGEX & HavIBeenPwned), ingen rate limiting                                                               | Förstärkt policy, rate limiting, JWT TTL 5 min med förnyelse, lösenordsåterställningssystem                                                                                         | ZAP + manuell                                                                    |
+| A08 Software/Data Integrity        | Ingen kontroll av leveranskedjan                                                                                                | Kontroll med OSV, användning av betrodda källor, sistnämnda gjordes redan och fortsatte med under studien                                                                           | OSV-rapport för dependencies och manuell kontroll för utvecklingsmiljöns verktyg |
+| A09 Logging and Alerting           | Ingen loggning                                                                                                                  | Centraliserad loggning i databas, varningssystem via mail, logging i läsbarformat (HTML med färgkoder)                                                                              | Manuell testning (ZAP-testning triggade alla varningar)                          |
+| A10 Exceptional Conditions         | Lokala felhanterare, e.getMessage() exponerat                                                                                   | GlobalExceptionHandler, generiska meddelanden                                                                                                                                       | ZAP (Buffer Overflow borta)                                                      |
 
 #### 4.2.2 Kontroll med hotmodelleringen
 
@@ -952,7 +954,8 @@ Det sistnämnda avslöjar en svaghet av STRIDE-hotmodelleringen: den mänskliga 
 
 ### 4.3 Oväntade Resultat
 
-Det förekom inga oväntade resultat från studien däremot framhävdes den ständiga kompromissen mellan det praktiska underhållet, de kommersiella och säkerhetsaspekterna som internetleverantörer ständigt får balansera: Hur avancerat ska ett lösenord vara, hur rigid ska en filvalidering vara och vilka filer ska tillåtas, när ska varningar triggas osv. Den svåraste aspekten för detta projekt var att acceptera att författaren inte kunde få en "ren" OSV-rapport utan _issues_ utan fick kompromissa för att EFBox underhållet skulle vara hållbart.
+Ett oväntat fel som inte hann lösas var att visa undantag inte hanterades av GlobalExceptionHandler. Undantag utan specifik error handling borde hanteras som `UndefinedException`. Problemet går säkert att lösa men inte inom tidsramen för studien. Trots detta skickas inga automatiska felmeddelande tillbaka (e.getMessages()) till användaren vilket är det viktigaste.
+Den svåraste aspekten för detta projekt var att acceptera att författaren inte kunde få en "ren" OSV-rapport utan _issues_ utan fick kompromissa för att EFBox underhållet skulle vara hållbart. Studien förväntade sig att kunna lösa just detta problem utan att kompromissa på detta vis. Dock finns kompromis som en del av hotmodellingens effektivitetskonttroll (se [Hotmodellering med Stride, punkt 3: Acceptera](#216-hotmodellering-med-stride)).
 
 ---
 

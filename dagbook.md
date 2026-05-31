@@ -371,8 +371,7 @@
 
 ### Mål för morgon dagen:
 
-- hotmodellering
-- kapitel 6
+- kolla igenom allt
 
 **Time:** 6 hours **TOTAL**: 139.75 hours
 

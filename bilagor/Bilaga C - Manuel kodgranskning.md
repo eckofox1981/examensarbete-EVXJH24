@@ -35,7 +35,7 @@ User.java är ett enkelt användarobjekt med ett OneToMany-förhållande till ma
 private final List<EFBoxFolder> RootFolder;
 ```
 
-som kommer att se till att vid kontoradering kommer även användarens mapp att raderas.
+som kommer att se till att vid kontoradering kommer även användarens mapp att raderas, detta är lämpligt då användarens data försvinner vid kontoradering.
 
 | Rad | Fynd               | OWASP-referens            | Kommentar                                                                                                                                                                                                        | Åtgärd                                    |
 | --- | ------------------ | ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- |
@@ -250,7 +250,7 @@ JWT är inte menade att användas på detta sätt. Studien kommer att utgå frå
 - om applikationen hade haft en fungerande frontend skulle JWT med extremt kort liv kunna förnyas regelbundet.
 - om användaren är inaktiv en längre period (mät av frontend) skulle hen kunna loggas ut automatisk (dvs klienten slutar be om nya JWT)
 
-Av praktiska skäl kommer JWT ha en TTL (_Time To Live_) på 3 minuter och förnyas med varje förfrågan. //TODO: ändra om brist på tid för implementering.
+Av praktiska skäl kommer JWT ha en TTL (_Time To Live_) på 5 minuter och förnyas med varje förfrågan om det är mindre än 3 minuter på TTL.
 
 ## Referenser
 
