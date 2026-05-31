@@ -562,7 +562,7 @@ Följande åtgärd föreslås av OWASP:
 | Säkra loggarna | Loggarna i sig bör vara skyddade mot injektionsattacker så att en hacker inte får loggarna att köra olovlig kod för att t.ex förfalska loggarna |
 | Utveckla procedur för övervakning och varningar | När en mistänksam aktivitet upptäcks och en varning skickas måste en respons vara designad för att hantera hotet (se även [Hotmodellering](#216-hotmodellering-med-stride)) |
 
-EfBox har ingen logging alls utöver det som erbjuds inbyggt i Spring Boot i terminalen. Därför kommer ett logging och alerting system behöva utvecklas och implementeras enligt OWASP rekommendationer.
+EFBox har ingen logging alls utöver det som erbjuds inbyggt i Spring Boot i terminalen. Därför kommer ett logging och alerting system behöva utvecklas och implementeras enligt OWASP rekommendationer.
 
 ##### 2.1.7.10 Mishandling Of exceptional Conditions (Felhantering av undantagstillstånd)
 
@@ -599,10 +599,12 @@ Webbsäkerhet är tyvärr ett ofullständigt kunskapsområde då nya exploaterin
 
 ### 2.3 Teknisk/Teoretisk Jämförelse
 
-//TODO: att göra, idéer Argon vs bcrypt, manuellkodgranskning vs sonarqube, zap mot manuella tester, OWASP 10 mot NIST mm
-Analys av olika alternativ eller approaches inom ditt område.
+Websäkerhets är ett område med många olika problem som har många olika lösningar. Under förberedande forskning för studien studerades olika möjlghet för att förbättra säkerheten i EFBox och olika bedömningar gjordes. Lösningarna skulle vara relativt enkla och snabba att implementera och någorlunda lättförstådda. T.ex:
 
-_Använd källhänvisningar_
+- Studien fokuserar på OWASP Top 10 för att information är lättare att ta in jämnfört med t.ex NIST (som fokuserar dessutom mer på USA än EU).
+- Skiftet till Argon2 är lätt att implementera och enligt alla källor är en klar förbättring. OWASP förslår dock åtgärder för att kunna behålla _legacy system_ som BCrrypt.
+- ZAP används men manuella tester, med mänsklig kännedom av sammanhang och potentiella luckor i koden, kommer att genomföras.
+- Rate limting implementeras mer effektivt i REDIS men för denna studie implementeras det i en HandlerInterceptor klass för enkelhetens skull
 
 ---
 
@@ -930,15 +932,15 @@ För filvalideringstestet försökte författaren att skicka ett exceldokument m
 
 | OWASP-kategori                     | Identifierad brist                                                                                                              | Åtgärd                                                                                                                                                                              | Verifiering                                                                      |
 | ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
-| A01 Broken Access Control          | Ingen rollhantering, ingen lagringskvot                                                                                         | GrantedAuthorities, roller och tillstånd implementerade, ostandardiserade URI ("bossmang" istället för "admin")                                                                     | Manuell testning                                                                 |
+| A01 Broken Access Control          | Ingen rollhantering, ingen lagringskvot                                                                                         | GrantedAuthorities, roller och tillstånd implementerade, ostandardiserade URI ("bossmang" istället för "admin")1                                                                    | Manuell testning                                                                 |
 | A02 Security Misconfiguration      | Felaktig CORS, ingen HTTPS, debug-logging                                                                                       | Miljövariabler, SSL, CORS i SecurityConfig                                                                                                                                          | ZAP + manuell                                                                    |
 | A03 Software Supply Chain Failures | Felaktig OSV-skanning, oanvända dependencies raderades, sårbara dependencies identifierades sent under studiens gång (Bilaga O) | Uppdatering av Spring Boot till 3.4.6, Gradle till 9.5.1, tvingade versionsuppgraderingar, borttagna oanvända dependencies, identifiering och accepterande av säkerhetskompromisser | OSV-rapport (Bilaga P)                                                           |
 | A04 Cryptographic Failures         | BCrypt, secret i klartext, lösenord bortaget från SecurityContext                                                               | Argon2id, miljövariabel, debugg lines                                                                                                                                               | Manuell testning                                                                 |
 | A05 Injection                      | Ingen inputvalidering, råa databasfrågor, ingen filvalidering                                                                   | Global REGEX-validering, loggning av försök, bildåtergivning, vanliga injektionskod triggar en Exception och loggas                                                                 | ZAP + manuell                                                                    |
-| A07 Authentication Failures        | Svag lösenordspolicy (REGEX & HavIBeenPwned), ingen rate limiting                                                               | Förstärkt policy, rate limiting, JWT TTL 5 min med förnyelse, lösenordsåterställningssystem                                                                                         | ZAP + manuell                                                                    |
+| A07 Authentication Failures        | Svag lösenordspolicy (REGEX & HavIBeenPwned), ingen rate limiting                                                               | Förstärkt policy, rate limiting baserad på IP och ID, JWT TTL 5 min med förnyelse, lösenordsåterställningssystem                                                                    | ZAP + manuell                                                                    |
 | A08 Software/Data Integrity        | Ingen kontroll av leveranskedjan                                                                                                | Kontroll med OSV, användning av betrodda källor, sistnämnda gjordes redan och fortsatte med under studien                                                                           | OSV-rapport för dependencies och manuell kontroll för utvecklingsmiljöns verktyg |
 | A09 Logging and Alerting           | Ingen loggning                                                                                                                  | Centraliserad loggning i databas, varningssystem via mail, logging i läsbarformat (HTML med färgkoder)                                                                              | Manuell testning (ZAP-testning triggade alla varningar)                          |
-| A10 Exceptional Conditions         | Lokala felhanterare, e.getMessage() exponerat                                                                                   | GlobalExceptionHandler, generiska meddelanden                                                                                                                                       | ZAP (Buffer Overflow borta)                                                      |
+| A10 Exceptional Conditions         | Lokala felhanterare, e.getMessage() exponerat                                                                                   | GlobalExceptionHandler, generiska meddelanden, Exceptions fångas tidigt                                                                                                             | ZAP (Buffer Overflow borta)                                                      |
 
 #### 4.2.2 Kontroll med hotmodelleringen
 
