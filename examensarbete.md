@@ -974,7 +974,7 @@ Tyvärr är det svårt som ensam utvecklare att diskutera runt de olika säkerhe
 
 #### 5.1.2. Hur kan de identifierade bristerna åtgärdas inom ramen för det befintliga systemets arkitektur?
 
-Denna fråga är svår att svara eftersom det enda sättet att åtgärda bristerna var att **utöka arkitekturen**. Jämför man originalprojektet (sparad i branchen `originalForEssay`) med slutprodukten (branch `main`) kan vi konstatera att 4.193 tillägg gjordes mot 847 borttagningar. **Elva nya _packages_ lades till med totalt 49 nya klasser** och sex nya _end-points_ skapades för att hantera det olika roller och tillstånd.
+Denna fråga är svår att svara eftersom det enda sättet att åtgärda bristerna var att **utöka arkitekturen**. Jämför man originalprojektet (sparad i branchen `originalForEssay`) med slutprodukten (branch `main`) kan vi konstatera att 4.193 tillägg gjordes mot 847 borttagningar. **Elva nya _packages_ lades till med totalt 49 nya klasser** och åtta nya _end-points_ skapades för att hantera det olika roller och tillstånd.
 
 Den grundlägande arkitekturen finns kvar med `fileobject` och `user` packages. Men för att åstadkomma OWASP rekommendationerna fick en parallell säkerhetsarkitektur skapas där all data trafik filtreras och fördelas mellan de olika services.
 
