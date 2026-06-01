@@ -603,7 +603,7 @@ Webbsäkerhet är tyvärr ett ofullständigt kunskapsområde då nya exploaterin
 Websäkerhets är ett område med många olika problem som har många olika lösningar. Under förberedande forskning för studien studerades olika möjlighet för att förbättra säkerheten i EFBox och olika bedömningar gjordes. Lösningarna skulle vara relativt enkla och snabba att implementera och någorlunda lättförstådda. T.ex:
 
 - Studien fokuserar på OWASP Top 10 för att information är lättare att ta in jämfört med t.ex NIST (som fokuserar dessutom mer på USA än EU).
-- Skiftet till Argon2 är lätt att implementera och enligt alla källor är en klar förbättring. OWASP föreslår dock åtgärder för att kunna behålla _legacy system_ som BCrrypt.
+- Skiftet till Argon2 är lätt att implementera och enligt alla källor är en klar förbättring. OWASP föreslår dock åtgärder för att kunna behålla _legacy system_ som BCrypt.
 - ZAP används men manuella tester, med mänsklig kännedom av sammanhang och potentiella luckor i koden, kommer att genomföras.
 - Rate limiting implementeras mer effektivt i REDIS men för denna studie implementeras det i en HandlerInterceptor klass för enkelhetens skull
 
@@ -841,7 +841,7 @@ Eftersom författaren granskar sin egen kod finns en risk att problem förbises.
 
 #### 4.1.1 Det nya EFBox-API:et
 
-_se även GitHub-repository [EFBox-main brach](https://github.com/eckofox1981/EFbox)._
+_se även GitHub-repository [EFBox-main branch](https://github.com/eckofox1981/EFbox)._
 
 Projektet gick igenom 10 faser (i branscher) för att försöka säkra applikationen:
 
