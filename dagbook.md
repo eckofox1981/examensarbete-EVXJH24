@@ -62,7 +62,7 @@
   - 2.1.6 Filvalidering
 - mkt research för filvalidering gick på mitt sidospår med Apache Tika och Commons Validator fruktlöst, OWASP lydiga på den punkten men länkar till ett färdigt projekt, räknar mycket tidsbesparing
 
-**Time:** 9.5 hours **TOTAL**: 34 hours
+**Time:** 9.5 hours **TOTAL**: 33 hours
 
 ### Mål för morgon dagen:
 
@@ -84,7 +84,7 @@
   - 2.1.7.2 Security Misconfigurations
 - se till att överblicka innehåll, orolig att för lite (eller för mkt?)
 
-**Time:** 5.75 hours **TOTAL**: 39.75 hours
+**Time:** 5.75 hours **TOTAL**: 38.75 hours
 
 ### Mål för morgon dagen:
 
@@ -101,7 +101,7 @@
 - se till att överblicka innehåll, orolig att för lite (eller för mkt?)
 - har börjat på befintliga lösningar med anser att OWASP i sig är svaret. La till en studie från Barcelona för att visa att jag sökt.
 
-**Time:** 7 hours **TOTAL**: 46 hours
+**Time:** 7 hours **TOTAL**: 45 hours
 
 ### Mål för morgon dagen:
 
@@ -132,7 +132,7 @@
 
 **NOTE**: problem med markdown, vägra länka till referencerna
 
-**Time:** 4 hours **TOTAL**: 50 hours
+**Time:** 4 hours **TOTAL**: 49 hours
 
 ## 2026-05-16
 
@@ -151,7 +151,7 @@
 
 **NOTE**: problem med markdown, vägra länka till referencerna
 
-**Time:** 3 hours **TOTAL**: 53 hours
+**Time:** 3 hours **TOTAL**: 52 hours
 
 ## 2026-05-17
 
@@ -175,9 +175,9 @@
 
 **NOTE**: problem med markdown, vägra länka till referencerna
 
-**Time:** 6 hours **TOTAL**: 59 hours
+**Time:** 6 hours **TOTAL**: 58 hours
 
-## SUMMERING FÖR VECKAN 2 (44 hours)
+## SUMMERING FÖR VECKAN 2 (43 hours)
 
 [x] Planering,
 [x] förberedelse och initial analys klar -> att debatera vare sig klar eller ej
@@ -203,7 +203,7 @@
 - göra klar Granskning
 - ZAP test med rapport
 
-**Time:** 8 hours **TOTAL**: 67 hours
+**Time:** 8 hours **TOTAL**: 66 hours
 
 ## 2026-05-19
 
@@ -218,7 +218,7 @@
 -
 - **NOTE**: fixa länkar på egen hand
 
-**Time:** 8.5 hours **TOTAL**: 75.5 hours
+**Time:** 8.5 hours **TOTAL**: 74.5 hours
 
 ## 2026-05-20
 
@@ -231,7 +231,7 @@
 - Göra klart `config-fixes`, få det reviewat, påbörja `logging-exception`
 - **NOTE**: fixa länkar på egen hand
 
-**Time:** 9 hours **TOTAL**: 84.5 hours
+**Time:** 9 hours **TOTAL**: 83.5 hours
 
 ## 2026-05-21
 
@@ -245,7 +245,7 @@
 - påbörja `authentication`
 - **NOTE**: fixa länkar på egen hand
 
-#**Time:** 10 hours **TOTAL**: 94.5 hours
+#**Time:** 10 hours **TOTAL**: 93.5 hours
 
 ## 2026-05-22
 
@@ -259,7 +259,7 @@
 - Göra klart `authentication`
 - **NOTE**: fixa länkar på egen hand
 
-**Time:** 7.5 hours **TOTAL**: 102 hours
+**Time:** 7.5 hours **TOTAL**: 101 hours
 
 ## 2026-05-23
 
@@ -271,7 +271,7 @@
 - Göra klart `authentication`
 - **NOTE**: fixa länkar på egen hand
 
-**Time:** 2.25 hours **TOTAL**: 104.25 hours
+**Time:** 2.25 hours **TOTAL**: 103.25 hours
 
 ## 2026-05-24
 
@@ -285,11 +285,15 @@
 
 - **NOTE**: fixa länkar på egen hand
 
-**Time:** 3 hours **TOTAL**: 107.25 hours
+**Time:** 3 hours **TOTAL**: 106.25 hours
 
 ## SUMMERING FÖR VECKAN 3 (48.25 hours)
 
-[x] Implementering av åtgärder klar -> LOL! Att göra:
+_från för vecka_
+[x] branches skapade, -> blir under arbetetsgång för att skapa bransch från godkända bransch
+[x] samlad analysrapport med kodreferenser -> nästan
+
+[] Implementering av åtgärder klar -> LOL! Att göra:
 
 - pass-recovery (add email, send email)
 - warning system (repetiva fel till admin och loginfel till användaren med)
@@ -314,7 +318,7 @@
 
 - **NOTE**: fixa länkar på egen hand
 
-**Time:** 8 hours **TOTAL**: 115.25 hours
+**Time:** 8 hours **TOTAL**: 114.25 hours
 
 ## 2026-05-26
 
@@ -329,7 +333,7 @@
 
 - **NOTE**: fixa länkar på egen hand
 
-**Time:** 8 hours **TOTAL**: 115.25 hours
+**Time:** 8 hours **TOTAL**: 122.25 hours
 
 ## 2026-05-27
 
@@ -344,7 +348,7 @@
 
 - **NOTE**: fixa länkar på egen hand
 
-**Time:** 8.5 hours **TOTAL**: 123.75 hours
+**Time:** 8.5 hours **TOTAL**: 130.75 hours
 
 ## 2026-05-28
 
@@ -361,7 +365,7 @@
 
 - **NOTE**: fixa länkar på egen hand
 
-**Time:** 10 hours **TOTAL**: 133.75 hours
+**Time:** 10 hours **TOTAL**: 140.75 hours
 
 ## 2026-05-29
 
@@ -373,7 +377,23 @@
 
 - kolla igenom allt
 
-**Time:** 6 hours **TOTAL**: 139.75 hours
+**Time:** 6 hours **TOTAL**: 146.75 hours
+
+## 2026-05-31
+
+- gått igenom allting, massa edits (kopplingar, stavel mm), börjag på presentation
+
+### Mål för morgon dagen:
+
+- kolla igenom allt
+- forstätta med presentation
+- kanske förkorta kraftigt efter möte med W.
+
+**Time:** 8 hours **TOTAL**: 154.75 hours
+
+## SUMMERING FÖR VECKAN 2 (47.75 hours)
+
+[x] Testning och rapport klar,
 
 | Vecka | Milstolpe   | Leverabler                                       |
 | ----- | ----------- | ------------------------------------------------ |
