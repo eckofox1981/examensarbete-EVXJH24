@@ -1,4 +1,4 @@
-# Säkringen av EFBox API:et enligt OWASP Top 10 2025
+# Säkringen av EFBox API:et enligt OWASP Top 10 Hot 2025
 
 ## Sammanfattning (Abstract)
 
@@ -14,7 +14,7 @@ The study contributes a concrete methodology for security analysis of existing R
 
 ## Innehållsförteckning
 
-- [Säkringen av EFBox API:et enligt OWASP Top 10 2025](#säkringen-av-efbox-apiet-enligt-owasp-top-10-2025)
+- [Säkringen av EFBox API:et enligt OWASP Top 10 Hot 2025](#säkringen-av-efbox-apiet-enligt-owasp-top-10-hot-2025)
   - [Sammanfattning (Abstract)](#sammanfattning-abstract)
   - [Innehållsförteckning](#innehållsförteckning)
   - [Förkortningar och Begrepp](#förkortningar-och-begrepp)
