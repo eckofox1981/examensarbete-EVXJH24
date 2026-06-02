@@ -120,7 +120,7 @@ The study contributes a concrete methodology for security analysis of existing R
 | EU                              | Europeiska Unionen                                                                                                                                                                                |
 | Frontend                        | Användargränssnittsorienterad bearbetning (webbsida, mobilapplikationer mm)                                                                                                                       |
 | GDPR                            | General Data Protection Regulation                                                                                                                                                                |
-| Git                             | Versionhateringsprogram                                                                                                                                                                           |
+| Git                             | Versionshanteringsprogram                                                                                                                                                                         |
 | GitHub                          | Ett kodbibliotek för olika programmeringsprojekt där innehåll kan hämtas eller laddas upp                                                                                                         |
 | Header                          | "Huvud" på svenska, början på ett meddelande inom datateknik som innehåller metadata om meddelandet (hur den ska tolkas)                                                                          |
 | Hashing                         | en process som omvandlar data (t.ex en sträng) till en alfanumerisk teckensträng med fast längd                                                                                                   |
@@ -136,7 +136,7 @@ The study contributes a concrete methodology for security analysis of existing R
 | Json                            | JavaScript Object Notation ett kompakt, textbaserat format som används för att utbyta data                                                                                                        |
 | JWT                             | Json Web Token, ett standardiserat sätt att överföra information som Json-objekt                                                                                                                  |
 | MIME-type                       | Multipurpose Internet Mail Extensions Type, används för att ange filtyp. Namnet härstammar från dess ursprungliga användning för att identidera emails innehåll och bifogade filer.               |
-| Open-source                     | Öppen källkod som inte är proprietärt, dvs illgänglig att använda, läsa, modifiera och vidaredistribuera för den som vill                                                                         |
+| Open-source                     | Öppen källkod som inte är proprietärt, dvs tillgänglig att använda, läsa, modifiera och vidaredistribuera för den som vill                                                                        |
 | MFA                             | Multi-Factor Authentication                                                                                                                                                                       |
 | NIST                            | National Institute of Standards and Technology                                                                                                                                                    |
 | ORM                             | Object Relational Mapping, en programmeringsteknik som tjänar till att transformera data som används i ett objektorienterade programmeringsspråk eller programmet och relationsdatabasen          |
@@ -313,7 +313,7 @@ Eftersom en filhanteringstjänst studeras i denna studie måste ansträngningar 
 Filvalidering liknar delvis inputvalidering då man försäkrar sig att själva filnamnet inte är farligt för systemet (kanske innehåller den systemrelaterade tecken som semi-colon ( ; )), för försök till injection.
 Dess extension inspekteras också för att identifiera dess typ (efter punkten t.ex image<strong>.png</strong>). En vanlig filhanteringsapplikation skulle behöva tillåta många olika filtyper men denna studie är en _proof of concept_ och antalet tillåtna filer kommer att begränsas (se [Resultat](#411-det-nya-efbox-apiet)). Denna metod har dock en svaghet då man kan namnge en körbar fil med en annan extension. T.ex filen _virus.exe_ kan få sitt namn bytt till _flower.png_. I ett sådant fall skulle den körbara filen fortfarande ta sig igenom serverns försvar [^22].
 
-I en förfrågans header kan nyckeln 'Content-type' hittas med en beskrivning av innehållet. Data i Content-type defineras av användaren och kan inte litas på men det kan agera som ett första steg i valideringen (dvs om Content-type värdet är bristfälligt så avslutas behandlingen av förfrågan)[^23].
+I en förfrågans header kan nyckeln 'Content-type' hittas med en beskrivning av innehållet. Data i Content-type definieras av användaren och kan inte litas på men det kan agera som ett första steg i valideringen (dvs om Content-type värdet är bristfälligt så avslutas behandlingen av förfrågan)[^23].
 
 De ovannämnda steg är viktiga men otillräckliga pga sina brister. Om en förfrågans header och filnamn valideras måste filinnehållet fortfarande valideras. OWASP anger inte specifikt vilket ramverk de föredrar men en länk till Dominique Righettos javaprojekt på GitHub ([länk till DocumentUpload-klassen](https://github.com/righettod/document-upload-protection/blob/master/src/main/java/eu/righettod/poc/web/DocumentUpload.java)) visar en sätt som använder I/O- (Input/Output) och NIO-importen (Non-blocking Input / output) med stöd av [Aspose](https://www.aspose.com/) API:et. Righettos i sitt projekt följer alla ovannämnda steg för att sen parsa filerna i en DocumentDetector subklass för att kontrollera deras filtyp.
 
@@ -353,12 +353,12 @@ Med HTTPS skall förbindelsen inte kunna avlyssnas av tredje part och användare
 
 Cross-origin resource sharing är ett HTTP-baserat system som gör det möjligt för en server att lista vilka domäner, schema eller port en webbläsare bör tillåta för att ladda resurser [^26].
 
-Om ingen CORS-inställning defineras, accepteras enbart förfågningar från servern, sk _same-origin_. CORS gör det möjligt att tillåta förfrågningar från andra källor **på ett kontrollerat sätt**.
+Om ingen CORS-inställning definieras, accepteras enbart förfågningar från servern, sk _same-origin_. CORS gör det möjligt att tillåta förfrågningar från andra källor **på ett kontrollerat sätt**.
 
 Webbläsaren gör en _preflight request_ (preflight: kontroll före flygning på svenska), dvs den granskar förfrågan, för att försäkra sig att servern kommer att tillåta den. I denna granskning skickas en OPTIONS-header som beskriver HTTP-metod (GET, POST, PUT, DEL mm) och den ursprungliga header för förfrågan.
 Man kan säga att preflight request kontrollerar att förfrågan är giltig innan den skickas.
 
-Enklare förfrågor behöver inte alltid trigga en preflight. Dessa defineras med headers med specifika HTTP-metod (GET, HEAD, POST), ett begränsat val av användardefinerade headers (ex: Accept, Accept-language mm) och enklare Content-type (ex: text eller formdata)[^27].
+Enklare förfrågningar behöver inte alltid trigga en preflight. Dessa definieras med headers med specifika HTTP-metod (GET, HEAD, POST), ett begränsat val av användardefinerade headers (ex: Accept, Accept-language mm) och enklare Content-type (ex: text eller formdata)[^27].
 
 En viktig del av CORS är kontrollen av ursprunget för förfrågan, detta bl.a för att förebygga [Cross Site Request Forgery (CSRF)](#2114-cross-site-request-forgery). Vissa servrar tillåter bara same-origin (se ovan) men andra kan tillåta en lista med domäner vars förfrågningar accepteras. Om servern inte hanterar känslig information (t.ex [Dog API](https://dog.ceo/dog-api/)) kan alla ursprung tillåtas.
 
@@ -430,7 +430,7 @@ Hotmodellering måste granskas av alla berörda aktörer [^29]:
 
 **Hotmodellering i denna studie**:
 
-För att lyckas skydda EFBox-applikationen på ett effektivt sätt kommer en förenklad version av hotmodellering, som täcker de mest kritiska hoten, skapas. Systemet kommer att inventeras och tillgängliga funktioner granskas för definera hoten med STRIDE. Men utan ett team av säkerhetsexperter bli en fullskalig hotmodellering orealistiskt och det kommer att implementeras som en _proof of concept_.
+För att lyckas skydda EFBox-applikationen på ett effektivt sätt kommer en förenklad version av hotmodellering, som täcker de mest kritiska hoten, skapas. Systemet kommer att inventeras och tillgängliga funktioner granskas för definiera hoten med STRIDE. Men utan ett team av säkerhetsexperter bli en fullskalig hotmodellering orealistisk och det kommer att implementeras som en _proof of concept_.
 
 #### 2.1.9 OWASP Top 10 hot 2025
 
@@ -710,7 +710,7 @@ Hotmodelleringen är förenklad och fokuserar på de mest kritiska hoten kopplad
 
 #### 3.3.3 Automatisk och Manuell kodgranskning av EFbox ur ett säkerhetsperspektiv
 
-Kodgranskningen avser bara säkersaspekterna och inte övriga detaljer som vissa designval (ex: valet att bara skicka tillbaka mappnamnen i _user/info_ istället för deras ID vilket hade varit mer användbart för en client).
+Kodgranskningen avser bara säkerhetsaspekterna och inte övriga detaljer som vissa designval (ex: valet att bara skicka tillbaka mappnamnen i _user/info_ istället för deras ID vilket hade varit mer användbart för en client).
 
 ##### 3.3.3.1 Analys med SonarQube
 

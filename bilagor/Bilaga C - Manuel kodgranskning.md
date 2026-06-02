@@ -244,7 +244,7 @@ EFbox saknar funktionalitet för lösenordsåterställning. Detta innebär att e
 
 JWT-tokens i EFbox har en giltighetstid på 60 minuter och det finns ingen mekanism för att ogiltigförklara en token före dess utgång. Detta innebär att en utloggad användares token fortfarande är giltig tills den löper ut, vilket kan missbrukas vid tokenstöld.
 
-JWT-token är immutable och går inte att ogiligförklarars. Alternativa lösningar är att skapa en sk. _black list_ av JWT som kontrolleras vid varje förfråga[^2], eller att hantera giltighetstiden. Tidsbegränsningar på studien gör det svårt att uppnå en felfri lösning.
+JWT-token är immutable och går inte att ogiltigförklaras. Alternativa lösningar är att skapa en sk. _black list_ av JWT som kontrolleras vid varje förfråga[^2], eller att hantera giltighetstiden. Tidsbegränsningar på studien gör det svårt att uppnå en felfri lösning.
 JWT är inte menade att användas på detta sätt. Studien kommer att utgå från kortare JWT giltighetstid med tanke på följande:
 
 - om applikationen hade haft en fungerande frontend skulle JWT med extremt kort liv kunna förnyas regelbundet.
