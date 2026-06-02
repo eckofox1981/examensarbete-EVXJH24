@@ -37,9 +37,9 @@ The study contributes a concrete methodology for security analysis of existing R
       - [2.1.5 Inputvalidering](#215-inputvalidering)
       - [2.1.6 Filvalidering](#216-filvalidering)
       - [2.1.7 HTTP- och API-säkerhet (CORS)](#217-http--och-api-säkerhet-cors)
-        - [2.1.7.1 Grundläggande om HTTP](#2171-grundläggande-om-http)
-      - [2.1.7.2 HTTPS](#2172-https)
-      - [2.1.7.3 Cross-origin resource sharing (CORS) - API: säkerhet](#2173-cross-origin-resource-sharing-cors---api-säkerhet)
+        - [2.1.7.1 HTTP](#2171-http)
+        - [2.1.7.2 HTTPS](#2172-https)
+        - [2.1.7.3 Cross-origin resource sharing (CORS) - API: säkerhet](#2173-cross-origin-resource-sharing-cors---api-säkerhet)
       - [2.1.8 Hotmodellering med STRIDE](#218-hotmodellering-med-stride)
       - [2.1.9 OWASP Top 10 hot 2025](#219-owasp-top-10-hot-2025)
         - [2.1.9.1 Broken Access Control (Bristfällig åtkomstkontroll)](#2191-broken-access-control-bristfällig-åtkomstkontroll)
@@ -321,7 +321,7 @@ I denna studie används Righettos approach som inspiration för implementationen
 
 #### 2.1.7 HTTP- och API-säkerhet (CORS)
 
-##### 2.1.7.1 Grundläggande om HTTP
+##### 2.1.7.1 HTTP
 
 HyperText Transfer Protocol (HTTP) är ett underliggande nätverksprotokoll för överföring av hypermedia dokument. I de flesta fallen sker denna överföring mellan en klient (t.ex en browser) och en server. HTTP-kommunikation är textbaserad, all information skickas i klar text, vilket gör det lättare för människor att läsa. HTTP är _stateless_, vilket innebär att all kommunikation sker utan minne av tidigare utbyte [^24]. Skulle en stateful kommunikation behövas kan _cookies_ användas. Dessa sparar relevant information (t.ex [inloggningsinformation](#212-autentisering-och-auktorisering-jwt)) i webbläsaren [^25] [^26].
 Dessa egenskaper är fördelaktiga när man utvecklar REST-API:er eftersom dessa ska utvecklas stateless, i.e nödvändig information hämtas vid behov och sparas inte i det aktiva minne med vissa undantag för caching.
@@ -344,12 +344,12 @@ Origin: https://foo.example
 
 HTTP-headern är central för hur [CORS](#2153-cross-origin-resource-sharing-cors---api-säkerhet) fungerar.
 
-#### 2.1.7.2 HTTPS
+##### 2.1.7.2 HTTPS
 
 HTTPS (S för _secure_, säkrad) är ett säkrare transportprotokoll för HTTP-meddelande. En tredje part tillhandhåller ett undertecknat digitaltcertifikat som kontrolleras av klienten med hjälp av förinstallerade certifikat.
 Med HTTPS skall förbindelsen inte kunna avlyssnas av tredje part och användaren skall kunna lita på att webbservern är densamma som den utger sig för att vara [^28].
 
-#### 2.1.7.3 Cross-origin resource sharing (CORS) - API: säkerhet
+##### 2.1.7.3 Cross-origin resource sharing (CORS) - API: säkerhet
 
 Cross-origin resource sharing är ett HTTP-baserat system som gör det möjligt för en server att lista vilka domäner, schema eller port en webbläsare bör tillåta för att ladda resurser [^26].
 
