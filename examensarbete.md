@@ -30,7 +30,7 @@ The study contributes a concrete methodology for security analysis of existing R
         - [2.1.1.1 Man in middle attack (MITM)](#2111-man-in-middle-attack-mitm)
         - [2.1.1.2 Code-Injection](#2112-code-injection)
         - [2.1.1.3 Brute force attack](#2113-brute-force-attack)
-        - [2.1.1.4 Cross Site Request Forgery](#2114-cross-site-request-forgery)
+        - [2.1.1.4 Cross Site Request Forgery (CSRF)](#2114-cross-site-request-forgery-csrf)
       - [2.1.2 Autentisering och auktorisering JWT](#212-autentisering-och-auktorisering-jwt)
       - [2.1.3 Asymmetrisk kryptografi](#213-asymmetrisk-kryptografi)
       - [2.1.4 Kryptering, lösenordhashing och salting](#214-kryptering-lösenordhashing-och-salting)
@@ -49,7 +49,7 @@ The study contributes a concrete methodology for security analysis of existing R
         - [2.1.9.5 Injection (Injektionsattacker)](#2195-injection-injektionsattacker)
         - [2.1.9.6 Insecure Design (Osäker design)](#2196-insecure-design-osäker-design)
         - [2.1.9.7 Authentication Failures (Autentiseringsbrister)](#2197-authentication-failures-autentiseringsbrister)
-        - [2.1.9.8 Software och Data Integrity Failures (Brister i mjukvaru- och dataintegritet)](#2198-software-och-data-integrity-failures-brister-i-mjukvaru--och-dataintegritet)
+        - [2.1.9.8 Software And Data Integrity Failures (Brister i mjukvaru- och dataintegritet)](#2198-software-and-data-integrity-failures-brister-i-mjukvaru--och-dataintegritet)
         - [2.1.9.9 Security Logging and Alerting Failures (Brister i säkerhetsloggning och larmhantering)](#2199-security-logging-and-alerting-failures-brister-i-säkerhetsloggning-och-larmhantering)
         - [2.1.9.10 Mishandling Of exceptional Conditions (Felhantering av undantagstillstånd)](#21910-mishandling-of-exceptional-conditions-felhantering-av-undantagstillstånd)
     - [2.2 Befintlig Forskning och Lösningar](#22-befintlig-forskning-och-lösningar)
@@ -113,9 +113,9 @@ The study contributes a concrete methodology for security analysis of existing R
 | CORS                            | Cross-origin resource sharing, en teknik som begränsar åtkomst till websidor från specifierade domäner                                                                                            |
 | CRUD                            | Create Read Update Delete (Skapa, Läsa, Ändra, Radera), ett begrepp som beskriver möjlig hantering av data                                                                                        |
 | CSP                             | Content-Security-Policy, en response header som definierar vilka resurser en webbläsare få använda (ofta en servers ursprung)                                                                     |
-| dependency                      | beroende eller avhängighet, inom programmering syftas det på program eller ramverk som en applikation är beroende av                                                                              |
+| Dependency                      | beroende eller avhängighet, inom programmering syftas det på program eller ramverk som en applikation är beroende av                                                                              |
 | DFD                             | Data Flow Diagram (Dataflödesdiagram)                                                                                                                                                             |
-| ECDSA                           | Elliptisk kurva digital signaturalgoritm, en av de mer komplexa offentliga nyckelkrypteringsalgoritmer                                                                                            |
+| ECDSA                           | Elliptic Curve Digital Signature Algorithm, Elliptisk kurva digital signaturalgoritm, en av de mer komplexa offentliga nyckelkrypteringsalgoritmer                                                |
 | Dependency (inom programmering) | Beroende på svenska, syftar på mjukvara som en applikation är beroende av                                                                                                                         |
 | EU                              | Europeiska Unionen                                                                                                                                                                                |
 | Frontend                        | Användargränssnittsorienterad bearbetning (webbsida, mobilapplikationer mm)                                                                                                                       |
@@ -123,6 +123,8 @@ The study contributes a concrete methodology for security analysis of existing R
 | Git                             | Versionhateringsprogram                                                                                                                                                                           |
 | GitHub                          | Ett kodbibliotek för olika programmeringsprojekt där innehåll kan hämtas eller laddas upp                                                                                                         |
 | Header                          | "Huvud" på svenska, början på ett meddelande inom datateknik som innehåller metadata om meddelandet (hur den ska tolkas)                                                                          |
+| Hashing                         | en process som omvandlar data (t.ex en sträng) till en alfanumerisk teckensträng med fast längd                                                                                                   |
+| HMAC                            | Hashed-based Message Authentication Code, en specifik typ av autentiserinsmeddelande som inkuderar en hash function och en krypteringsnyckel                                                      |
 | HTML                            | HyperText Markup Language, programmeringsspråket som lägger grunden till webbsidor                                                                                                                |
 | HTTP                            | Hypertext Transfer Protocol, ett kommunikationsprotokoll som används för att överföra information på internet                                                                                     |
 | HTTPS                           | Hypertext Transfer Protocol Secure, protokoll för krypterad transport av data för HTTP-protokollet                                                                                                |
@@ -143,7 +145,7 @@ The study contributes a concrete methodology for security analysis of existing R
 | Plug-in                         | Tilläggsprogram om inte körs fristående utan installeras som ett tillägg i ett annat program                                                                                                      |
 | Postman                         | Ett verktyg för utvecklare för att testa API                                                                                                                                                      |
 | Pull request (PR)               | begäranden för att ändra, granska och slå samman kod i en Git-lagringsplats                                                                                                                       |
-| RSA                             | Ett krypteringsalgoritm döpt uppkallad efter dess skapare Rivest, Shamir och Adleman. Systemet kräver en nyckel för kryptering och en annan för avkryptering                                      |
+| RSA                             | Ett krypteringsalgorim döpt uppkallad efter dess skapare Rivest, Shamir och Adleman. Systemet kräver en nyckel för kryptering och en annan för avkryptering                                       |
 | Repository                      | Kodbibliotek                                                                                                                                                                                      |
 | REST                            | Representational State Transfer - Arkitekturstil för webbaserade API:er                                                                                                                           |
 | Spring Boot                     | Ett open-source Java-ramverk som förenklar utvecklingen av webbapplikationer genom att erbjuda en snabb och enkel konfiguration                                                                   |
@@ -154,7 +156,6 @@ The study contributes a concrete methodology for security analysis of existing R
 | TLS                             | Transport Layer Security, ett kryp­te­rings­pro­to­koll som sä­ker­stäl­ler säker da­taö­ver­fö­ring på internet.                                                                                 |
 | URI                             | Uniform Resource Identifier, en teckensträng som används för att identifiera en resurs. URI kan användas för att lokalisera en webbplats, fil eller en specifik del av data                       |
 | URL                             | Uniform Resource Locator, är den teckensträng som identifierar en viss resurs på internet, till exempel en webbsida. I folkmun kallas URL i för "webbadress"                                      |
-| white hats                      | hackers som angripper i syftet att dela med sig av sina fynder till utvecklarna av en applikation                                                                                                 |
 | XML                             | Extensible Markup Language                                                                                                                                                                        |
 | XSS                             | [Cross Site Scripting](#2112)                                                                                                                                                                     |
 | ZAP                             | Zed Attack Proxy, en _open-source_ programvara som används i samband säkerhetstestning av applikationer                                                                                           |
@@ -179,7 +180,7 @@ Sammanfattningsvis genomgår internet en ny era där säkerheten kan komma att l
 Denna studie avser att studera hur man kan göra en applikation säker baserat på OWASP Top 10 hot.
 
 Open Worldwide Application Security Project (OWASP) är en internationell non-profit organisation med målet att förbättra säkerheten i programvaror och webbtjänster [^7]. Organisationen är öppen och transparent – all dokumentation, verktyg och forskning publiceras fritt tillgängligt online.
-Ett av organisationens mest kända bidrag är OWASP Top 10, en lista över de tio mest förekommande och kritiska säkerhetshoten i webbapplikationer. Listan baseras på data insamlad från hundratals organisationer världen över och uppdateras regelbundet för att spegla det aktuella hotlandskapet. Den senaste versionen publicerades 2025 [^8].
+Ett av organisationens mest kända bidrag är **OWASP Top 10**, en lista över de tio mest förekommande och kritiska säkerhetshoten i webbapplikationer. Listan baseras på data insamlad från hundratals organisationer världen över och uppdateras regelbundet för att spegla det aktuella hotlandskapet. Den senaste versionen publicerades 2025 [^8].
 OWASP Top 10 används globalt som referensram inom websäkerhet – både av enskilda utvecklare och av stora organisationer. Listan fungerar som ett gemensamt språk mellan utvecklare, säkerhetsexperter och verksamheter för att identifiera, prioritera och åtgärda säkerhetsrisker. Flera regulatoriska ramverk, däribland PCI DSS (betalkortsstandarden), refererar explicit till OWASP Top 10 som en del av sina krav [^9].
 I denna studie används OWASP Top 10:2025 som referensram för att systematiskt identifiera och åtgärda säkerhetsbrister i EFbox REST API.
 
@@ -246,11 +247,11 @@ _*Förenklad exempel: 'SELECT * FROM users;' skulle kunna ge all användardata f
 
 ##### 2.1.1.3 Brute force attack
 
-Brute force (engelska för råstyrka) är en metod för att hitta exempelvis lösenord genom att pröva alla möjliga kombinationer. Termen brute force syftar oftast på att hitta lösenord och nycklar [^14]. Om ett lösenord är enkelt går attack snabbare medan väldigt komplicerade lösenord tar längre tid att hitta. Detta kan jämföras med ett kombinationslås med bara tre siffror och ett med sex stycken där en tjuv testar alla möjliga kombinationer [^15].
+Brute force (engelska för råstyrka) är en metod för att hitta exempelvis lösenord genom att pröva alla möjliga kombinationer. Brute Force angrep används ofta för att hitta lösenord och nycklar [^14]. Om ett lösenord är enkelt går attack snabbare medan väldigt komplicerade lösenord tar längre tid att hitta. Detta kan jämföras med ett kombinationslås med bara tre siffror och ett med sex stycken där en tjuv testar alla möjliga kombinationer [^15].
 
 <u>Skyddas med hjälp utav:</u> varningar vid upprepade misslyckade inloggningsförsök och låsning av berörda konton, starkt lösenordspolicy
 
-##### 2.1.1.4 Cross Site Request Forgery
+##### 2.1.1.4 Cross Site Request Forgery (CSRF)
 
 En hacker kan använda en annans rättigheter hos en tjänst och lura till sig en oönskad handling. Istället för att, på ett avancerat sätt, få tag på en användarens uppgifter kan man använda dess rättigheter direkt (_Request Forgery_). Detta kan ske via en extern länk från en annan sajt (_Cross Site_).
 
@@ -289,7 +290,7 @@ Det som signeras med den privata nyckeln kan verifieras av vem som helst med den
 
 **Hashing** omvandlar data till en bestämd längd av bokstäver och siffror. Denna process <u>kan inte</u> bli ogjord och hashad data kan inte användas för att avkryptera originalinnehållet [^18].
 Hashing är ett populärt sätt att förvara **lösenord** i databaser pga envägsprocessen. När en användare loggar in, hashas det angivna lösenordet och det jämförs med hashen i databasen.
-Stark lösenordspolicy som långa komplex tecken och best practice hashing (med system som t.ex Argon2id) gör det nästan omöjligt att komma åt datan [^19].
+Stark lösenordspolicy som långa komplex tecken och best practice hashing (med system som t.ex Argon2id) gör det nästan omöjligt att komma åt datan [^19] vid [Brute Force angrepp](#2113-brute-force-attack).
 
 Hackers kan använda sig av så kallade _Rainbow Table_ [^20], en tabell där fördefinerade lösenord har hashats enligt bestämda metoder, och försöka hitta ett hashat lösenord som överensstämmer med det i den attackerade databasen. Om ett hittas, kan anfallaren enkelt kolla upp klartextversionen av hashet (dvs användarens lösenord). Som en ytterligare säkerhetsåtgärd mot detta kan **salting** implementeras.
 Salting lägger till en slumpmässig vald radtecken <u>unik för varje användare</u> till lösenordet vilket gör det ännu svårare för hackers att komma åt datan [^18].
@@ -322,7 +323,7 @@ I denna studie används Righettos approach som inspiration för implementationen
 
 ##### 2.1.7.1 Grundläggande om HTTP
 
-HyperText Transfer Protocol (HTTP) är ett underliggande nätverksprotokoll för överföring av hypermedia dokument. I de flesta fallen sker denna överföring mellan en klient (t.ex en browser) och en server. HTTP-kommunikation är textbaserad, all information skickas i klar text, vilket gör det lättare för människor att läsa. HTTP är _stateless_, vilket innebär att all kommunikation sker utan minne av tidigare utbyte [^24]. Skulle en stateful kommunikation behövas kan _cookies_ användas. Dessa sparar relevant information (t.ex inloggningsinformation) i webbläsaren [^25] [^26].
+HyperText Transfer Protocol (HTTP) är ett underliggande nätverksprotokoll för överföring av hypermedia dokument. I de flesta fallen sker denna överföring mellan en klient (t.ex en browser) och en server. HTTP-kommunikation är textbaserad, all information skickas i klar text, vilket gör det lättare för människor att läsa. HTTP är _stateless_, vilket innebär att all kommunikation sker utan minne av tidigare utbyte [^24]. Skulle en stateful kommunikation behövas kan _cookies_ användas. Dessa sparar relevant information (t.ex [inloggningsinformation](#212-autentisering-och-auktorisering-jwt)) i webbläsaren [^25] [^26].
 Dessa egenskaper är fördelaktiga när man utvecklar REST-API:er eftersom dessa ska utvecklas stateless, i.e nödvändig information hämtas vid behov och sparas inte i det aktiva minne med vissa undantag för caching.
 
 HTTP meddelande innehåller en så kallad _header_ som innehåller information om hur det ska läsas. Innehållet i en header varierar men kan hålla information om vilken sorts anrop som görs till servern (GET, POST, PUT mm.) eller om innehållet (text, fil mm).
@@ -458,11 +459,10 @@ Om säkerheten i en applikation är felkonfigurerad (eller inte konfigurerad all
 Förebyggande åtgärder kan vara:
 | Åtgärd | Förklaring |
 |--|--|
-| Säkrad appliction-deployment | Säkerhetskonfigurationen bör standardiseras och automatiseras så att utvecklings-, test- och produktionsmiljöer alltid är identiskt konfigurerade. Detta minimerar risken för mänskliga fel och säkerställer att nya miljöer snabbt kan driftsättas med rätt säkerhetsinställningar (behandlas ej i denna studie). |
 | Minimera attackyta | onödiga funktioner skall tas bort, likaså onödig dokumentation och ramverk |̣̣
 | Implementation av Security headers | Säkerhetsheaders är instruktioner till webbläsaren för hur säkerhet skall hanteras. Dessa bör definieras med korrekta direktiv. Exempel för en filhanteringsapplikation skulle vara x-content-type (för att definiera MIME-typ) eller CSP |
 | Kontroll vid uppgradering| Vissa uppgraderingar till projektets ramverk eller dependencies kan påverka säkerhetskonfigurationen eller radera den (se [Software Supply Chain Failures](#2173-software-supply-chain-failures-bristermjukvarans-leveranskedja)) |
-| Logging| Som backup bör en centraliserad konfiguration implementeras för att fånga och varna vid ovanligt många felmeddelanden |
+| Logging| Som backup bör en centraliserad konfiguration implementeras för att fånga och varna vid ovanligt många felmeddelanden (se [Mishandling of Exceptional Conditions](#21910-mishandling-of-exceptional-conditions-felhantering-av-undantagstillstånd)) |
 | CORS-konfiguration| I OWASP A02 Security Miconfiguration nämns inte CORS specifikt. CORS-konfiguration är dock nära relaterad till A02 och behandlas i denna studie inom ramen för säkerhetskonfiguration. CORS skall konfigureras för att användaren enbart kommer åt tillåtna tjänster (se även [Broken Access Control](#2171-broken-access-control-bristfällig-åtkomstkontroll)) eller att förfrågan tas emot från godkända domäner |
 
 Eftersom EFBox var en _proof of concept_ förväntas säkerhetskonfigurationen behöva ses över och stärkas, i synnerhet CORS och logging. Spring Boot implementerar automatiskt vissa konfigurationer som t.ex _security headers_ [^33].
@@ -471,18 +471,16 @@ Eftersom EFBox var en _proof of concept_ förväntas säkerhetskonfigurationen b
 
 I en applikation, kan dess dependencies och tredjepartsverktyg vara dess sårbarhet. Om själva depency har råkat ut för en lyckad attack kan hela leveranskedjan till system bli sårbar. Ett annat problem skulle kunna vara att själva dependency var designad i syfte att göra system sårbara.
 Därför är det viktigt att dokumentera och övervaka levereranskedjan. Källor som _[National Vulnerability Database (NVD)](https://nvd.nist.gov/), [Common Vulnerability Exposure (CVE)](https://www.cve.org/)_ eller _[Open Source Vulnerability (OSV)](https://osv.dev/)_ kan hjälpa utvecklare att se om de komponenterna som används i en applikation har blivit sårbara.
-Andra åtgärd för Brister i Mjukvarans Leveranskedja kan vara:
+Andra åtgärd för Brister i Mjukvarans Leveranskedja kan vara (anpassad för denna studie):
 | Åtgärd | Förklaring |
 | ------ | ---------- |
 | Övervakning av **hela** leveranskedja | Utvecklare bör inte bara övervaka applikationens egna dependency utan även deras dependency osv. |
 | Minimera attackyta | Onödiga dependencies tas bort för att inte utsättas för risk i onödan |̣̣
-| Regelbundna updateringar | Updateringar skall ske regelbundet för alla använda verktyg. Detta gäller också för IDE:er och andra utvecklingsverktyg |
 | Välja en version | En specifik version av en dependency bör användas och updateras |
-| Sandboxing | Uppdateringar eller nya dependencies bör testas i separata miljöer (sandboxes) |
 
 Att övervaka Brister i Mjukvarans Leveranskedja är en komplicerad process med många fallgropar. OWASP har utvecklat verktyg som [OWASP Dependency Track](https://owasp.org/www-project-dependency-track/) för att hjälpa utvecklare.
 
-För denna studie kommer Brister i Mjukvarans Leveranskedja att granskas med hjälp av [Open Source Vulnerabilities (OSV) verktyget](https://osv.dev/) och uppdateras vid behov. Valet av OSV över OWASP egna verktyg beror på snabbare implementering.
+För denna studie kommer Brister i Mjukvarans Leveranskedja att granskas med hjälp av [Open Source Vulnerabilities (OSV) verktyget](https://osv.dev/) och uppdateras vid behov.
 
 ##### 2.1.9.4 Cryptographic Failures (Kryptografibrister)
 
@@ -514,12 +512,12 @@ Applikationer ska vara säkrade mot [injektion](#2112-code-injection) för att o
 
 Eftersom EFbox-API:Et använder JPA/Hibernate i Spring Boot (ett ORM-verktyg) kan det förväntas att den inte är så känslig mot klassiska injektionsattacker.
 
-OWASP pratar inte om kodinjektion via filer men för denna studie anses det vara relevant och kommer att behandlas under granskning av EFbox.
+OWASP Top 10 pratar inte om kodinjektion via filer men **[för denna studie anses det vara relevant](#332-hotmodellering-av-efbox)** och kommer att behandlas under granskning av EFbox.
 
 ##### 2.1.9.6 Insecure Design (Osäker design)
 
 Säker design är en kultur och metodologi som konstant utvärdera hot och ser till att koden är designad på ett sätt som förebygger mot kända hot. Detta uppnås genom att titta på hur datan flödar genom applikationen. För objektorienterade programmeringspråk som Java handlar t.ex om segregering av klasser/objekt och hur de fördelas genom projektet. Ett verktyg för att kontrollera designen kan vara Unit Testing (som testar funktioner och komponenter) men även det behöver designas.
-Säker design förblir en bedömningsfråga och är svår att sätta ett värde på. Därför kommer detta hot inte behandlas (se [Avgränsningar](#14-avgränsningar)).
+Säker design förblir en bedömningsfråga och är svår att sätta ett värde på. Därför kommer detta hot inte behandlas (se [Avgränsningar](#14-avgränsningar)). Dock kommer kodkvaliteten att upphållas för kodförståelse och eventuellt underhåll.
 
 ##### 2.1.9.7 Authentication Failures (Autentiseringsbrister)
 
@@ -534,9 +532,9 @@ Autentiseringsbrister uppstår när en anfallare olovligt identifierar sig till 
 | Behåll säkra lösenord | Om lösenordet inte har råkat ut för ett dataintrång bör inte användaren uppmanas till att byta. Om ett dataintrång misstänks skall lösenordet bytas **omedelbart**. |
 
 Att försöka ta sig igenom inloggningen till en tjänst är ett av de lättare intrång en hacker kan försöka sig på. Genom att göra inloggningsprocessen säker kan en utvecklare hoppas på att trötta ut de mindre ambitösa aktörer och få applikationen att framstå som säkerhetsorienterad vilket kan även få mer avancerade hackers att ge upp.
-EFBox implementerar kryptering med BCrypt med en lättare lösenordvalidering som sparar hashade lösenord. Detta kommer att granskas och uppdateras till en säkrare standard. MFA är önskvärt men kommer inte att implementeras pga tidsbrist.
+EFBox implementerar kryptering med BCrypt med en lättare lösenordvalidering som sparar hashade lösenord. Detta kommer att granskas och uppdateras till en säkrare standard.
 
-##### 2.1.9.8 Software och Data Integrity Failures (Brister i mjukvaru- och dataintegritet)
+##### 2.1.9.8 Software And Data Integrity Failures (Brister i mjukvaru- och dataintegritet)
 
 För att undvika Brister i mjukvaru- och dataintegritet måste man säkerställa att den mjukvaran eller dependencies som används av applikationen kommer från pålitliga källor. Det är alltså inte bara mjukvaran i sig som kan vara farlig utan själva källan. Detta kan jämföras med en privatperson som köper ett känd och säkert kameraövervakningssystem men beställer det från en kriminell organisation som gömmer spionmjukvara i systemet.
 Mjukvaran **och** källan måste vara pålitliga. OWASP föreslår följande:
@@ -546,14 +544,14 @@ Mjukvaran **och** källan måste vara pålitliga. OWASP föreslår följande:
 | Säkra dependency-bibliotek | _Dependency-libraries_ som Maven, NPM eller i EFBoxs fall Gradle bör kontrolleras för att säkerställa att de hämtar data från rätt källor |
 
 EFBox är byggd på Gradle som beskriver en [process för att kontrollera dependencies](https://docs.gradle.org/current/userguide/dependency_verification.html) som löser många fallgropar nämnda ovan. Detta kommer att implementeras för applikationen. Källorna för andra verktyg (IDE, SonarQube mm) är också kontrollerade före projektets början.
-OWASP nämner också olika steg för att skydda CI/CD-kedjan men detta anses vara _out of scope_ för denna studie.
+OWASP nämner också olika steg för att skydda CI/CD-kedjan men detta anses utanför studiens omfattning.
 
 ##### 2.1.9.9 Security Logging and Alerting Failures (Brister i säkerhetsloggning och larmhantering)
 
 Om inga varningar skickas eller ingen historik sparas, hur kan tjänsteleverantören då veta att systemet har utsatts för hot? Denna fråga summerar OWASP A09 Security Logging and Alerting Failures, då det fokuseras på behovet att informera ansvariga att något obehörigt har skett.
 Om inte misstänksam aktivitet övervakas och sparas (genom logging) kan inte dessa upptäcktas. Om inga varningar skickas kan inte en snabb respons utföras.
 
-Andra brister inom Brister i Säkerhetsloggning och Larmhantering kan vara att loggarna är tillgängliga för den som utför attacken eller att känslig information sparas i loggarna (se även [Broken Access Control](#2171-broken-access-control-bristfällig-åtkomstkontroll)). I detta fall kan loggarna manipuleras för att dölja spåren av attacken så att den förblir hemlig.
+Andra brister inom Brister i Säkerhetsloggning och Larmhantering kan vara att loggarna är tillgängliga för den som utför attacken eller att känslig information sparas i loggarna (se även [Broken Access Control](#2171-broken-access-control-bristfällig-åtkomstkontroll) och [Repudiation](#218-hotmodellering-med-stride)). I detta fall kan loggarna manipuleras för att dölja spåren av attacken så att den förblir hemlig.
 Att designa sådana system är svårt. För mycket information är opraktiskt att läsa igenom och om för många varningar skickas riskerar de att ignoreras.
 Följande åtgärd föreslås av OWASP:
 | Åtgärd | Förklaring |
@@ -605,7 +603,9 @@ Websäkerhets är ett område med många olika problem som har många olika lös
 - Studien fokuserar på OWASP Top 10 för att information är lättare att ta in jämfört med t.ex NIST (som fokuserar dessutom mer på USA än EU).
 - Skiftet till Argon2 är lätt att implementera och enligt alla källor är en klar förbättring. OWASP föreslår dock åtgärder för att kunna behålla _legacy system_ som BCrypt.
 - ZAP används men manuella tester, med mänsklig kännedom av sammanhang och potentiella luckor i koden, kommer att genomföras.
-- Rate limiting implementeras mer effektivt i REDIS men för denna studie implementeras det i en HandlerInterceptor klass för enkelhetens skull
+- Rate limiting implementeras mer effektivt i REDIS men för denna studie implementeras det i en HandlerInterceptor klass för enkelhetens skull.
+- Valet av OSV över OWASP Dependency Track egna verktyg beror på snabbare implementering.
+- MFA hade snabbt kunnat implementeras med email och EFBox UserAccessCode ([se Resultat punkt 6](#4-resultat)) men författaren anser inte att det är realistiskt och hinner inte forska i implementering av en riktig MFA-lösning.
 
 ---
 
@@ -623,6 +623,7 @@ För det praktiska arbetet ter planeringen sig enligt följande:
 2. Analys och test av EFbox i dess nuvarande konfiguration
 3. Implementera de nödvändiga ändringarna till EFBox
 4. Ny analys och testning av EFBox efter implementationen ovan
+5. Refleftioner king arbetssättet mm.
 
 ### 3.2 Verktyg och Tekniker
 
@@ -644,6 +645,8 @@ I utvecklingsmiljön används följande verktyg:
 - Claude AI för code reviews (prompt och historik kommer att bifogas för transparens)
 - Git för versionshantering
 - Git Hub för repositories
+
+Alla verktyg har kommer från sina officiella källor och updateras i enlighet med [2.9.3](#2193-software-supply-chain-failures-brister-i-mjukvarans-leveranskedja) och [2.9.7](#2198-software-och-data-integrity-failures-brister-i-mjukvaru--och-dataintegritet).
 
 ### 3.3 Datainsamling och Analys
 
@@ -703,13 +706,11 @@ för att kategorisera hoten.
 | Elevation of Privilege | JWT-filter                             | [Manipulerat JWT-payload för att höja användarroll](#2177-authentication-failures-autentiseringsbrister)                                                      | Hög      | Validera JWT-signatur, undvik rollbaserad kontroll                                                                                                     |
 | Elevation of Privilege | /folder/search                         | Söksträng direkt i URL-sökväg – potentiellt injektionsmål                                                                                                     | Medel    | [Inputvalidering på sökparameter](#2175-injection-injektionsattacker)                                                                                  |
 
-Hotmodelleringen är förenklad och fokuserar på de mest kritiska hoten
-kopplade till OWASP Top 10:2025. En fullskalig hotmodellering med
-formella DFD-diagram är utanför studiens scope.
+Hotmodelleringen är förenklad och fokuserar på de mest kritiska hoten kopplade till OWASP Top 10:2025. En fullskalig hotmodellering med formella DFD-diagram är utanför studiens omfattning.
 
 #### 3.3.3 Automatisk och Manuell kodgranskning av EFbox ur ett säkerhetsperspektiv
 
-Kodgranskningen avser bara säkersaspekterna och inte övriga detaljer som vissa designmål (ex: valet att bara skicka tillbaka mappnamnen i _user/info_ istället för deras ID vilket hade varit med användbart för en client).
+Kodgranskningen avser bara säkersaspekterna och inte övriga detaljer som vissa designval (ex: valet att bara skicka tillbaka mappnamnen i _user/info_ istället för deras ID vilket hade varit mer användbart för en client).
 
 ##### 3.3.3.1 Analys med SonarQube
 
@@ -732,13 +733,13 @@ _se Bilaga B för mer information_
 | Problem | Hot (OWASP Top 10) | Fil | Åtgärd |
 |-|-|-|-|
 | 1. Hårdkodade lösenord | Broken Access Control (A01), Security Misconfiguration (A02) | application.properties| Användning av miljövariablar. |
-| 2. Acceptans för stora filer (100MB) | Denial of Service Attack, Security Misconfiguration (A02) | application.properties (2 st) | Anses vara acceptabelt för studien |
+| 2. Acceptans för stora filer (100MB) | Denial of Service Attack, Security Misconfiguration (A02) | application.properties (2 st) | Acceptabelt när lagringskvot implementeras |
 
 ##### 3.3.3.2 Manuel kodgranskning ur ett säkerhetsperspektiv
 
 All kod i EFBox granskas fil-för-fil och fynder dokumenteras i _Bilaga C - Manuel kodgranskning av EFbox-API:et ur ett säkerhetsperspektiv_.
-**Sammanfattning av den manuella säkerhetsgranskningen**
 
+**Sammanfattning av birsterna funna i den manuella säkerhetsgranskningen:**
 Den manuella kodgranskningen identifierade ett antal återkommande brister
 genom hela kodbasen. Nedan sammanfattas de viktigaste fynden per OWASP-kategori:
 
@@ -746,9 +747,11 @@ genom hela kodbasen. Nedan sammanfattas de viktigaste fynden per OWASP-kategori:
 | ------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | A01 Broken Access Control                  | Avsaknad av GrantedAuthorities och rollhantering.                                                                                                                             |
 | A02 Security Misconfiguration              | Felaktig CORS-konfiguration, ingen HTTPS-konfiguration.                                                                                                                       |
+| A03 Software Supply Chain Failures         | 0 issues enl. initiala OSV-skanning (fel updagades dock i [OSV-rapport](#412-osv-rapport))                                                                                    |
 | A04 Cryptographic Failures                 | JWT-secret i klartext (.txt-fil), lösenordshash exponeras i SecurityContext, BCrypt bör uppgraderas till Argon2id.                                                            |
 | A05 Injection                              | Bristande inputvalidering i samtliga paket. Egenskriven databasfråga i sök-funktionen utgör en reell injektionsrisk. Ingen filvalidering.                                     |
 | A07 Authentication Failures                | Lösenordspolicy för svag (min 5 tecken, inga specialtecken). Ingen kontroll mot komprometterade lösenord. Ingen rate limiting på inloggning. JWT-giltighetstid på 60 minuter. |
+| A08 Software And Data Integrity Failures   | Bedöms egentligen av utvecklaren men enbart officiella källor används för nedladdning av verktyg och ramverk                                                                  |
 | A09 Security Logging and Alerting Failures | Ingen säkerhetsloggning eller varningssystem implementerat.                                                                                                                   |
 | A10 Mishandling of Exceptional Conditions  | Automatiska felmeddelanden avslöjar känslig information i samtliga controllers. Inget centraliserat undantagshanteringssystem.                                                |
 
@@ -757,7 +760,7 @@ genom hela kodbasen. Nedan sammanfattas de viktigaste fynden per OWASP-kategori:
 OWASP ZAP (för _Zed Attack Proxy_) är ett öppenkällkodsverktyg för att testa API [^36]. Verktyget kan användas för att analysera dataflödet mellan klienten och servern. Efter initial analysen kan funktionen _Active Scan_ generera olika attack scenario och tillhörande rapport.
 För att kunna fånga upp dataflödet mellan klienten och servern används ZAP som proxy (mellanhand) med en port mot servern och en mot klienten, i detta fall Postman.
 
-**NOTERING**: under förberedande forskning för ZAP lyckades inte författaren att testa ZAP med vanliga HTTP-förfrågor då ZAP översatte dem till HTTPS, vilket logiskt inte accepterades av Postman. Eftersom HTTPS, enligt Bilaga C, behöver implementeras, konfigurerades ett privat certifikat i resursmappen med tillhörande konfigurationer i application.properties enligt [Spring Boots hemsida](https://docs.spring.io/spring-boot/how-to/webserver.html#howto.webserver.configure-ssl.pem-files).
+**NOTERING**: under förberedande forskning för ZAP lyckades inte författaren att testa ZAP med vanliga HTTP-förfrågor då ZAP översatte dem till HTTPS, vilket logiskt inte accepterades av Postman utan certifikat. Eftersom HTTPS, enligt Bilaga C, behöver implementeras, konfigurerades ett privat certifikat i resursmappen med tillhörande konfigurationer i application.properties enligt [Spring Boots hemsida](https://docs.spring.io/spring-boot/how-to/webserver.html#howto.webserver.configure-ssl.pem-files).
 
 Test protokoll:
 
@@ -787,7 +790,7 @@ Följande är en kort sammantfattning av ZAPs genererade rapport.
 ##### 3.3.3.3.1.2 Buffer Overflow (Medium Risk, Medium confidence) :
 
 - A02 Security Misconfiguration: ZAP skickade en extremt lång sträng och fick svaret 500 med felmeddelande "UUID string too large". Buffer Overflow kan ha berott på den lokala testmiljön och IDE:s begränsade minne men det ett argument för hastighetsbegränsning och inputsvalidering.
-- A10 Mishandling of Exceptional Conditions: Svaret var inte fördefinierat utan texten från felet (dvs `e.getMessage()`). Det är ett tecken på att undantagshanteringen bör ses över.
+- Sudien bedömer också att detta borde ingå i "A10 Mishandling of Exceptional Conditions" då svaret var inte fördefinierat utan texten från felet (dvs `e.getMessage()`), ett tecken på att undantagshanteringen bör ses över.
 
 ##### 3.3.3.3.1.3 Application Error Disclosure (Low Risk, Medium confidence):
 
@@ -800,7 +803,7 @@ Följande är en kort sammantfattning av ZAPs genererade rapport.
 
 ##### 3.3.3.3.2 Sammanfattning
 
-Testning med ZAP har delvis bekräftat antaganden från kodgranskningen men det noteras att injektion-försöken, som inte borde tillåtas, inte lyckats.
+Testning med ZAP har delvis bekräftat antaganden från kodgranskningen och att injektionsförsöken inte fungerade som väntat.
 
 ### 3.4 Planering av åtgärder
 
@@ -848,7 +851,7 @@ Projektet gick igenom 10 faser (i branscher) för att försöka säkra applikati
 **1. Config-fixes:**
 
 - alla säkerhetsdetaljerna som fanns i klar text (användare, lösenord mm) ingår nu i miljövariablar som inte delas på github
-- SSL implementerades och cookies används för JWT
+- CORS implementerades och cookies används för JWT
 - JWT kontrolleras för format
 
 **2. New-Exception-Handling:**
@@ -858,31 +861,32 @@ Projektet gick igenom 10 faser (i branscher) för att försöka säkra applikati
 **3. Logging-Exception :**
 
 - Exceptions och andra events loggas nu centralt och sparas i databasen
-- det hade varit säkrare att spara loggarna i en separat databas men nuvarande set-up räcker för denna studie.
+- det hade varit säkrare att spara loggarna i en separat databas men nuvarande konfiguration räcker för denna studie.
 
 **4. Log-access:**
 
-- Användare har nu både roller och tillstånd beroende på vilka de kan ha tillgång tillgång till loggarna,
+- Användare har nu både roller och tillstånd beroende på vilka de kan ha tillgång tillgång till loggarna (se [A01](#2191-broken-access-control-bristfällig-åtkomstkontroll)),
 - en process via mail till ägaren (ROLE_OWNER) gör det möjligt att be om adminstatus och tillgång till loggarna (i olika förfrågor)
-- Ägare definieras enbart direkt i databasen
+- Ägare definieras enbart direkt i databasen, det noteras dock att om en ELEVATION OF PRIVILEDGE lyckas till OWNER-nivå kan konsekvenserna bli förödande. Dock bedöms risken låg för detta och accepteras (i enighet med filosofin i [hotmodellering](#218-hotmodellering-med-stride)).
 
 **5. Authentication:**
 
 - BCrypt har ersatts av Argon2id,
 - lösenordspolicyn har förstärkts med krav på versaler, gemena tecken, siffror och specialtecken,
 - lösenord kontrolleras även med HaveIBeenPwned-databasen
-- rate-limiting baserad på både IP-address och användar-ID har implementerats i en egen klass, en produktion miljö bör dock implementera detta via REDIS eftersom servern fortfarande förfrågas. Detta märktes under ZAP-testet (se nedan) då min dator frös ett litet tag. Denial-of-service verkar därför fortfarande vara ett problem men rate-limiting försvårar i alla fall brute-force-attacker.
+- rate-limiting baserad på både IP-address och användar-ID har implementerats i en egen klass, en produktion miljö bör dock implementera detta via REDIS eftersom servern fortfarande förfrågas. Detta märktes under ZAP-testet (se nedan) då testmiljön frös ett litet tag. Denial-of-service med Brute Force Attack verkar därför fortfarande vara ett problem men rate-limiting försvårar potentiella angrepp.
 - JWT har en livslängd på 5 minuter, likaså cookien den leveras med och förnyas när en användare utför en auktoriserad förfråga och enbart 3 min återstår av TTL:n.
 
 **6. Pass-Recovery:**
 
-- lösenordsåterställning via mail, en kod genererad med SecureRandom skickas till användaren
+- Lösenordsåterställning via mail, en kod genererad med SecureRandom skickas till användaren
+- Koden hashas med Argon2 och sparas i databas
 - Koden för studien är bara fyrsiffrig men skulle lätt ändras till en längre sekvens
 
 **7. Warning-System:**
 
-- Repetitiva misslyckade inloggningsförsök (fem på femton minuter) meddelas till användaren och admin,
-- repetitiva exception (fem på fem minuter) meddelas likaså till admins
+- Repetitiva misslyckade inloggningsförsök (fem på femton minuter) meddelas till användaren och admin, detta anses också att vara ett sätt att respektera [bytet av lösenord enbart när de misstänks vara kompromisserat](#2197-authentication-failures-autentiseringsbrister).
+- repetitiva exception (fem på fem minuter) meddelas likaså till admins.
 
 **8. Input-validation**
 
@@ -893,7 +897,7 @@ Projektet gick igenom 10 faser (i branscher) för att försöka säkra applikati
 
 - Filer som kommer in inspekteras innan de sparas och bilder saneras (manipuleras för att sen sparas på nytt för att strippa metadata och potentiellt skadlig kod),
 - de enda filtyper som godkänns är Word-, Excel-, PowerPoint-dokument, Pdf:er och bilder av olika format,
-- fler typer av filer skulle kunna accepteras på ett relativt enkelt sätt med nuvarande arkitektur.
+- fler typer av filer skulle kunna inkluderas på ett relativt enkelt sätt med nuvarande arkitektur (positivt om [A06](#2196-insecure-design-osäker-design) omfattades av studien).
 - Bildsaneringen orsakar en liten men tydlig kvalitetsförlust, detta kan åtgärdas men det är utanför ramen för denna studie
 
 ### 4.1.2 OSV-rapport
@@ -923,9 +927,6 @@ Jämfört med den initiala skanningen noteras att Buffer Overflow och Applicatio
 #### 4.1.4 Manuellt testande via Postman
 
 Med postman testades alla säkerhetsspärrar som implementerades, från otillåten resursåtkomst till filinjektioner, genom att kalla de olika end-points.
-
-Tre användare skapades, alla med olika filer och mappar och olika otillåtna åtkomstförsöken utfördes utan framgång.
-
 För filvalideringstestet försökte författaren att skicka ett exceldokument med macros (ej tillåtet) och EFBox identifierade korrekt att filen inte var acceptabel, vilket förväntades av filvalideringen.
 
 ### 4.2 Detaljerade fynd
@@ -958,7 +959,7 @@ Det sistnämnda avslöjar en svaghet av STRIDE-hotmodelleringen: den mänskliga 
 
 ### 4.3 Oväntade Resultat
 
-Ett oväntat fel som inte hann lösas var att visa undantag inte hanterades av GlobalExceptionHandler. Undantag utan specifik error handling borde hanteras som `UndefinedException`. Problemet går säkert att lösa men inte inom tidsramen för studien. Trots detta skickas inga automatiska felmeddelande tillbaka (e.getMessages()) till användaren vilket är det viktigaste.
+Ett oväntat fel som inte hann lösas var att visa undantag inte hanterades av GlobalExceptionHandler. Undantag utan specifik error handling borde hanteras som `UndefinedException`. Tidsrammen tillåter tyvärr inte en djupare debugging. Trots detta skickas inga automatiska felmeddelande tillbaka (e.getMessages()) till användaren vilket är det viktigaste.
 Den svåraste aspekten för detta projekt var att acceptera att författaren inte kunde få en "ren" OSV-rapport utan _issues_ utan fick kompromissa för att EFBox underhållet skulle vara hållbart. Studien förväntade sig att kunna lösa just detta problem utan att kompromissa på detta vis. Dock finns kompromis som en del av hotmodellingens effektivitetskontroll (se [Hotmodellering med Stride, punkt 3: Acceptera](#216-hotmodellering-med-stride)).
 
 ---
@@ -970,7 +971,7 @@ Den svåraste aspekten för detta projekt var att acceptera att författaren int
 #### 5.1.1. Vilka säkerhetsbrister identifieras i EFbox REST API utifrån OWASP Top 10:2025?
 
 OWASP dokumentation är väldigt detaljerad och dess _cheat sheet_ serie är väldigt användbar för att implementera åtgärder och tankegångar. Listan av säkerhetsbrister listad i [Sammanfattning](#33332-sammanfattning) får antagligen med de flesta brister som fanns med i projektet när studien började.
-Tyvärr är det svårt som ensam utvecklare att diskutera runt de olika säkerhetsaspekterna, potentiella hot och lösningar. Kunskap är också begränsad i ett team av en person. AI skulle helt klart bredda ut ramen för studien och driva fram olika lösningar men den underliggande tanken för denna studie var att få lära sig de olika säkerhetskoncepterna på egen hand.
+Tyvärr är det svårt som ensam utvecklare att diskutera runt de olika säkerhetsaspekterna, potentiella hot och lösningar. Kunskap är också begränsad i ett team av en person. AI skulle helt klart bredda ut ramen för studien och driva fram olika lösningar men den underliggande tanken för denna studie var att få implementera de olika säkerhetskoncepterna på egen hand.
 
 #### 5.1.2. Hur kan de identifierade bristerna åtgärdas inom ramen för det befintliga systemets arkitektur?
 
@@ -996,12 +997,22 @@ private boolean isUsernameValid(String username) {
     }
 ```
 
-Vid varje pull request flaggades `PASSWORD_REGEX` som ett säkerhets hot eftersom SonarQube antog att ett lösenord hade hårdkodas, vilket sänkte förtroendet för verktyget.
+Vid varje pull request flaggades `PASSWORD_REGEX` som ett säkerhets hot eftersom SonarQube antog att ett lösenord hade hårdkodas. SonarQube ville inte höja security rating över C pga detta trots att ur ett kodförståelse perspektiv är det lättare att läsa. Ett liknande problem förekom med Emailvalideringen och SonarQube sänkte(!) betyget för Reliability. **Dessa två problem är de enda som hindra en A-rating** (se bilder nedan).
 
-Pull requests analyserades även av Claude AI för kodkvalitet (se Bilagor F till M). Detta har varit hjälpsamt för att hålla kodkvalitet och rätta enkla misstag som studien, med en ensam utvecklare, hade missat. Claude AI kunde ibland lida av bristande sammanhangshålning och även hallucinationer. Flera rapporter påpekar att `.env.example` har två st `OWNER_EMAIL` miljövariablar vilka inte fanns. Överlag dock har Claude AI:s kodgranskning varit hjälpsam. Utan att information om branchens syftet kunde verktyget analysera syftet med den och beskriva det på ett korrekt sätt i rapporterna. Det ansågs vara ett tecken på kodtydlighet och att målen uppnåtts.
+<img title="SonarQube Map Overview" alt="Security Rating explanation" src="/images/Screenshot 2026-06-02 at 09-05-25 Security Rating - EFbox in eckofox SonarQube Cloud.png" width="49%">
+<img title="SonarQube File Overview" alt="Security Rating explanation" src="/images/Screenshot 2026-06-02 at 09-05-43 Security Rating - EFbox in eckofox SonarQube Cloud.png" width="49%">
 
-ZAP är ett fantastiskt verktyg för en smidig analys. Alla registrerade end-points skannas och testas och antalet förfrågan på kort tid testa serverns kapacitet. T.ex kunde studien konstatera att Rate-limiting åtgärderna, baserade på IP för anonyma användare alternativt på användarID, skulle inte räcka mot en _Denial of Service_-attack då testmiljön "frös" i ett par minuter. Alla registrerade exception finns i Bilaga Q - EFBox_event_log efter ZAP test (EFbox skapa en HTML-verion av loggarna). Det konstateras att de implementerade skydden fyller sina syften.
-Rapporten fyllde sitt syfte men även här fanns ett falskt positiv fynd om en SQL-injektion eftersom lösenord har ingen inputvalidering för att de hashas i databasen. ZAP skickade inte heller några filer för att testa injektionsangrep utan ett excelblad med macro skickades manuellt för att testa filvalideringen. Andra manuella tester har varit att ljuga om filtypen, skicka förbjudna filer mm.
+| Mätpunkt        | Betyg |
+| --------------- | ----- |
+| Security        | C     |
+| Reliability     | C     |
+| Maintanability  | A     |
+| Security Review | A     |
+
+Pull requests analyserades även av Claude AI för kodkvalitet (se Bilagor F till M). Detta har varit hjälpsamt för att hålla kodkvalitet och rätta enkla misstag som studien, med en ensam utvecklare, hade missat. Claude AI kunde ibland lida av bristande sammanhangshållning och även hallucinationer. Flera rapporter påpekar att `.env.example` har två st `OWNER_EMAIL` miljövariablar vilka inte fanns. Överlag dock har Claude AI:s kodgranskning varit hjälpsam. Utan att information om branchens syftet kunde verktyget analysera syftet med den och beskriva det på ett korrekt sätt i rapporterna. Det ansågs vara ett tecken på kodtydlighet och att målen uppnåtts.
+
+ZAP är möjliggör en smidig analys. Alla registrerade end-points skannas och testas och antalet förfrågan på kort tid testa serverns kapacitet. T.ex kunde studien konstatera att Rate-limiting åtgärderna, baserade på IP för anonyma användare alternativt på användarID, skulle inte räcka mot en _Denial of Service_-attack då testmiljön "frös" i ett par minuter. Alla registrerade exception finns i Bilaga Q - EFBox_event_log efter ZAP test (EFbox skapar en HTML-verion av loggarna). Det konstateras att de implementerade skydden fyller sina syften.
+Rapporten var informativ men även här fanns ett falskt positiv fynd om en SQL-injektion eftersom lösenord har ingen inputvalidering för att de hashas i databasen. ZAP skickade inte heller några filer för att testa injektionsangrep utan ett excelblad med macro skickades manuellt för att testa filvalideringen. Andra manuella tester har varit att ljuga om filtypen, skicka förbjudna filer mm.
 
 Sist har en del av kvalitetssäkring varit att arbeta metodiskt enligt de planerade åtgärder med hjälp av verktyget GitHub Project med utrymme för anpassning till de olika problem som uppstod. Om inga fel hittades i samband med en granskning, en logik eller av test verktygen så dubbelkollades noga. Det var så OSV granskningen av dependencies uppdagades och kunde åtgärdas. Det hade dock varit bättre, och mer givande, att arbeta i team och diskutera resultat.
 
@@ -1017,7 +1028,7 @@ Metoden som används i studien anser författaren vara metodiskt och anpassad. F
 
 Begränsingarna har huvudsakligen grundat sig i att arbeta själv. Ett team kan fördela resurser och stämma av med projektdeltagarna. Kunskapsbasen är inte heller så bred med bara en person som ska läsa sig på alla tekniska möjligheter att lösa ett problem. Kanske har enkla lösningar förbisetts och tid förlorats pga detta. De lösningar som har implementerats är kanske bristfälliga på ett sätt studien inte förutsett.
 
-Ett misstag som gjordes pga tidsbristen under hotmodelleringen var att en lagringskvot för användaren förbisågs och planerades aldrig. Det resulterade i sin tur att det inte planerades och följaktigen inte implementerades.
+Ett misstag som gjordes pga tidsbristen under hotmodelleringen var att en lagringskvot för användaren förbisågs och planerades aldrig. Det resulterade i sin tur att det varken planerades eller implementerades.
 
 Att arbeta ensam ökar också risken för partiskhet när man analysera sitt eget arbete: har rätt verktyg, metodologi och koncept används och implementerats på rätt sätt eller har mindre anpassade sätt tillämpats för att de var enklare att använda?
 
@@ -1047,7 +1058,7 @@ Studien avser ett småskaligt projekt men understryker tydligt hur stort och inv
 
 ### 6.2 Bidrag och Betydelse
 
-Under förberedande forskning hittades många olika lösningar online på specifika problem men ingen övergripande logik eller metodologi. OWASP, NIST och andra organisationer har detaljerade lösningar men inte metodologi. Betydelsen av denna studie är att visa ett sätt att implementera säkerhet. Utvecklare kan dra lärdomar från de misstag som begicks här och få inspiration för metodologi, verktyg mm.
+Under förberedande forskning hittades många olika lösningar online (OWASP, NIST och andra organisationer och entusiaster) på specifika problem men ingen övergripande logik eller metodologi. Betydelsen av denna studie är att visa ett sätt att implementera säkerhet. Utvecklare kan dra lärdomar från de misstag som begicks här och få inspiration för metodologi, verktyg mm.
 
 ### 6.3 Framtida Arbete
 
